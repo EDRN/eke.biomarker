@@ -1,0 +1,10 @@
+<div metal:define-macro='biomarkerFields'>
+    <div>
+        <label for='parent-fieldname-shortName' i18n:translate='label_shortName'>Short Name:</label>
+        <metal:field use-macro='python:context.widget("shortName", mode="view")'>Fred</metal:field>
+    </div>
+    <div>
+        <label for='parent-fieldname-bmAliases' i18n:translate='label_bmAliases'>Aliases:</label>
+        <metal:field use-macro='python:context.widget("bmAliases", mode="view")'>Fredrick, Federico</metal:field>
+    </div>
+</div>

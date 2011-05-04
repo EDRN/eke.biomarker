@@ -1,0 +1,110 @@
+Changelog
+=========
+
+What follows is a history of changes from release to release.  Where issue IDs
+are listed below, you can find out more about them by visiting the issue
+tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
+
+
+1.1.0 - Plone 4
+---------------
+
+This release of eke.biomarker makes it compatible with Plone 4.
+
+
+1.0.2 - A Mixed Bag
+-------------------
+
+The following issues were addressed in this release:
+
+* CA-620 - Locks appear on biomarkers listed under a protocol incorrectly
+  (test exposure)
+* CA-698 - "Structural" objects appear in searches
+
+
+1.0.1 - Sweeping Views
+----------------------
+
+This release adds a number of improvements to the biomarker views to
+reflect requests made by NCI that more specific details be captured in
+each annotated biomarker.
+
+This release addresses the following issues:
+
+* CA-674 - Add PerformanceComment to the biomarker organ tab
+* CA-675 - Portal: Change name of sensitivity/specificity and add specific assay type attribute
+* CA-676 - Portal: Add decision rule attribute to biomarker-organ-study information
+
+
+1.0.0 - Prime Time
+------------------
+
+This release addresses a number of issues 
+that make this component (and some of its
+selected counterparts) "prime time" for
+the operational NCI portal. 
+
+This release addresses the following issues:
+
+* CA-528 Automatic periodic ingest of RDF
+
+You can find the issue tracker at https://oodt.jpl.nasa.gov/jira/browse/CA
+
+
+0.0.6 - Open Door Policy
+------------------------
+
+For this release, we're exposing more information about biomarkers.  Instead
+of making unapproved biomarkers private and requiring a log in to view them,
+you can now view basic information about them.  Full details require a login.
+For more information, see https://oodt.jpl.nasa.gov/jira/browse/CA-650.
+
+
+0.0.5 - Eleventh Hour
+---------------------
+
+This release includes some look-and-feel changes, specifically to support
+https://oodt.jpl.nasa.gov/jira/browse/CA-600.
+
+
+0.0.4 - Padlocked!
+------------------
+
+This release addresses the following issue:
+
+* https://oodt.jpl.nasa.gov/jira/browse/CA-551 - Add lock icon to biomarkers
+  and science data that are "secure" to protocol pages
+
+
+0.0.3 - The unnamed release
+---------------------------
+
+* http://oodt.jpl.nasa.gov/jira/browse/CA-511 - Need to index alternative
+  biomarker names
+
+
+0.0.2 - Various "CYA" Fixes
+---------------------------
+
+* http://oodt.jpl.nasa.gov/jira/browse/CA-499 - Disclaimer needed on
+  biomarker list.
+* http://oodt.jpl.nasa.gov/jira/browse/CA-500 - Show unpublished
+  biomarkers in a biomarker folder.
+* http://oodt.jpl.nasa.gov/jira/browse/CA-510 - Lock box for science data and
+  biomarkers should disappear if a user has access to the object
+
+
+0.0.1 - Security Ingest
+-----------------------
+
+The sole issue addressed in this release is:
+
+* http://oodt.jpl.nasa.gov/jira/browse/CA-475 - "Public" should only see
+  biomarkers and science data that have QAState=Accepted.  Disregard Security
+  flag.
+
+
+0.0.0 - Unreleased
+------------------
+
+Initial release into beta.

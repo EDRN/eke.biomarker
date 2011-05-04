@@ -1,0 +1,132 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+    xml:lang='en'
+    lang='en'
+    xmlns:tal='http://xml.zope.org/namespaces/tal'
+    xmlns:metal='http://xml.zope.org/namespaces/metal'
+    xmlns:i18n='http://xml.zope.org/namespaces/i18n'
+    metal:use-macro='context/main_template/macros/master'
+    i18n:domain='eke.biomarker'>
+    <head>
+        <title>Biomarker Folder</title>
+    </head>
+    <body>
+        <metal:main fill-slot='main'>
+            <tal:main-macro metal:define-macro='main'
+                tal:define='
+                    portalURL      context/@@plone_portal_state/portal_url;
+                    haveContents   view/haveBiomarkers;
+                    contents       view/biomarkers;
+                    subfolders     view/subfolders;
+                    kssClassesView context/@@kss_field_decorator_view;
+                    getKssClasses  nocall:kssClassesView/getKssClassesInlineEditable;
+                    templateId     template/getId;
+                    isManager      python:checkPermission("Manage portal", context);
+                    Batch          python:modules["Products.CMFPlone"].Batch;
+                    b_size         python:30;
+                    b_start        python:0;
+                    b_start        request/b_start|b_start;
+                '>
+                <div tal:replace='structure provider:plone.abovecontenttitle' />
+                <h1 class='documentFirstHeading'> 
+                    <metal:field use-macro='python:context.widget("title", mode="view")'>
+                        Title
+                    </metal:field>
+                </h1>
+
+                <div tal:replace='structure provider:plone.belowcontenttitle' />
+                <p class='documentDescription'>
+                    <metal:field use-macro='python:context.widget("description", mode="view")'>Description.</metal:field>
+                </p>
+                <div tal:replace='structure provider:plone.abovecontentbody' />
+                <div metal:use-macro='context/@@standardRDFAttribute/macros/rdfDataSource'>Standard RDF</div>
+                <div tal:condition='isManager'>
+                    <label for='parent-fieldname-bmoDataSource' i18n:translate='label_bmoDataSource'>
+                        Biomarker-Organs Data Source:
+                    </label>
+                    <metal:field use-macro='python:context.widget("bmoDataSource", mode="view")'>http://bmo.com/bmo</metal:field>
+                </div>
+
+                <div tal:condition='view/haveReviewListings' tal:omit-tag=''>
+                    <h3 i18n:translate='biomarkerFolder_reviewListings'>Review Listings</h3>
+                    <ul>
+                        <li tal:repeat='rl view/reviewListings'>
+                            <a href='#' title='Oh this is sooooo awesome.' tal:content='rl/title'
+                                tal:attributes='href rl/url; title rl/description'>
+                                Yawner Listing
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div tal:condition='subfolders' tal:omit-tag=''>
+                    <h3 i18n:translate='biomarkerFolder_subfolders'>Subfolders in this Folder</h3>
+                    <ul>
+                       <li tal:repeat='subfolder subfolders'>
+                            <a href='#' title='Scintilating sub-folders exposed!' tal:content='subfolder/title'
+                                tal:attributes='href subfolder/url; title subfolder/description'>
+                                Sub-Biomarker Action Folder
+                            </a>
+                       </li> 
+                    </ul>
+                </div>
+
+                <p class='' i18n:translate='biomarkerFolder_disclaimer'>
+                    The EDRN is involved in researching hundreds of biomarkers.  The following is a partial list of biomarkers
+                    and associated results that are currently available for access and viewing.  The bioinformatics team at EDRN is
+                    currently working with EDRN collaborative groups to capture, curate, review, and post the results as it is
+                    available.  EDRN also provides secure access to additional biomarker information not available to the public
+                    that is currently under review by EDRN research groups.  If you have access to this information, please ensure
+                    that you are logged in.  If you are unsure or would like access, please
+                    <a tal:attributes='href string:${portalURL}/contact-info' i18n:name='contact'
+                        href='#'>contact the operator</a> for more information.
+                </p>
+
+                <h2 i18n:translate='biomarkerFolder_inThisFolder'>Contents</h2>
+                <p tal:condition='not:haveContents' i18n:translate='biomarkerFolder_noBiomarkers' class='discreet'>
+                    There are currently no biomarkers in this folder.
+                </p>
+                <div tal:condition='haveContents' tal:define='batch python:Batch(contents, b_size, int(b_start), orphan=1);'
+                    tal:omit-tag=''>
+                    <table class='listing'>
+                        <thead>
+                            <tr>
+                                <th i18n:translate='biomarkerFolder_titleHeading'>Title</th>
+                                <th i18n:translate='biomarkerFolder_typeHeading'>Type</th>
+                                <th i18n:translate='biomarkerFolder_organsHeading'>Organ(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tal:row repeat='item batch'>
+                                <tal:def define='url item/url; description item/description; title item/title; rs item/reviewState;
+                                    biomarkerType item/biomarkerType; bodySystems item/bodySystems; oddrow repeat/item/odd'>
+                                    <tr tal:attributes='class python:oddrow and "odd" or "even";'>
+                                        <td>
+                                            <a href='#' title='A questionable biomarker of fine upbringing.' tal:content='title'
+                                                tal:attributes='href url; title description;'> 
+                                                Doom
+                                            </a>
+                                            <span tal:condition='python:rs != "published"' tal:omit-tag=''>
+                                                <img src='lock_icon.gif'
+                                                    alt='Unreleased biomarker'
+                                                    i18n:attributes='alt biomarkerFolder_unreleasedBiomarker'
+                                                    tal:attributes='src string:${portalURL}/lock_icon.gif'
+                                                />
+                                            </span>
+                                        </td>
+                                        <td tal:content='biomarkerType'>Sticky</td>
+                                        <td tal:content='python:", ".join(bodySystems)'>Anus, Rectum</td>
+                                    </tr>
+                                </tal:def>
+                            </tal:row>
+                        </tbody>
+                    </table>
+                    <div metal:use-macro='context/batch_macros/macros/navigation'>Navigation here.</div>
+                </div>
+                <div metal:use-macro='context/document_relateditems/macros/relatedItems'>
+                    Any related items
+                </div>
+                <div tal:replace='structure provider:plone.belowcontentbody' />
+            </tal:main-macro>
+        </metal:main>
+    </body>
+</html>

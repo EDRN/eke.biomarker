@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Copyright 2009 California Institute of Technology. ALL RIGHTS
+RESERVED. U.S. Government Sponsorship acknowledged.
+-->
+<configure xmlns='http://namespaces.zope.org/zope' i18n_domain='eke.biomarker'>
+    <class class='.biomarkerfolder.BiomarkerFolder'>
+        <require permission='zope2.View' interface='..interfaces.IBiomarkerFolder'/>
+    </class>
+    <class class='.elementalbiomarker.ElementalBiomarker'>
+        <require permission='zope2.View' interface='..interfaces.IBiomarker'/>
+    </class>
+    <class class='.biomarkerpanel.BiomarkerPanel'>
+        <require permission='zope2.View' interface='..interfaces.IBiomarkerPanel'/>
+    </class>
+    <class class='.biomarkerbodysystem.BiomarkerBodySystem'>
+        <require permission='zope2.View' interface='..interfaces.IBiomarkerBodySystem'/>
+    </class>
+    <class class='.bodysystemstudy.BodySystemStudy'>
+        <require permission='zope2.View' interface='..interfaces.IBodySystemStudy'/>
+    </class>
+    <class class='.studystatistics.StudyStatistics'>
+        <require permission='zope2.View' interface='..interfaces.IStudyStatistics'/>
+    </class>
+    <class class='.reviewlisting.ReviewListing'>
+        <require permission='zope2.View' interface='..interfaces.IReviewListing'/>
+    </class>
+    <subscriber
+        for='..interfaces.IBiomarker zope.app.container.interfaces.IContainerModifiedEvent'
+        handler='.base.BodySystemUpdater'
+    />
+    <utility
+        component='.base.BiomarkerVocabularyFactory'
+        name='eke.biomarker.BiomarkersVocabulary'
+    />
+</configure>
