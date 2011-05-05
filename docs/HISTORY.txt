@@ -5,6 +5,14 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
+1.1.1 - Unique IDs
+------------------
+
+This release replaces the unique ID generation method for "Study Statistics"
+objects from the "generateUniqueId" method (acquired from who knows where
+(possibly CacheFu?)) to UUIDs, the generation of which is part of the standard
+library.
+
 
 1.1.0 - Plone 4
 ---------------

@@ -20,6 +20,7 @@ from rdflib import URIRef, ConjunctiveGraph, URLInputSource
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
+import uuid
 
 # Well-known URI refs
 _accessPredicateURI                      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#AccessGrantedTo')
@@ -101,11 +102,10 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             preds = statements[bag]
             del preds[_typeURI]
             sensitivityURIs.extend(flatten(preds.values()))
-        # For each set of staistics...
+        # For each set of statistics...
         for sensitivityURI in sensitivityURIs:
             predicates = statements[sensitivityURI]
-            objID = catalog.generateUniqueId('Study Statistics')
-            stats = bodySystemStudy[bodySystemStudy.invokeFactory('Study Statistics', objID)]
+            stats = bodySystemStudy[bodySystemStudy.invokeFactory('Study Statistics', uuid.uuid1())]
             updateObject(stats, sensitivityURI, predicates, catalog)
             stats.title = sensitivityURI
             stats.reindexObject()
