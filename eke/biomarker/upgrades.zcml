@@ -9,8 +9,17 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     <genericsetup:upgradeStep
         source='0'
         destination='1'
-        title='Null Upgrade Step'
+        title='Null Upgrade Step (0→1)'
         description='The EKE Biomarkers package requires no custom upgrade steps to go from profile 0 to profile 1.'
+        profile='eke.biomarker:default'
+        handler='eke.biomarker.upgrades.nullUpgradeStep'
+        sortkey='1'
+    />
+    <genericsetup:upgradeStep
+        source='1'
+        destination='4'
+        title='Null Upgrade Step (1→4)'
+        description='The EKE Biomarkers package requires no custom upgrade steps to go from profile 1 to profile 4.'
         profile='eke.biomarker:default'
         handler='eke.biomarker.upgrades.nullUpgradeStep'
         sortkey='1'
