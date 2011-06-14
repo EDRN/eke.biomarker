@@ -12,7 +12,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 This release includes:
 
 * A plone.app.testing layer.
-
+* Support for edrnsite.collaborations
 
 
 1.1.2 - Upgrade Cleanup
