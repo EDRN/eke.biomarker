@@ -42,8 +42,18 @@ class TestSetup(BaseTestCase):
         from eke.biomarker.content.biomarkerfolder import BiomarkerFolderSchema
         self.failUnless(BiomarkerFolderSchema['bmoDataSource'].widget.size >= 60)
 
+class CollaborativeGroupNamingTest(BaseTestCase):
+    '''Unit tests for the identification of collaborative groups in BMDB'''
+    def testGroupNameMapping(self):
+        from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES as cgbitn
+        self.assertEquals(u'Breast and Gynecologic Cancers Research Group',         cgbitn[u'Breast and Gynecologic'])
+        self.assertEquals(u'G.I. and Other Associated Cancers Research Group',      cgbitn[u'G.I. and Other Associated'])
+        self.assertEquals(u'Lung and Upper Aerodigestive Cancers Research Group',   cgbitn[u'Lung and Upper Aerodigestive'])
+        self.assertEquals(u'Prostate and Urologic Cancers Research Group',          cgbitn[u'Prostate and Urologic'])
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestSetup))
+    suite.addTest(unittest.makeSuite(CollaborativeGroupNamingTest))
     return suite
     
