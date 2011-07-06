@@ -19,7 +19,7 @@ class EKEBiomarker(PloneSandboxLayer):
         eke.biomarker.tests.base.registerLocalTestData()
     def setUpPloneSite(self, portal):
         self.applyProfile(portal, 'eke.biomarker:default')
-    def teatDownZope(self, app):
+    def tearDownZope(self, app):
         z2.uninstallProduct(app, 'eke.biomarker')
 
 EKE_BIOMARKER_FIXTURE = EKEBiomarker()
