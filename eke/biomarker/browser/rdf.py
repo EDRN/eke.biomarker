@@ -8,6 +8,7 @@ EKE Biomarkers: RDF ingest for biomarkers.
 
 from Acquisition import aq_inner, aq_parent
 from eke.biomarker.interfaces import IBiomarker
+from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES
 from eke.knowledge import ProjectMessageFactory as _
 from eke.knowledge.browser.rdf import KnowledgeFolderIngestor, CreatedObject, RDFIngestException
 from eke.knowledge.browser.utils import updateObject
@@ -37,6 +38,9 @@ _referencesStudyPredicateURI             = URIRef('http://edrn.nci.nih.gov/rdf/r
 _sensitivityDatasPredicateURI            = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#SensitivityDatas')
 _typeURI                                 = URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
 _visibilityPredicateURI                  = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#QAState')
+
+# Interface identifier for EDRN Collaborative Group, from edrnsite.collaborations
+_collabGroup = 'edrnsite.collaborations.interfaces.collaborativegroupindex.ICollaborativeGroupIndex'
 
 def flatten(l):
     '''Flatten a list.'''
@@ -75,6 +79,17 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         of the matching objects rather than a sequence of brains.'''
         results = catalog(identifier=[unicode(i) for i in identifiers])
         return [i.getObject() for i in results]
+    def updateCollaborativeGroups(self, context, biomarker):
+        catalog = getToolByName(context, 'portal_catalog')
+        for accessGroup in biomarker.accessGroups:
+            groupName = COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES.get(accessGroup)
+            if not groupName: continue
+            results = [i.getObject() for i in catalog(object_provides=_collabGroup, Title=groupName)]
+            for collabGroup in results:
+                currentBiomarkers = collabGroup.getBiomarkers()
+                if biomarker not in currentBiomarkers:
+                    currentBiomarkers.append(biomarker)
+                    collabGroup.setBiomarkers(currentBiomarkers)
     def updateBiomarker(self, obj, uri, predicates, context, statements):
         '''Update a biomarker. Sets various attributes and then adjusts workflow & security.'''
         updateObject(obj, uri, predicates, context)
@@ -84,6 +99,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             settings = [dict(type='group', roles=[u'Reader'], id=i) for i in groupIDs]
             sharing = getMultiAdapter((obj, TestRequest()), name=u'sharing')
             sharing.update_role_settings(settings)
+            self.updateCollaborativeGroups(context, obj)
         if _hasBiomarkerStudyDatasPredicateURI in predicates:
             for someURI in predicates[_hasBiomarkerStudyDatasPredicateURI]:
                 studyPredicates = statements[someURI]

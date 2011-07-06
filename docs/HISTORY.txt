@@ -13,6 +13,9 @@ This release includes:
 
 * A plone.app.testing layer.
 * Support for edrnsite.collaborations
+* Re-attaches biomarkers that indicate their collaborative group back to the
+  "Collaborative Group" (from edrnsite.collaborations) objects to which they
+  "belong".
 
 
 1.1.2 - Upgrade Cleanup
