@@ -6,8 +6,8 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
-1.1.3 - TBD
------------
+1.1.3 - Let's Collaborate!
+--------------------------
 
 This release includes:
 
