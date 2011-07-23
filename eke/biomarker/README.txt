@@ -216,8 +216,10 @@ Now we can create a testing Elemental Biomarker::
     'Public Safety'
     >>> biomarker.publications[0].title
     'Glazed Roast Chicken'
-    >>> biomarker.resources[0].title, biomarker.resources[1].title
-    ('A search engine', 'A web index')
+    >>> resources = [i.title for i in biomarker.resources]
+    >>> resources.sort()
+    >>> resources
+    ['A search engine', 'A web index']
     >>> biomarker.accessGroups
     ('ldap://access.this/1',)
 
