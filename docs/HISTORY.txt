@@ -11,7 +11,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 This release includes:
 
-* CA-781: Add ability to associate eCAS datasets with Biomarker records in the
+* CA-784: Add ability to associate eCAS datasets with Biomarker records in the
   BMDB
 
 
