@@ -61,6 +61,7 @@ class BiomarkerBodySystem(ATFolder, KnowledgeObject):
     publications = atapi.ATReferenceFieldProperty('publications')
     qaState      = atapi.ATFieldProperty('qaState')
     resources    = atapi.ATReferenceFieldProperty('resources')
+    datasets     = atapi.ATReferenceFieldProperty('datasets')
     description  = atapi.ATFieldProperty('description')
     performanceComment = atapi.ATFieldProperty('performanceComment')
     

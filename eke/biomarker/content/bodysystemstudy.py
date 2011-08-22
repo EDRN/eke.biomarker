@@ -54,6 +54,7 @@ class BodySystemStudy(ATFolder, KnowledgeObject):
     protocols    = atapi.ATReferenceFieldProperty('protocols')
     publications = atapi.ATReferenceFieldProperty('publications')
     resources    = atapi.ATReferenceFieldProperty('resources')
+    datasets     = atapi.ATReferenceFieldProperty('datasets')
     study        = atapi.ATReferenceFieldProperty('study')
     decisionRule = atapi.ATFieldProperty('decisionRule')
     

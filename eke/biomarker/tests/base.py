@@ -1,5 +1,5 @@
 # encoding: utf-8
-# Copyright 2008 California Institute of Technology. ALL RIGHTS
+# Copyright 2008–2011 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 '''
@@ -14,6 +14,7 @@ from Products.PloneTestCase.layer import onsetup
 import eke.knowledge.tests.base as ekeKnowledgeBase
 import eke.publications.tests.base as ekePublicationsBase
 import eke.study.tests.base as ekeStudyBase
+import eke.ecas.tests.base as ekeECASBase
 
 # Traditional Products we have to load manually for test cases:
 # (none at this time)
@@ -28,6 +29,7 @@ def setupEKESite():
     ztc.installPackage('eke.knowledge')
     ztc.installPackage('eke.publications')
     ztc.installPackage('eke.study')
+    ztc.installPackage('eke.ecas')
     ztc.installPackage('eke.biomarker')
 
 setupEKESite()
@@ -51,6 +53,7 @@ _biomarkerA = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:Alias>Bigo</bmdb:Alias>
         <bmdb:memberOfPanel rdf:resource='http://edrn/bmdb/p1'/>
         <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1' />
+        <bmdb:AssociatedDataset rdf:resource='urn:edrn:top-secret-data'/>
         <bmdb:indicatorForOrgan rdf:resource='http://edrn/bmdb/a1/o1' />
         <bmdb:hasBiomarkerStudyDatas>
             <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
@@ -210,6 +213,7 @@ def registerLocalTestData():
     ekeKnowledgeBase.registerLocalTestData()
     ekePublicationsBase.registerLocalTestData()
     ekeStudyBase.registerLocalTestData()
+    ekeECASBase.registerLocalTestData()
     ekeKnowledgeBase.registerTestData('/biomarkers/a', _biomarkerA)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/a', _biomarkerOrganA)
     ekeKnowledgeBase.registerTestData('/biomarkers/b', _biomarkerB)

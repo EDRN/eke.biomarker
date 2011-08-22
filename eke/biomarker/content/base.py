@@ -1,5 +1,5 @@
 # encoding: utf-8
-# Copyright 2009 California Institute of Technology. ALL RIGHTS
+# Copyright 2009–2011 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 '''EKE Biomarker: base content implementation.'''
@@ -10,8 +10,6 @@ from eke.knowledge.content import knowledgeobject
 from Products.Archetypes import atapi
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.CMFCore.utils import getToolByName
-from zope.app.container.interfaces import IContainerModifiedEvent
-from zope.component import adapts
 from zope.interface import implements, directlyProvides
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
@@ -86,6 +84,20 @@ ResearchedObjectSchema = atapi.Schema((
             description=_(u'Additional resources about this object.'),
         ),
         predicateURI=predicateURIBase + 'referencesResource',
+    ),
+    atapi.ReferenceField(
+        'datasets',
+        storage=atapi.AnnotationStorage(),
+        enforceVocabulary=True,
+        multiValued=True,
+        vocabulary_factory=u'eke.ecas.DatasetsVocabulary',
+        relationship='datasetsSupportingThisObject',
+        vocabulary_display_path_bound=-1,
+        widget=atapi.ReferenceWidget(
+            label=_(u'Datasets'),
+            description=_(u'Datasets providing measured scientific bases for this object.'),
+        ),
+        predicateURI=predicateURIBase + 'AssociatedDataset',
     ),
 ))
 
@@ -163,6 +175,7 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     protocols            = atapi.ATReferenceFieldProperty('protocols')
     publications         = atapi.ATReferenceFieldProperty('publications')
     resources            = atapi.ATReferenceFieldProperty('resources')
+    datasets             = atapi.ATReferenceFieldProperty('datasets')
     shortName            = atapi.ATFieldProperty('shortName')
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]

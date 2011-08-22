@@ -81,6 +81,9 @@
                                 </a>
                             </li>
                         </ul>
+                        <div metal:use-macro='context/@@commonBiomarker/macros/datasets'>
+                            Datasets
+                        </div>
                     </div>
                     <div class='tabbertab'>
                         <h2 i18n:translate='bm_OrgansTab'

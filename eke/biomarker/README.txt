@@ -176,6 +176,16 @@ And to miscellaneous resources::
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.open(portalURL + '/ye-olde-intarwebz/ingest')
 
+And to ECAS datasets::
+
+    >>> browser.open(portalURL)
+    >>> browser.getLink(id='dataset-folder').click()
+    >>> browser.getControl(name='title').value = u'Ye Olde Data Warehouse'
+    >>> browser.getControl(name='description').value = u'This folder is just for functional tests.'
+    >>> browser.getControl(name='rdfDataSource').value = u'testscheme://localhost/datasets/b'
+    >>> browser.getControl(name='form.button.save').click()
+    >>> browser.open(portalURL + '/ye-olde-data-warehouse/ingest')
+
 Now we can create a testing Elemental Biomarker::
 
     >>> browser.open(portalURL + '/questionable-biomarkers')
@@ -193,6 +203,7 @@ Now we can create a testing Elemental Biomarker::
     >>> browser.getControl(name='protocols:list').displayValue = ["Public Safety"]
     >>> browser.getControl(name='publications:list').displayValue = ["Glazed Roast Chicken"]
     >>> browser.getControl(name='resources:list').displayValue = ['A search engine', 'A web index']
+    >>> browser.getControl(name='datasets:list').displayValue = ['Get Bent']
     >>> browser.getControl(name='accessGroups:lines').value = 'ldap://access.this/1'
     >>> browser.getControl(name='form.button.save').click()
     >>> 'phthalate' in f.objectIds()
@@ -220,6 +231,8 @@ Now we can create a testing Elemental Biomarker::
     >>> resources.sort()
     >>> resources
     ['A search engine', 'A web index']
+    >>> biomarker.datasets[0].title
+    'Get Bent'
     >>> biomarker.accessGroups
     ('ldap://access.this/1',)
 
@@ -658,6 +671,8 @@ Ingesting::
     'A web index'
     >>> a1.protocols[0].title
     'Public Safety'
+    >>> a1.datasets[0].title
+    'Get Bent'
     >>> a1.qaState
     'Accepted'
     >>> o1 = a1['rectum']

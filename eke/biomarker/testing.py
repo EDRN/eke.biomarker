@@ -6,11 +6,12 @@ from eke.knowledge.testing import EKE_KNOWLEDGE_FIXTURE
 from eke.publications.testing import EKE_PUBLICATIONS_FIXTURE
 from eke.site.testing import EKE_SITE_FIXTURE
 from eke.study.testing import EKE_STUDY_FIXTURE
+from eke.ecas.testing import EKE_ECAS_FIXTURE
 from plone.app.testing import PloneSandboxLayer, IntegrationTesting, FunctionalTesting
 from plone.testing import z2
 
 class EKEBiomarker(PloneSandboxLayer):
-    defaultBases = (EKE_STUDY_FIXTURE, EKE_SITE_FIXTURE, EKE_PUBLICATIONS_FIXTURE, EKE_KNOWLEDGE_FIXTURE)
+    defaultBases = (EKE_ECAS_FIXTURE, EKE_STUDY_FIXTURE, EKE_SITE_FIXTURE, EKE_PUBLICATIONS_FIXTURE, EKE_KNOWLEDGE_FIXTURE)
     def setUpZope(self, app, configurationContext):
         import eke.biomarker
         self.loadZCML(package=eke.biomarker)

@@ -5,6 +5,16 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
+
+1.1.5 — Dataset Linkages
+------------------------
+
+This release includes:
+
+* CA-781: Add ability to associate eCAS datasets with Biomarker records in the
+  BMDB
+
+
 1.1.4 — Resiliency: the bread and butter of PvP
 -----------------------------------------------
 

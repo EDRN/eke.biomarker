@@ -45,7 +45,7 @@ class IPhasedObject(Interface):
 
 class IResearchedObject(Interface):
     '''An abstract object that is researched; that is, there are studies,
-    publications, and other resources about it.'''
+    publications, datasets, and other resources about it.'''
     protocols = schema.List(
         title=_(u'Protocols & Studies'),
         description=_(u'Protocols and studies that are studying this object.'),
@@ -74,6 +74,15 @@ class IResearchedObject(Interface):
             title=_(u'Resource'),
             description=_(u'An additional resource about an object.'),
             schema=IKnowledgeObject
+        )
+    )
+    datasets = schema.List(
+        title=_(u'Datasets'),
+        description=_(u'Datasets providing measured scientific bases for this biomarker.'),
+        required=False,
+        value_type=schema.TextLine(
+            title=_(u'Dataset'),
+            description=_(u'Dataset providing a measured scientific basis for this biomarker.'),
         )
     )
     
@@ -128,6 +137,7 @@ class IBiomarker(IKnowledgeObject, IResearchedObject, IQualityAssuredObject):
         description=_(u'What kind of biomarker.'),
         required=False,
     )
+    
 
 class IBiomarkerPanel(IBiomarker):
     '''A panel of biomarkers that itself behaves as a single (yet composite) biomarker.'''
