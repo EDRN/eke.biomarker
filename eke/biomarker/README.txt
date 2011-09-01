@@ -236,6 +236,14 @@ Now we can create a testing Elemental Biomarker::
     >>> biomarker.accessGroups
     ('ldap://access.this/1',)
 
+Heather Kincaid reported (not via the issue tracker, unfortunately) that the
+URLs to datasets should go into ECAS.  Do they?  Let's look::
+
+    >>> browser.contents
+    '...href="urn:edrn:top-secret-data"...Get Bent...'
+
+Yes.
+
 
 Biomarker Body System
 ~~~~~~~~~~~~~~~~~~~~~

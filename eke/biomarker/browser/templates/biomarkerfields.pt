@@ -15,7 +15,7 @@
     </p>
     <ul tal:condition='datasets'>
         <li tal:repeat='dataset datasets'>
-            <a href='#' title='Cool data.' tal:attributes='href dataset/absolute_url; title dataset/description|nothing'
+            <a href='#' title='Cool data.' tal:attributes='href dataset/identifier|nothing; title dataset/description|nothing'
                 tal:content='dataset/title'>
                 Cool
             </a>

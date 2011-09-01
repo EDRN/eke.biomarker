@@ -13,6 +13,7 @@ This release includes:
 
 * CA-784: Add ability to associate eCAS datasets with Biomarker records in the
   BMDB
+* (No issue ID): Dataset links should go directly into eCAS
 
 
 1.1.4 — Resiliency: the bread and butter of PvP
