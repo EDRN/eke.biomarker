@@ -67,13 +67,8 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             self._doPublish(subItem, wfTool)
     def publishBiomarker(self, context, biomarker, predicates):
         wfTool = getToolByName(context, 'portal_workflow')
-        try:
-            if wfTool.getInfoFor(biomarker, 'review_state') != 'published':
-                self._doPublish(biomarker, wfTool)
-        except WorkflowException:
-            # For some bizarre reason, under plone.app.testing, publishing fails to getInfoFor with
-            # "WorkflowException: No workflow provides '${name}' information."
-            pass
+        if wfTool.getInfoFor(biomarker, 'review_state') != 'published':
+            self._doPublish(biomarker, wfTool)
     def findObjectsByIdentifiers(self, catalog, identifiers):
         '''Use the given catalog to find the given identifiers.  Return a list
         of the matching objects rather than a sequence of brains.'''
