@@ -1,16 +1,10 @@
 # encoding: utf-8
-# Copyright 2008–2011 California Institute of Technology. ALL RIGHTS
+# Copyright 2008–2012 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
-'''
-Testing base code.
+'''Testing data.
 '''
 
-from Products.Five import zcml
-from Products.Five import fiveconfigure
-from Testing import ZopeTestCase as ztc
-from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import onsetup
 import eke.knowledge.tests.base as ekeKnowledgeBase
 import eke.publications.tests.base as ekePublicationsBase
 import eke.study.tests.base as ekeStudyBase
@@ -18,22 +12,6 @@ import eke.ecas.tests.base as ekeECASBase
 
 # Traditional Products we have to load manually for test cases:
 # (none at this time)
-
-@onsetup
-def setupEKESite():
-    '''Set up additional products required.'''
-    fiveconfigure.debug_mode = True
-    import eke.biomarker
-    zcml.load_config('configure.zcml', eke.biomarker)
-    fiveconfigure.debug_mode = False
-    ztc.installPackage('eke.knowledge')
-    ztc.installPackage('eke.publications')
-    ztc.installPackage('eke.study')
-    ztc.installPackage('eke.ecas')
-    ztc.installPackage('eke.biomarker')
-
-setupEKESite()
-ptc.setupPloneSite(products=['eke.biomarker'])
 
 _biomarkerA = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
@@ -220,17 +198,4 @@ def registerLocalTestData():
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/b', _biomarkerOrganB)
     ekeKnowledgeBase.registerTestData('/biomarkers/c', _biomarkerC)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/c', _biomarkerOrganC)
-
-class BaseTestCase(ekeKnowledgeBase.BaseTestCase):
-    '''Base for tests in this package.'''
-    def setUp(self):
-        super(BaseTestCase, self).setUp()
-        registerLocalTestData()
-    
-class FunctionalBaseTestCase(ekeKnowledgeBase.FunctionalBaseTestCase):
-    '''Base class for functional (doc-)tests.'''
-    def setUp(self):
-        super(FunctionalBaseTestCase, self).setUp()
-        registerLocalTestData()
-    
 
