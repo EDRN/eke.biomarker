@@ -34,9 +34,32 @@ _biomarkerA = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:AssociatedDataset rdf:resource='urn:edrn:top-secret-data'/>
         <bmdb:indicatorForOrgan rdf:resource='http://edrn/bmdb/a1/o1' />
         <bmdb:hasBiomarkerStudyDatas>
-            <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
-                <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/ps' />
-            </bmdb:BiomarkerStudyData>
+            <rdf:Bag>
+                <rdf:li>
+                    <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
+                        <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/ps' />
+                        <bmdb:SensitivityDatas>
+                            <rdf:Bag>
+                                <rdf:li>
+                                    <bmdb:SensitivityData rdf:about='http://edrn/bmdb/a1/s1/sd-0'>
+                                        <bmdb:SensSpecDetail>Full bodied</bmdb:SensSpecDetail>
+                                        <bmdb:Sensitivity>97</bmdb:Sensitivity>
+                                        <bmdb:Specificity>48</bmdb:Specificity>
+                                        <bmdb:Prevalence>43</bmdb:Prevalence>
+                                        <bmdb:NPV>12</bmdb:NPV>
+                                        <bmdb:PPV>14</bmdb:PPV>
+                                    </bmdb:SensitivityData>
+                                </rdf:li>
+                            </rdf:Bag>
+                        </bmdb:SensitivityDatas>
+                    </bmdb:BiomarkerStudyData>
+                </rdf:li>
+                <rdf:li>
+                    <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
+                        <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/so' />
+                    </bmdb:BiomarkerStudyData>
+                </rdf:li>
+            </rdf:Bag>
         </bmdb:hasBiomarkerStudyDatas>
         <bmdb:referencedInPublication rdf:resource='http://is.gd/pVKq' />
         <bmdb:referencesResource rdf:resource='http://yahoo.com/' />
@@ -123,10 +146,14 @@ _biomarkerB = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1' />
         <bmdb:indicatorForOrgan rdf:resource='http://edrn/bmdb/a1/o1' />
         <bmdb:hasBiomarkerStudyDatas>
-            <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
-                <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/ps' />
-                <bmdb:DecisionRule>A sample decision rule</bmdb:DecisionRule>
-            </bmdb:BiomarkerStudyData>
+            <rdf:Bag>
+                <rdf:li>
+                    <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/a1/s1'>
+                        <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/ps' />
+                        <bmdb:DecisionRule>A sample decision rule</bmdb:DecisionRule>
+                    </bmdb:BiomarkerStudyData>
+                </rdf:li>
+            </rdf:Bag>
         </bmdb:hasBiomarkerStudyDatas>
         <bmdb:referencedInPublication rdf:resource='http://is.gd/pVKq' />
         <bmdb:referencesResource rdf:resource='http://yahoo.com/' />
@@ -163,11 +190,6 @@ _biomarkerC = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:Type>Colloidal</bmdb:Type>
         <bmdb:memberOfPanel rdf:resource='http://edrn/bmdb/mbp'/>
         <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1' />
-        <bmdb:hasBiomarkerStudyDatas>
-            <bmdb:BiomarkerStudyData rdf:about='http://edrn/bmdb/msb/s1'>
-                <bmdb:referencesStudy rdf:resource='http://swa.it/edrn/ps' />
-            </bmdb:BiomarkerStudyData>
-        </bmdb:hasBiomarkerStudyDatas>
     </bmdb:Biomarker>
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/mbp'>
         <bmdb:Title>My Biomarker P[anel]</bmdb:Title>
