@@ -96,18 +96,23 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             sharing.update_role_settings(settings)
             self.updateCollaborativeGroups(context, obj)
         if _hasBiomarkerStudyDatasPredicateURI in predicates:
-            for someURI in predicates[_hasBiomarkerStudyDatasPredicateURI]:
-                studyPredicates = statements[someURI]
-                if _referencesStudyPredicateURI not in studyPredicates: # An empty <hasBiomarkerStudyDatas/>
-                    continue
-                catalog = getToolByName(context, 'portal_catalog')
-                results = catalog(
-                    identifier=unicode(studyPredicates[_referencesStudyPredicateURI][0]),
-                    object_provides=IProtocol.__identifier__
-                )
-                obj.setProtocols([i.UID for i in results])
-                for i in [i.getObject() for i in results]:
-                    self._addBiomarkerToProtocol(obj, i)
+            catalog = getToolByName(context, 'portal_catalog')
+            protocolUIDs = []
+            bag = statements[predicates[_hasBiomarkerStudyDatasPredicateURI][0]]
+            for subjectURI, objects in bag.iteritems():
+                if subjectURI == _typeURI: continue
+                # Assume anything else is a list item pointing to BiomarkerStudyData objects
+                for bmsd in [statements[i] for i in objects]:
+                    # Right now, we use just the "referencesStudy" predicate, if it's present
+                    if _referencesStudyPredicateURI not in bmsd: continue
+                    results = catalog(
+                        identifier=unicode(bmsd[_referencesStudyPredicateURI][0]),
+                        object_provides=IProtocol.__identifier__
+                    )
+                    protocolUIDs.extend([j.UID for j in results])
+                    for k in [j.getObject() for j in results]:
+                        self._addBiomarkerToProtocol(obj, k)
+            obj.setProtocols(protocolUIDs)
     def addStatistics(self, bodySystemStudy, bags, statements, normalizer, catalog):
         '''Add study statistics to a body system study.  The bags are
         RDF-style collections of URIRefs to statistics found in the

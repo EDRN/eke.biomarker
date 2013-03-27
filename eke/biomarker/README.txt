@@ -645,8 +645,10 @@ Ingesting::
     >>> browser.open(portalURL + '/tacky-biomarkers/ingest')
     >>> browser.contents
     '...The following items have been created...Apogee 1...'
-    >>> f.objectIds()
-    ['apogee-1', 'panel-1']
+    >>> 'apogee-1' in f.objectIds()
+    True
+    >>> 'panel-1' in f.objectIds()
+    True
     >>> a1 = f['apogee-1']
     >>> a1.title
     u'Apogee 1'
