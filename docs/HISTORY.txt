@@ -11,6 +11,8 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 * Made compatible with Plone 4.2.4.
 * CA-1083 - eke.biomarker RDF ingest should treat predicate
   "hasBiomarkerStudyDatas" as a resource-pointing predicate
+* CA-1090 - For biomarkers, show a "-" or "N/A" or SOMETHING for prevalence,
+  NPV, and PPV if they're zero or not given.
 
 
 1.1.7 — Upgrades
