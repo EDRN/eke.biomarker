@@ -105,13 +105,13 @@ class BiomarkerView(KnowledgeObjectView):
         return [dict(name=i.Title, obj=i.getObject()) for i in results]
     @memoize
     def statistics(self, protocol):
-        def massage(value, replaceZeroWithNA=False):
+        def massage(value):
             try:
                 numeric = float(value)
             except (ValueError, TypeError):
-                return u''
+                return u'ND' # Not determined
             if numeric == 0.0:
-                return u'-' if replaceZeroWithNA else u''
+                return u'N/A' # Not applicable
             return numeric
         catalog = getToolByName(protocol, 'portal_catalog')
         results = catalog(
@@ -123,9 +123,9 @@ class BiomarkerView(KnowledgeObjectView):
             notes=i.getObject().details,
             sens=massage(i.getObject().sensitivity),
             spec=massage(i.getObject().specificity),
-            npv=massage(i.getObject().npv, replaceZeroWithNA=True),
-            ppv=massage(i.getObject().ppv, replaceZeroWithNA=True),
-            prev=massage(i.getObject().prevalence, replaceZeroWithNA=True)
+            npv=massage(i.getObject().npv),
+            ppv=massage(i.getObject().ppv),
+            prev=massage(i.getObject().prevalence),
         ) for i in results]
     @memoize
     def viewable(self):
