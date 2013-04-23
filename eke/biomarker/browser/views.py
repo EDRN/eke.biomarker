@@ -105,11 +105,11 @@ class BiomarkerView(KnowledgeObjectView):
         return [dict(name=i.Title, obj=i.getObject()) for i in results]
     @memoize
     def statistics(self, protocol):
-        def massage(value):
+        def massage(value, deterministic=True):
             try:
                 numeric = float(value)
             except (ValueError, TypeError):
-                return u'ND' # Not determined
+                return u'ND' if deterministic else u'N/A' # ND = Not determined
             if numeric == 0.0:
                 return u'N/A' # Not applicable
             return numeric
@@ -123,9 +123,9 @@ class BiomarkerView(KnowledgeObjectView):
             notes=i.getObject().details,
             sens=massage(i.getObject().sensitivity),
             spec=massage(i.getObject().specificity),
-            npv=massage(i.getObject().npv),
-            ppv=massage(i.getObject().ppv),
-            prev=massage(i.getObject().prevalence),
+            npv=massage(i.getObject().npv, deterministic=False),
+            ppv=massage(i.getObject().ppv, deterministic=False),
+            prev=massage(i.getObject().prevalence, deterministic=False),
         ) for i in results]
     @memoize
     def viewable(self):
