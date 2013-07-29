@@ -10,19 +10,8 @@
         <title>Study Statistics</title>
     </head>
     <body>
-        <metal:main fill-slot='main'>
-            <tal:main-macro metal:define-macro='main'>
-                <div tal:replace='structure provider:plone.abovecontenttitle' />
-                <h1 class='documentFirstHeading'> 
-                    <metal:field use-macro='python:context.widget("title", mode="view")'>
-                        Title
-                    </metal:field>
-                </h1>
-                <div tal:replace='structure provider:plone.belowcontenttitle' />
-                <p class='documentDescription'>
-                    <metal:field use-macro='python:context.widget("description", mode="view")'>Description.</metal:field>
-                </p>
-                <div tal:replace='structure provider:plone.abovecontentbody' />
+        <metal:main fill-slot='content-core'>
+            <tal:main-macro metal:define-macro='content-core'>
                 <div>
                     <label for='parent-fieldname-identifier' i18n:translate='label_identifier'>Identifier:</label>
                     <metal:field use-macro='python:context.widget("identifier", mode="view")'>urn:edrn:biomarkers:x3</metal:field>
@@ -51,10 +40,6 @@
                     <label for='parent-fieldname-details' i18n:translate='label_details'>Details:</label>
                     <metal:field use-macro='python:context.widget("details", mode="view")'>Uhm, 0.6?</metal:field>
                 </div>
-                <div metal:use-macro='context/document_relateditems/macros/relatedItems'>
-                    Any related items
-                </div>
-                <div tal:replace='structure provider:plone.belowcontentbody' />
             </tal:main-macro>
         </metal:main>
     </body>

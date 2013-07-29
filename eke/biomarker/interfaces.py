@@ -10,7 +10,7 @@ from eke.knowledge.interfaces import IKnowledgeFolder, IKnowledgeObject, IBodySy
 from eke.publications.interfaces import IPublication
 from eke.study.interfaces import IProtocol
 from zope import schema
-from zope.app.container.constraints import contains
+from zope.container.constraints import contains
 from zope.interface import Interface
 
 class IBiomarkerFolder(IKnowledgeFolder):

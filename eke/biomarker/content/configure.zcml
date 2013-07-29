@@ -26,7 +26,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         <require permission='zope2.View' interface='..interfaces.IReviewListing'/>
     </class>
     <subscriber
-        for='..interfaces.IBiomarker zope.app.container.interfaces.IContainerModifiedEvent'
+        for='..interfaces.IBiomarker zope.container.interfaces.IContainerModifiedEvent'
         handler='.base.BodySystemUpdater'
     />
     <utility
