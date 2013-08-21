@@ -11,6 +11,8 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     i18n_domain='eke.biomarker'>
 
     <five:registerPackage package="." initialize=".initialize" />
+    <include package='z3c.autoinclude' file='meta.zcml' />
+    <includeDependencies package='.' />
     <include package='.browser'/>
     <include package='.content'/>
     <genericsetup:registerProfile 

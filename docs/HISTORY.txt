@@ -5,10 +5,11 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
-1.1.10 — TBD
-------------
+1.1.10 — More Upgrades
+----------------------
 
 • Compatibility with Plone 4.3.
+• Uses z3c.autoinclude.
 
 
 1.1.9 — Get Him to the Greek
