@@ -21,7 +21,9 @@ from rdflib import URIRef, ConjunctiveGraph, URLInputSource
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
-import uuid
+import uuid, logging
+
+_logger = logging.getLogger(__name__)
 
 # Well-known URI refs
 _accessPredicateURI                      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#AccessGrantedTo')
@@ -50,9 +52,6 @@ def flatten(l):
                 yield j
         else:
             yield i
-
-class BiomarkerIngestException(RDFIngestException):
-    '''Exception during ingest of biomarker data.'''
 
 class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
     '''RDF ingestion for biomarkers.'''
@@ -156,7 +155,11 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             studies = self.findObjectsByIdentifiers(catalog,
                 [unicode(i) for i in bmStudyDataPredicates[_referencesStudyPredicateURI]])
             if len(studies) < 1:
-                raise BiomarkerIngestException('Study %s not found' % bmStudyDataPredicates[_referencesStudyPredicateURI][0])
+                _logger.warn('Study "%s" not found for biomarker body system "%r"',
+                    bmStudyDataPredicates[_referencesStudyPredicateURI][0],
+                    biomarkerBodySystem.identifier
+                )
+                continue
             identifier = normalizer(studies[0].title)
             bodySystemStudy = biomarkerBodySystem[biomarkerBodySystem.invokeFactory('Body System Study', identifier)]
             updateObject(bodySystemStudy, studyURI, bmStudyDataPredicates, catalog)
@@ -180,7 +183,8 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             organName = unicode(predicates[_organPredicateURI][0])
             results = catalog(Title=organName, object_provides=IBodySystem.__identifier__)
             if len(results) < 1:
-                raise BiomarkerIngestException('Unknown organ %s for biomarker %s' % (organName, biomarker.title))
+                _logger.warn('Unknown organ %s for biomarker %s', organName, biomarker.title)
+                continue
             organObjID = normalizer(organName)
             biomarkerBodySystem = biomarker[biomarker.invokeFactory('Biomarker Body System', organObjID)]
             biomarkerBodySystem.setTitle(results[0].Title)
