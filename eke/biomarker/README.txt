@@ -969,6 +969,28 @@ Let's find out::
 Fantastic.
 
 
+Bad Protocols
+-------------
+
+CA-1163 tells that if a protocol can't be found for a biomarker, it raises an
+exception and aborts the whole ingest.  Instead, it should just leave the
+protocol blank and continue onto the next marker.  Let's see if we have such
+an error::
+
+    >>> browser.open(portalURL + '/tacky-biomarkers/edit')
+    >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/bad-study'
+    >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/bad-study'
+    >>> browser.getControl(name='form.button.save').click()
+    >>> browser.getLink('Ingest').click()
+    >>> browser.contents
+    '...The following items have been created...Bad Study...'
+
+No error!
+
+
+
+
+
 .. References:
 .. _EKE: http://cancer.jpl.nasa.gov/documents/applications/knowledge-environment
 .. _RDF: http://w3.org/RDF/

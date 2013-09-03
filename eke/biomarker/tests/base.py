@@ -209,6 +209,45 @@ _biomarkerC = '''<?xml version='1.0' encoding='UTF-8'?>
 _biomarkerOrganC = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>'''
 
+_badStudyBiomarker = '''<?xml version='1.0' encoding='UTF-8'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
+    <bmdb:Biomarker rdf:about='http://edrn/bmdb/bad-study'>
+        <bmdb:Title>Bad Study</bmdb:Title>
+        <bmdb:ShortName>BS</bmdb:ShortName>
+        <bmdb:BiomarkerID>http://edrn/bmdb/bad-study</bmdb:BiomarkerID>
+        <bmdb:URN>urn:edrn:bmdb:bs</bmdb:URN>
+        <bmdb:IsPanel>0</bmdb:IsPanel>
+        <bmdb:QAState>Accepted</bmdb:QAState>
+        <bmdb:indicatorForOrgan rdf:resource='http://edrn/bmdb/bad-study/bad-organ' />
+    </bmdb:Biomarker>
+</rdf:RDF>'''
+
+_badStudyBiomarkerOrgan = '''<?xml version='1.0' encoding='UTF-8'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
+  <bmdb:BiomarkerOrganData rdf:about="http://edrn/bmdb/bad-study/bad-organ">
+    <bmdb:URN>urn:edrn:bmdb:biomarkerorgan:120</bmdb:URN>
+    <bmdb:Biomarker rdf:resource="http://edrn/bmdb/bad-study"/>
+    <bmdb:Description></bmdb:Description>
+    <bmdb:PerformanceComment>testing everything in bmdb.....
+</bmdb:PerformanceComment>
+    <bmdb:Organ>Rectum</bmdb:Organ>
+    <bmdb:Phase>Three</bmdb:Phase>
+    <bmdb:QAState>Under Review</bmdb:QAState>
+    <bmdb:hasBiomarkerOrganStudyDatas>
+      <rdf:Bag>
+        <rdf:li rdf:resource="http://edrn/bmdb/bad-study/bad-organ#bad-protocol"/>
+      </rdf:Bag>
+    </bmdb:hasBiomarkerOrganStudyDatas>
+  </bmdb:BiomarkerOrganData>
+  <bmdb:BiomarkerOrganStudyData rdf:about="http://edrn/bmdb/bad-study/bad-organ#bad-protocol">
+    <bmdb:referencesStudy rdf:resource="http://edrn.nci.nih.gov/data/protocols/non-existent-protocol"/>
+    <bmdb:DecisionRule></bmdb:DecisionRule>
+  </bmdb:BiomarkerOrganStudyData>
+</rdf:RDF>'''
+
+
+# BiomarkerIngestException: Study "http://edrn.nci.nih.gov/data/protocols/" not found for biomarker body system "'http://tumor.jpl.nasa.gov/bmdb/biomarkers/organs/100/120'"
+
 def registerLocalTestData():
     ekeKnowledgeBase.registerLocalTestData()
     ekePublicationsBase.registerLocalTestData()
@@ -220,4 +259,6 @@ def registerLocalTestData():
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/b', _biomarkerOrganB)
     ekeKnowledgeBase.registerTestData('/biomarkers/c', _biomarkerC)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/c', _biomarkerOrganC)
+    ekeKnowledgeBase.registerTestData('/biomarkers/bad-study', _badStudyBiomarker)
+    ekeKnowledgeBase.registerTestData('/biomarkerorgans/bad-study', _badStudyBiomarkerOrgan)
 
