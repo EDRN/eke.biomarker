@@ -8,6 +8,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     xmlns:five='http://namespaces.zope.org/five'
     xmlns:genericsetup='http://namespaces.zope.org/genericsetup'
     xmlns:zcml='http://namespaces.zope.org/zcml'
+    xmlns:faceted='http://namespaces.zope.org/faceted'
     i18n_domain='eke.biomarker'>
 
     <five:registerPackage package="." initialize=".initialize" />
@@ -22,9 +23,15 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         description='Biomarkers for the EDRN Knowledge Environment.'
         provides='Products.GenericSetup.interfaces.EXTENSION'
     />
-    <include package='eke.knowledge' />
+    <!-- <include package='eke.knowledge' />
     <include package='eke.publications' />
-    <include package='eke.study' />
+    <include package='eke.study' /> -->
+    <faceted:view
+        name='faceted_biomarkers_view'
+        template='templates/faceted_biomarkers_view.pt'
+        title='Faceted Biomarkers View'
+        permission='zope2.View'
+    />
     <include
         zcml:condition='installed Products.GenericSetup.upgrade'
         file='upgrades.zcml'

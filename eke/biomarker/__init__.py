@@ -9,6 +9,8 @@ from zope.i18nmessageid import MessageFactory
 
 ProjectMessageFactory = MessageFactory('eke.biomarker')
 
+PROFILE_ID = u'profile-eke.biomarker:default'
+
 from eke.biomarker import config
 from Products.Archetypes import atapi
 import Products.CMFCore
@@ -21,7 +23,6 @@ def initialize(context):
         biomarkerpanel, \
         bodysystemstudy, \
         elementalbiomarker, \
-        reviewlisting, \
         studystatistics
     contentTypes, constructors, ftis = atapi.process_types(atapi.listTypes(config.PROJECTNAME), config.PROJECTNAME)
     for atype, constructor in zip(contentTypes, constructors):

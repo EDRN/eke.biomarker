@@ -167,16 +167,3 @@ class StudyStatisticsView(KnowledgeObjectView):
     '''Default view of Study Statistics.'''
     __call__ = ViewPageTemplateFile('templates/studystatistics.pt')
     
-class ReviewListingView(BrowserView):
-    '''Default view of a Review Listing.'''
-    __call__ = ViewPageTemplateFile('templates/reviewlisting.pt')
-    def haveBiomarkers(self):
-        return len(self.biomarkers()) > 0
-    @memoize
-    def biomarkers(self):
-        context = aq_inner(self.context)
-        catalog = getToolByName(context, 'portal_catalog')
-        results = catalog(object_provides=IBiomarker.__identifier__, sort_on='sortable_title', accessGroups=context.accessGroup)
-        return [dict(name=i.Title, description=i.Description, url=i.getURL()) for i in results]
-    
-

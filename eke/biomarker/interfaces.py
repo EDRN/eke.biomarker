@@ -25,7 +25,13 @@ class IBiomarkerFolder(IKnowledgeFolder):
         description=_(u'URL to a source of RDF data that supplements the RDF data source with biomarker-organ data.'),
         required=True
     )
-    
+    disclaimer = schema.Text(
+        title=_(u'Disclaimer'),
+        description=_(u'Legal disclaimer to display on Biomarker Folder pages.'),
+        required=False,
+    )
+
+
 class IQualityAssuredObject(Interface):
     '''An abstract object that undergoes a quality assurance process.'''
     qaState = schema.TextLine(

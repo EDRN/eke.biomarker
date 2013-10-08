@@ -9,6 +9,5 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     <object name='Biomarker Panel'       meta_type='Factory-based Type Information with dynamic views'/>
     <object name='Body System Study'     meta_type='Factory-based Type Information with dynamic views'/>
     <object name='Elemental Biomarker'   meta_type='Factory-based Type Information with dynamic views'/>
-    <object name='Review Listing'        meta_type='Factory-based Type Information with dynamic views'/>
     <object name='Study Statistics'      meta_type='Factory-based Type Information with dynamic views'/>
 </object>

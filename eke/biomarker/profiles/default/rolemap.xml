@@ -30,11 +30,6 @@ RESERVED. U.S. Government Sponsorship acknowledged.
             <role name='Owner' />
             <role name='Contributor' />
         </permission>
-        <permission name='EKE: Add Review Listing' acquire='True'>
-            <role name='Manager' />
-            <role name='Owner' />
-            <role name='Contributor' />
-        </permission>
         <permission name='EKE: Add Study Statistics' acquire='True'>
             <role name='Manager' />
             <role name='Owner' />

@@ -31,6 +31,8 @@ _externalRequirements = [
     'Products.CMFPlone',
     'zope.globalrequest',
     'z3c.autoinclude',
+    'eea.facetednavigation',
+    'plone.api',
 ]
 _classifiers = [
     'Development Status :: 4 - Beta',

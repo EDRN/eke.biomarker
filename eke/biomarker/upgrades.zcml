@@ -24,4 +24,22 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         handler='eke.biomarker.upgrades.nullUpgradeStep'
         sortkey='1'
     />
+    <genericsetup:upgradeStep
+        source='4'
+        destination='5'
+        title='Biomarker Folder Upgrade Step (4→5)'
+        description='This step adds faceted navigation and parameterized disclaimers to all existing Biomarker Folders.'
+        profile='eke.biomarker:default'
+        handler='eke.biomarker.upgrades.upgradeBiomarkerFolders'
+        sortkey='1'
+    />
+    <genericsetup:upgradeStep
+        source='4'
+        destination='5'
+        title='Types Upgrade Step (4→5)'
+        description='This step removes the `Review Listing` content type.'
+        profile='eke.biomarker:default'
+        handler='eke.biomarker.upgrades.loadPortalTypes'
+        sortkey='1'
+    />
 </configure>

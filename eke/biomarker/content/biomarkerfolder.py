@@ -4,13 +4,16 @@
 
 '''Biomarker folder.'''
 
+from eea.facetednavigation.interfaces import IPossibleFacetedNavigable
 from eke.biomarker import ProjectMessageFactory as _
 from eke.biomarker.config import PROJECTNAME
 from eke.biomarker.interfaces import IBiomarkerFolder
+from eke.biomarker.utils import setFacetedNavigation
+from eke.knowledge.content import knowledgefolder
 from Products.Archetypes import atapi
 from Products.ATContentTypes.content.schemata import finalizeATCTSchema
+from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
-from eke.knowledge.content import knowledgefolder
 
 BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Schema((
     atapi.StringField(
@@ -23,16 +26,38 @@ BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Sch
             size=60,
         ),
     ),
+    atapi.TextField(
+        'disclaimer',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        searchable=False,
+        validators=('isTidyHtmlWithCleanup',),
+        default_output_type='text/x-html-safe',
+        widget=atapi.RichWidget(
+            label=_(u'Disclaimer'),
+            description=_(u'Legal disclaimer to display on Biomarker Folder pages.'),
+            rows=10,
+        )
+    ),
 ))
 
 finalizeATCTSchema(BiomarkerFolderSchema, folderish=True, moveDiscussion=False)
 
 class BiomarkerFolder(knowledgefolder.KnowledgeFolder):
     '''Biomarker folder which contains biomarkers.'''
-    implements(IBiomarkerFolder)
+    implements(IBiomarkerFolder, IPossibleFacetedNavigable)
     portal_type               = 'Biomarker Folder'
     _at_rename_after_creation = True
     schema                    = BiomarkerFolderSchema
     bmoDataSource             = atapi.ATFieldProperty('bmoDataSource')
+    disclaimer                = atapi.ATFieldProperty('disclaimer')
 
 atapi.registerType(BiomarkerFolder, PROJECTNAME)
+
+def addFacetedNavigation(obj, event):
+    '''Set up faceted navigation on all newly created Biomarker Folders.'''
+    if not IBiomarkerFolder.providedBy(obj): return
+    factory = getToolByName(obj, 'portal_factory')
+    if factory.isTemporary(obj): return
+    request = obj.REQUEST
+    setFacetedNavigation(obj, request)

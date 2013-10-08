@@ -85,6 +85,7 @@ be created anywhere in the portal::
     >>> browser.getControl(name='description').value = 'This folder is just for functional tests.'
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
+    >>> browser.getControl(name='disclaimer').value = u'You are legally obligated to not use these biomarkers.'
     >>> browser.getControl(name='form.button.save').click()
     >>> 'questionable-biomarkers' in portal.objectIds()
     True
@@ -97,6 +98,8 @@ be created anywhere in the portal::
     'testscheme://localhost/biomarkers/a'
     >>> f.bmoDataSource
     'testscheme://localhost/biomarkerorgans/a'
+    >>> f.disclaimer
+    'You are legally obligated to not use these biomarkers.'
 
 Biomarker Folders hold biomarkers as well as other Biomarker Folders.  We'll
 test adding biomarkers below, but let's make sure there's a link to created
@@ -472,42 +475,6 @@ Why demonstrate adding all that?  Well, to ensure it works for one, but also
 to make sure views of the panel work when we test the templates.
 
 
-Review Listing
-~~~~~~~~~~~~~~
-
-A Review Listing is essentially a smart folder or collection: it lists all
-biomarkers together that have a matching access group URI.  They too are added
-to Biomarker Folders and nowhere else::
-
-    >>> browser.open(portalURL)
-    >>> browser.getLink(id='review-listing')
-    Traceback (most recent call last):
-    ...
-    LinkNotFoundError
-    >>> browser.open(portalURL + '/questionable-biomarkers')
-    >>> l = browser.getLink(id='review-listing')
-    >>> l.url.endswith('createObject?type_name=Review+Listing')
-    True
-    >>> l.click()
-    >>> browser.getControl(name='title').value = 'List This, Pal'
-    >>> browser.getControl(name='description').value = "Take these biomarkers and shove 'em up your---"
-    >>> browser.getControl(name='accessGroup').value = 'ldap://access.this/1'
-    >>> browser.getControl(name='form.button.save').click()
-    >>> 'list-this-pal' in f.objectIds()
-    True
-    >>> rl = f['list-this-pal']
-    >>> rl.title
-    'List This, Pal'
-    >>> rl.description
-    "Take these biomarkers and shove 'em up your---"
-    >>> rl.accessGroup
-    'ldap://access.this/1'
-
-That's all there is to it, but see below in the "Templates" section where we
-visit this newly created Review Listing and prove that a matching biomarker
-appears in it.
-
-
 Templates
 ---------
 
@@ -556,57 +523,12 @@ And the panel::
 Biomarker Folder View
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default, biomarkers are displayed in alphabetical order by name.  Let's add
-a second biomarker to see if that works::
+Previously, we used a simple alphabetical view.  No more.  Now we have a nifty
+faceted view::
 
     >>> browser.open(portalURL + '/questionable-biomarkers')
-    >>> browser.getLink(id='elemental-biomarker').click()
-    >>> browser.getControl(name='title').value = 'Portnoy'
-    >>> browser.getControl(name='identifier').value = 'urn:bloom-county:portnoy'
-    >>> browser.getControl(name='form.button.save').click()
-    >>> browser.open(portalURL + '/questionable-biomarkers')
     >>> browser.contents
-    '...Phthalate...Portnoy...Various Secretions...'
-    
-Additionally, any nested folders and Review Listings should appear above the
-list of protocols::
-
-    >>> browser.getLink(id='biomarker-folder').click()
-    >>> browser.getControl(name='title').value = 'Special Subsection for Particulaly Sticky Biomarkers'
-    >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
-    >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
-    >>> browser.getControl(name='form.button.save').click()
-    >>> browser.open(portalURL + '/questionable-biomarkers')
-    >>> browser.contents
-    '...List This, Pal...Special Subsection...Phthalate...Portnoy...Various Secretions...'
-
-And issue CA-499 says we need a disclaimer on the biomarker list.  Is
-it there?  Let's find out::
-
-    >>> browser.contents
-    '...The EDRN is involved in researching hundreds of biomarkers.  The following is a partial list...'
-    
-No problem.
-
-
-Review Listing
-~~~~~~~~~~~~~~
-
-The Review Listing "List This, Pal" contains the access group URL
-"ldap://access.this/1", which happens to be one of the access groups for the
-"Phthalate" biomarker.  That means Phthalate should appear when we visit the
-Review Listing::
-
-    >>> browser.open(portalURL + '/questionable-biomarkers/list-this-pal')
-    >>> browser.contents
-    '...List This, Pal...Phthalate...'
-
-Further, the panel "Various Secretions" should *not* be in the listing:
-
-    >>> 'Various Secretions' not in browser.contents
-    True
-
-Perfect.
+    '...faceted-results...'
 
 
 RDF Ingestion
@@ -767,7 +689,7 @@ Re-ingesting shouldn't duplicate any biomarkers::
 Ingesting biomarkers should also update their indicated organs which are
 displayed on the folder::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers')
+    >>> browser.open(portalURL + '/tacky-biomarkers/@@view')
     >>> browser.contents
     '...Apogee 1...Rectum...Panel 1...'
 
@@ -933,14 +855,14 @@ RDF Data Sources
 
 The URL to an RDF data source is nominally displayed on a knowledge folder::
 
-    >>> browser.getLink('View').click()
+    >>> browser.open(portalURL + '/tacky-biomarkers/@@view')
     >>> browser.contents
     '...RDF Data Source...testscheme://localhost/biomarkers/b...Biomarker-Organs Data Source...testscheme://localhost/biomarkerorgans/b...'
 
 That shows up because we're logged in as an administrator.  Mere mortals
 shouldn't see that::
 
-    >>> unprivilegedBrowser.open(portalURL + '/tacky-biomarkers')
+    >>> unprivilegedBrowser.open(portalURL + '/tacky-biomarkers/@@view')
     >>> 'RDF Data Source' not in unprivilegedBrowser.contents
     True
     >>> 'Biomarker-Organs Data Source' not in unprivilegedBrowser.contents

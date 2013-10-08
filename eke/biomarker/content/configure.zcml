@@ -22,15 +22,24 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     <class class='.studystatistics.StudyStatistics'>
         <require permission='zope2.View' interface='..interfaces.IStudyStatistics'/>
     </class>
-    <class class='.reviewlisting.ReviewListing'>
-        <require permission='zope2.View' interface='..interfaces.IReviewListing'/>
-    </class>
     <subscriber
         for='..interfaces.IBiomarker zope.container.interfaces.IContainerModifiedEvent'
         handler='.base.BodySystemUpdater'
     />
+    <subscriber
+        for='..interfaces.IBiomarkerFolder zope.container.interfaces.IObjectAddedEvent'
+        handler='.biomarkerfolder.addFacetedNavigation'
+    />
+    <subscriber
+        for='..interfaces.IBiomarkerFolder Products.Archetypes.interfaces.event.IObjectInitializedEvent'
+        handler='.biomarkerfolder.addFacetedNavigation'
+    />
     <utility
         component='.base.BiomarkerVocabularyFactory'
         name='eke.biomarker.BiomarkersVocabulary'
+    />
+    <utility
+        component='.base.IndicatedOrgansVocabularyFactory'
+        name='eke.biomarker.IndicatedOrgansVocabulary'
     />
 </configure>

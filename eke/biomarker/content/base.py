@@ -194,4 +194,10 @@ directlyProvides(BiomarkerVocabularyFactory, IVocabularyFactory)
 def BodySystemUpdater(context, event):
     context.updatedIndicatedBodySystems()
     context.reindexObject(idxs=['indicatedBodySystems'])
-    
+
+def IndicatedOrgansVocabularyFactory(context):
+    '''Get a vocab for indicated organs'''
+    catalog = getToolByName(context, 'portal_catalog')
+    results = catalog.uniqueValuesFor('indicatedBodySystems')
+    return SimpleVocabulary.fromItems([(i, i) for i in results])
+directlyProvides(IndicatedOrgansVocabularyFactory, IVocabularyFactory)    

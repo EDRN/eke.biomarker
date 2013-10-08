@@ -157,22 +157,6 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         title='Study Statistics view'
     />
 
-    <!-- Review Listing -->
-    <browser:resource name='review-listing.gif' file='images/review-listing.gif'/>
-    <browser:page
-        class='.views.ReviewListingView'
-        for='..interfaces.IReviewListing'
-        name='view'
-        permission='zope2.View'
-    />
-    <browser:menuItem
-        action='@@view'
-        description='Default representation of a Review Listing.'
-        for='..interfaces.IReviewListing'
-        menu='plone_displayviews'
-        title='Review Listing view'
-    />
-
     <!-- O T H E R   R E S O U R C E S -->
     <!-- Stylesheet for biomarkers only -->
     <browser:resource

@@ -6,9 +6,11 @@
 EKE Biomarker: test the setup of this package.
 '''
 
-import unittest2 as unittest
 from eke.biomarker.testing import EKE_BIOMARKER_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
+from zope.component import queryUtility
+from zope.schema.interfaces import IVocabularyFactory
+import unittest2 as unittest
 
 class SetupTest(unittest.TestCase):
     '''Unit tests the setup of this package.'''
@@ -36,6 +38,10 @@ class SetupTest(unittest.TestCase):
             'Study Statistics'
         ):
             self.failUnless(i in types)
+    def testObsoleteTypes(self):
+        '''Make sure obsolete types are gone.'''
+        types = getToolByName(self.portal, 'portal_types').objectIds()
+        self.failIf('Review Listing' in types, u'`Review Listing` type is obsolete and should not be implemented anymore')
     def testTypesNotSearched(self):
         '''Ensure our "structural" types aren't searched by default.'''
         notSearched = self.portal.portal_properties.site_properties.getProperty('types_not_searched')
@@ -45,6 +51,10 @@ class SetupTest(unittest.TestCase):
         '''Ensure fields for URLs are extra wide.'''
         from eke.biomarker.content.biomarkerfolder import BiomarkerFolderSchema
         self.failUnless(BiomarkerFolderSchema['bmoDataSource'].widget.size >= 60)
+    def testVocabularies(self):
+        vocabs = (u'eke.biomarker.BiomarkersVocabulary', u'eke.biomarker.IndicatedOrgansVocabulary')
+        for v in vocabs:
+            self.failUnless(queryUtility(IVocabularyFactory, name=v), u'Vocabulary "{}" not available'.format(v))
 
 class CollaborativeGroupNamingTest(unittest.TestCase):
     '''Unit tests for the identification of collaborative groups in BMDB'''
