@@ -3,8 +3,10 @@
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 from zope.component import getMultiAdapter
+from zope.interface import noLongerProvides
 from eea.facetednavigation.interfaces import ICriteria
 from eea.facetednavigation.layout.interfaces import IFacetedLayout
+from eea.facetednavigation.settings.interfaces import IHidePloneLeftColumn, IHidePloneRightColumn
 from eke.biomarker.interfaces import IBiomarker
 import plone.api
 
@@ -54,3 +56,6 @@ def setFacetedNavigation(folder, request):
     criteria.add('path', 'bottom', 'default', title='Path Search', hidden=True, index='path', default=path)
     criteria.add('debug', 'top', 'default', title='Debug Criteria', user='kelly')
     IFacetedLayout(folder).update_layout('faceted_biomarkers_view')
+    noLongerProvides(folder, IHidePloneLeftColumn)
+    noLongerProvides(folder, IHidePloneRightColumn)
+    
