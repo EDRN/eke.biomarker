@@ -55,19 +55,23 @@ def flatten(l):
 
 class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
     '''RDF ingestion for biomarkers.'''
-    def _doPublish(self, item, wfTool):
+    def _pushWorkflow(self, item, wfTool, action='publish'):
         try:
-            wfTool.doActionFor(item, action='publish')
+            wfTool.doActionFor(item, action=action)
             item.reindexObject()
         except WorkflowException:
             pass
         for i in item.objectIds():
             subItem = item[i]
-            self._doPublish(subItem, wfTool)
+            self._pushWorkflow(subItem, wfTool, action)
     def publishBiomarker(self, context, biomarker, predicates):
         wfTool = getToolByName(context, 'portal_workflow')
         if wfTool.getInfoFor(biomarker, 'review_state') != 'published':
-            self._doPublish(biomarker, wfTool)
+            self._pushWorkflow(biomarker, wfTool)
+    def retractBiomarker(self, context, biomarker, predicates):
+        wfTool = getToolByName(context, 'portal_workflow')
+        if wfTool.getInfoFor(biomarker, 'review_state') != 'private':
+            self._pushWorkflow(biomarker, wfTool, 'hide')
     def findObjectsByIdentifiers(self, catalog, identifiers):
         '''Use the given catalog to find the given identifiers.  Return a list
         of the matching objects rather than a sequence of brains.'''
@@ -254,6 +258,10 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         # Publish as necessary
         for uri, predicates in statements.items():
             if uri in newBiomarkers:
-                self.publishBiomarker(context, newBiomarkers[uri], predicates)
+                biomarker = newBiomarkers[uri]
+                if biomarker.qaState == 'Private':
+                    self.retractBiomarker(context, biomarker, predicates)
+                else:
+                    self.publishBiomarker(context, biomarker, predicates)
         self.objects = [CreatedObject(i) for i in newBiomarkers.values()]
         return self.render and self.template() or len(self.objects)

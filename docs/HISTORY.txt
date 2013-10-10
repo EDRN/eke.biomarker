@@ -9,6 +9,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 ------------
 
 • CA-1163 - Make RDF ingest defensive against bad protocols from BMDB
+• CA-1182 - Recognize "Private" QA State of Biomarker
 • CA-1184 - Biomarker "report" by Organ
 • CA-1189 - Enable left+right portlets on /biomarkers
 • Drops the obsolete "Review Listing" type

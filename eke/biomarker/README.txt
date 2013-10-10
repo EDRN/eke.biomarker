@@ -910,7 +910,47 @@ an error::
 No error!
 
 
+Private Biomarkers
+------------------
 
+CA-1182 wants us to have private biomarkers.  These are biomarkers (and their
+child objects) that get a private workflow state, so that only users in the
+Sharing tab for the marker who have "read" permission can read it.  In the RDF
+they have a "QAState" of "Private".
+
+From the section above, we have a biomarker that should be public::
+
+    >>> browser.open(portalURL + '/tacky-biomarkers/bad-study')
+    >>> browser.contents
+    '...State:...Published...'
+
+And even an unprivileged user can view it:
+
+    >>> unprivilegedBrowser.open(portalURL + '/tacky-biomarkers/bad-study')
+    >>> unprivilegedBrowser.contents
+    '...Bad Study...BS...'
+
+Now let's ingest a private one::
+
+    >>> browser.open(portalURL + '/tacky-biomarkers/edit')
+    >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/private'
+    >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/private'
+    >>> browser.getControl(name='form.button.save').click()
+    >>> browser.getLink('Ingest').click()
+
+Our super user can view it, but note the publication state::
+
+    >>> browser.open(portalURL + '/tacky-biomarkers/secret-1')
+    >>> browser.contents
+    '...State:...state-private...'
+    
+And our unprivileged user gets redirected to a log in page::
+
+    >>> unprivilegedBrowser.open(portalURL + '/tacky-biomarkers/secret-1')
+    >>> unprivilegedBrowser.contents
+    '...Login Name...Password...'
+
+Yay!
 
 
 .. References:

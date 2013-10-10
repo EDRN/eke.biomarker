@@ -246,6 +246,41 @@ _badStudyBiomarkerOrgan = '''<?xml version='1.0' encoding='UTF-8'?>
 </rdf:RDF>'''
 
 
+_privateBiomarker = '''<?xml version='1.0' encoding='UTF-8'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
+    <bmdb:Biomarker rdf:about='http://edrn/bmdb/secret1'>
+        <bmdb:Title>Secret 1</bmdb:Title>
+        <bmdb:ShortName>S1</bmdb:ShortName>
+        <bmdb:BiomarkerID>http://edrn/bmdb/secret1</bmdb:BiomarkerID>
+        <bmdb:URN>urn:edrn:bmdb:secret1</bmdb:URN>
+        <bmdb:IsPanel>0</bmdb:IsPanel>
+        <bmdb:Description>A secret biomarker.</bmdb:Description>
+        <bmdb:QAState>Private</bmdb:QAState>
+        <bmdb:Phase>3</bmdb:Phase>
+        <bmdb:Security>Public</bmdb:Security>
+        <bmdb:Alias>Hush-hush</bmdb:Alias>
+        <bmdb:Type>Colloidal</bmdb:Type>
+        <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1' />
+        <bmdb:indicatorForOrgan rdf:resource='http://edrn/bmdb/secret1/secretOrgan1' />
+    </bmdb:Biomarker>
+</rdf:RDF>'''
+
+_privateBiomarkerOrgan = '''<?xml version='1.0' encoding='UTF-8'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
+    <bmdb:BiomarkerOrganData rdf:about="http://edrn/bmdb/secret1/secretOrgan1">
+        <bmdb:URN>http://edrn/bmdb/secret1/secretOran1</bmdb:URN>
+        <bmdb:Biomarker rdf:resource='http://edrn/bmdb/secret1'/>
+        <bmdb:Description>Shhh, it's secret!</bmdb:Description>
+        <bmdb:PerformanceComment>The biomarker's performance is secret.</bmdb:PerformanceComment>
+        <bmdb:Organ>Secret</bmdb:Organ>
+        <bmdb:Phase>2</bmdb:Phase>
+        <bmdb:QAState>Private</bmdb:QAState>
+        <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1'/>
+        <bmdb:hasBiomarkerOrganStudyDatas/>
+    </bmdb:BiomarkerOrganData>
+</rdf:RDF>'''
+
+
 # BiomarkerIngestException: Study "http://edrn.nci.nih.gov/data/protocols/" not found for biomarker body system "'http://tumor.jpl.nasa.gov/bmdb/biomarkers/organs/100/120'"
 
 def registerLocalTestData():
@@ -261,4 +296,6 @@ def registerLocalTestData():
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/c', _biomarkerOrganC)
     ekeKnowledgeBase.registerTestData('/biomarkers/bad-study', _badStudyBiomarker)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/bad-study', _badStudyBiomarkerOrgan)
+    ekeKnowledgeBase.registerTestData('/biomarkers/private', _privateBiomarker)
+    ekeKnowledgeBase.registerTestData('/biomarkerorgans/private', _privateBiomarkerOrgan)
 
