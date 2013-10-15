@@ -25,7 +25,6 @@
         <metal:main fill-slot='main'>
             <tal:main-macro metal:define-macro='main' tal:define='
                 portalURL        context/@@plone_portal_state/portal_url;
-                approvedViewable view/viewable;
             '>
                 <div tal:replace='structure provider:plone.abovecontenttitle' />
                 <h1 class='documentFirstHeading'> 
@@ -85,7 +84,7 @@
                             Datasets
                         </div>
                     </div>
-                    <div class='tabbertab'>
+                    <div class='tabbertab' tal:define='approvedViewable python:view.viewable("Organs");'>
                         <h2 i18n:translate='bm_OrgansTab'
                             tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
                             Organs
@@ -93,7 +92,7 @@
                         <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
                             Log in to view this section, if necessary.
                         </div>
-                        <div tal:condition='view/viewable'>
+                        <div tal:condition='approvedViewable'>
                             <p i18n:translate='bm_OrgansIntro' class='organsIntro'>
                                 The following organs have data associated with this biomarker&#x2026;
                             </p>
@@ -124,149 +123,155 @@
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                                         eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                                     </p>
-                                    <h3 i18n:translate='bm_supportingStudyData'>Supporting Study Data</h3>
-                                    <p i18n:translate='bm_studyIntro' class='studyIntro'>
-                                        The following studies/protocols provide evidence supporting
-                                        <span tal:replace='context/title' i18n:name='bmName'>Sticky Substance Alpha One</span>
-                                        indications for the
-                                        <span tal:replace='bodySystem/name' i18n:name='bodySystemName'>Anus</span>&#x2026;
-                                    </p>
-                                    <tal:define define='studies python:view.studies(bodySystem["obj"])'>
-                                        <p class='discreet' i18n:translate='bm_noStudiesForBodySystem' tal:condition='not:studies'>
-                                            No supporting studies or protocols found.
+                                    <tal:block condition='python:view.viewable("Organs-Supplemental")'>
+                                        <h3 i18n:translate='bm_supportingStudyData'>Supporting Study Data</h3>
+                                        <p i18n:translate='bm_studyIntro' class='studyIntro'>
+                                            The following studies/protocols provide evidence supporting
+                                            <span tal:replace='context/title' i18n:name='bmName'>Sticky Substance Alpha One</span>
+                                            indications for the
+                                            <span tal:replace='bodySystem/name' i18n:name='bodySystemName'>Anus</span>&#x2026;
                                         </p>
-                                        <div tal:repeat='study studies' class='studyBox'>
-                                            <div class="studyBoxTop"><div></div></div>
-                                            <div class="studyBoxContent">
-                                                <h4 tal:content='study/name'>In Search of Lost Time</h4>
-                                                <p tal:condition='not:study/obj/protocol/description'
-                                                    i18n:translate='bm_noAbstractText' class='discreet'>
-                                                    No abstract available.
-                                                </p>
-                                                <p tal:condition='study/obj/protocol/description'
-                                                    tal:content='study/obj/protocol/description'>
-                                                    You can lorem my ipsum any time, sit amet.
-                                                </p>
-                                                <a class='discreet' href='#' i18n:translate='bm_visitStudy'
-                                                    tal:attributes='href study/obj/protocol/absolute_url'>
-                                                    View more about this study
-                                                </a>
-                                                <h5 i18n:translate='bm_ssi'>Sensitivity/Specificity Information</h5>
-                                                <tal:define define='stats python:view.statistics(study["obj"])'>
-                                                    <p class='discreet' tal:condition='not:stats' i18n:translate='bm_noStats'>
-                                                        No statistics found.
+                                        <tal:define define='studies python:view.studies(bodySystem["obj"])'>
+                                            <p class='discreet' i18n:translate='bm_noStudiesForBodySystem'
+                                                tal:condition='not:studies'>
+                                                No supporting studies or protocols found.
+                                            </p>
+                                            <div tal:repeat='study studies' class='studyBox'>
+                                                <div class="studyBoxTop"><div></div></div>
+                                                <div class="studyBoxContent">
+                                                    <h4 tal:content='study/name'>In Search of Lost Time</h4>
+                                                    <p tal:condition='not:study/obj/protocol/description'
+                                                        i18n:translate='bm_noAbstractText' class='discreet'>
+                                                        No abstract available.
                                                     </p>
-                                                    <table tal:condition='stats'>
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Notes</th>
-                                                                <th width='8%'>Sensitivity</th>
-                                                                <th width='8%'>Specificity</th>
-                                                                <th width='8%'>Prevalence</th>
-                                                                <th width='8%'>NPV</th>
-                                                                <th width='8%'>PPV</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr tal:repeat='stat stats'>
-                                                                <td tal:content='stat/notes'>Carrier anomaly detected</td>
-                                                                <td class='stat' tal:content='stat/sens'>12.1</td>
-                                                                <td class='stat' tal:content='stat/spec'>12.2</td>
-                                                                <td class='stat' tal:content='stat/prev'>12.3</td>
-                                                                <td class='stat' tal:content='stat/npv'>12.4</td>
-                                                                <td class='stat' tal:content='stat/ppv'>12.5</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </tal:define>
-    											<h5 i18n:translate='bm_ssProtocols'>Additional Study-Specific Protocols</h5>
-    											<ul tal:condition='study/obj/protocols'>
-    												<li tal:repeat='pro study/obj/protocols'>
-    													<a href='#' tal:attributes='href pro/absolute_url;
-    														title pro/description|nothing' tal:content='pro/title'>
-    														Bonus Study-Specific Studies
-    													</a>
-    												</li>
-    											</ul>
-    											<p class='discreet' i18n:translate='bm_ssNoProtocols'
-    												tal:condition='not:study/obj/protocols'>
-    												No additional study-specific protocols defined.
-    											</p>
-    											<h5 i18n:translate='bm_ssPubs'>Study-Specific Publications</h5>
-    											<ul tal:condition='study/obj/publications'>
-    												<li tal:repeat='pub study/obj/publications'>
-    													<a href='#' tal:attributes='href pub/absolute_url;
-    														title pub/description|nothing' tal:content='pub/title'>
-    														My Publication Had Improper Contact With My Protocol
-    													</a>
-    												</li>
-    											</ul>
-    											<p class='discreet' i18n:translate='bm_ssNoPubs'
-    												tal:condition='not:study/obj/publications'>
-    												No study-specific publications defined.
-    											</p>
-    											<h5 i18n:translate='bm_ssResources'>Study-Specific Resources</h5>
-    											<ul tal:condition='study/obj/resources'>
-    												<li tal:repeat='res study/obj/resources'>
-    													<a href='#' tal:attributes='href res/absolute_url;
-    														title res/description|nothing' tal:content='res/title'>
-    														My Resource Was Lubricating For My Study
-    													</a>
-    												</li>
-    											</ul>
-    											<p class='discreet' i18n:translate='bm_ssNoResources'
-    												tal:condition='not:study/obj/resources'>
-    												No study-specific resources defined.
-    											</p>
-    										</div>
-                                            <div class="studyBoxBottom"><div></div></div>
-                                        </div>
-                                    </tal:define>
-    								<h4 i18n:translate='bm_bssProtocols'>Organ-Specific Protocols</h4>
-    								<ul tal:condition='bodySystem/obj/protocols'>
-    									<li tal:repeat='protocol bodySystem/obj/protocols'>
-    										<a href='#' tal:attributes='href protocol/absolute_url;
-    										    title protocol/description|nothing;'
-    											tal:content='protocol/title'>
-    											My Happy Protocol Belongs to My Body System
-    										</a>
-    									</li>
-    								</ul>
-    								<p class='discreet' i18n:translate='bm_noBSSProtocols'
-    									tal:condition='not:bodySystem/obj/protocols'>
-    									No organ-specific protocols defined.
-    								</p>
-    								<h4 i18n:translate='bm_bssPubs'>Organ-Specific Publications</h4>
-    								<ul tal:condition='bodySystem/obj/publications'>
-    									<li tal:repeat='pub bodySystem/obj/publications'>
-    										<a href='#' tal:attributes='href pub/absolute_url; title pub/description|nothing;'
-    											tal:content='pub/title'>
-    											My Happy Publication Touched My Body System
-    										</a>
-    									</li>
-    								</ul>
-    								<p class='discreet' i18n:translate='bm_noBSSPubs'
-    								    tal:condition='not:bodySystem/obj/publications'>
-    									No organ-specific publications defined.
-    								</p>
-    								<h4 i18n:translate='bm_bssResources'>Organ-Specific Resources</h4>
-    								<ul tal:condition='bodySystem/obj/resources'>
-    									<li tal:repeat='res bodySystem/obj/resources'>
-    										<a href='#' tal:attributes='href res/absolute_url; title res/description|nothing;'
-    											tal:content='res/title'>
-    											My Happy Resource Was Caressed By My Body System
-    										</a>
-    									</li>
-    								</ul>
-    								<p class='discreet' i18n:translate='bm_noBSSResources'
-    									tal:condition='not:bodySystem/obj/publications'>
-    									No organ-specific resources defined.
-    								</p>
+                                                    <p tal:condition='study/obj/protocol/description'
+                                                        tal:content='study/obj/protocol/description'>
+                                                        You can lorem my ipsum any time, sit amet.
+                                                    </p>
+                                                    <a class='discreet' href='#' i18n:translate='bm_visitStudy'
+                                                        tal:attributes='href study/obj/protocol/absolute_url'>
+                                                        View more about this study
+                                                    </a>
+                                                    <h5 i18n:translate='bm_ssi'>Sensitivity/Specificity Information</h5>
+                                                    <tal:define define='stats python:view.statistics(study["obj"])'>
+                                                        <p class='discreet' tal:condition='not:stats' i18n:translate='bm_noStats'>
+                                                            No statistics found.
+                                                        </p>
+                                                        <table tal:condition='stats'>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Notes</th>
+                                                                    <th width='8%'>Sensitivity</th>
+                                                                    <th width='8%'>Specificity</th>
+                                                                    <th width='8%'>Prevalence</th>
+                                                                    <th width='8%'>NPV</th>
+                                                                    <th width='8%'>PPV</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr tal:repeat='stat stats'>
+                                                                    <td tal:content='stat/notes'>Carrier anomaly detected</td>
+                                                                    <td class='stat' tal:content='stat/sens'>12.1</td>
+                                                                    <td class='stat' tal:content='stat/spec'>12.2</td>
+                                                                    <td class='stat' tal:content='stat/prev'>12.3</td>
+                                                                    <td class='stat' tal:content='stat/npv'>12.4</td>
+                                                                    <td class='stat' tal:content='stat/ppv'>12.5</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </tal:define>
+        											<h5 i18n:translate='bm_ssProtocols'>Additional Study-Specific Protocols</h5>
+        											<ul tal:condition='study/obj/protocols'>
+        												<li tal:repeat='pro study/obj/protocols'>
+        													<a href='#' tal:attributes='href pro/absolute_url;
+        														title pro/description|nothing' tal:content='pro/title'>
+        														Bonus Study-Specific Studies
+        													</a>
+        												</li>
+        											</ul>
+        											<p class='discreet' i18n:translate='bm_ssNoProtocols'
+        												tal:condition='not:study/obj/protocols'>
+        												No additional study-specific protocols defined.
+        											</p>
+        											<h5 i18n:translate='bm_ssPubs'>Study-Specific Publications</h5>
+        											<ul tal:condition='study/obj/publications'>
+        												<li tal:repeat='pub study/obj/publications'>
+        													<a href='#' tal:attributes='href pub/absolute_url;
+        														title pub/description|nothing' tal:content='pub/title'>
+        														My Publication Had Improper Contact With My Protocol
+        													</a>
+        												</li>
+        											</ul>
+        											<p class='discreet' i18n:translate='bm_ssNoPubs'
+        												tal:condition='not:study/obj/publications'>
+        												No study-specific publications defined.
+        											</p>
+        											<h5 i18n:translate='bm_ssResources'>Study-Specific Resources</h5>
+        											<ul tal:condition='study/obj/resources'>
+        												<li tal:repeat='res study/obj/resources'>
+        													<a href='#' tal:attributes='href res/absolute_url;
+        														title res/description|nothing' tal:content='res/title'>
+        														My Resource Was Lubricating For My Study
+        													</a>
+        												</li>
+        											</ul>
+        											<p class='discreet' i18n:translate='bm_ssNoResources'
+        												tal:condition='not:study/obj/resources'>
+        												No study-specific resources defined.
+        											</p>
+        										</div>
+                                                <div class="studyBoxBottom"><div></div></div>
+                                            </div>
+                                        </tal:define>
+        								<h4 i18n:translate='bm_bssProtocols'>Organ-Specific Protocols</h4>
+        								<ul tal:condition='bodySystem/obj/protocols'>
+        									<li tal:repeat='protocol bodySystem/obj/protocols'>
+        										<a href='#' tal:attributes='href protocol/absolute_url;
+        										    title protocol/description|nothing;'
+        											tal:content='protocol/title'>
+        											My Happy Protocol Belongs to My Body System
+        										</a>
+        									</li>
+        								</ul>
+        								<p class='discreet' i18n:translate='bm_noBSSProtocols'
+        									tal:condition='not:bodySystem/obj/protocols'>
+        									No organ-specific protocols defined.
+        								</p>
+        								<h4 i18n:translate='bm_bssPubs'>Organ-Specific Publications</h4>
+        								<ul tal:condition='bodySystem/obj/publications'>
+        									<li tal:repeat='pub bodySystem/obj/publications'>
+        										<a href='#' tal:attributes='href pub/absolute_url; title pub/description|nothing;'
+        											tal:content='pub/title'>
+        											My Happy Publication Touched My Body System
+        										</a>
+        									</li>
+        								</ul>
+        								<p class='discreet' i18n:translate='bm_noBSSPubs'
+        								    tal:condition='not:bodySystem/obj/publications'>
+        									No organ-specific publications defined.
+        								</p>
+        								<h4 i18n:translate='bm_bssResources'>Organ-Specific Resources</h4>
+        								<ul tal:condition='bodySystem/obj/resources'>
+        									<li tal:repeat='res bodySystem/obj/resources'>
+        										<a href='#' tal:attributes='href res/absolute_url; title res/description|nothing;'
+        											tal:content='res/title'>
+        											My Happy Resource Was Caressed By My Body System
+        										</a>
+        									</li>
+        								</ul>
+        								<p class='discreet' i18n:translate='bm_noBSSResources'
+        									tal:condition='not:bodySystem/obj/publications'>
+        									No organ-specific resources defined.
+        								</p>
+                                    </tal:block>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class='tabbertab' tal:define='protocols context/protocols'>
+                    <div class='tabbertab' tal:define='
+                            protocols context/protocols;
+                            approvedViewable python:view.viewable("Studies");
+                    '>
                         <h2 i18n:translate='bm_StudiesTab'
                             tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
                             Studies
@@ -274,7 +279,7 @@
                         <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
                             Log in to view this section, if necessary.
                         </div>
-                        <div tal:condition='view/viewable'>
+                        <div tal:condition='approvedViewable'>
                             <p class='discreet' tal:condition='not:protocols' i18n:translate='bm_noProtocols'>
                                 No associated studies or protocols found.
                             </p>
@@ -286,7 +291,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class='tabbertab' tal:define='publications context/publications'>
+                    <div class='tabbertab' tal:define='
+                            publications context/publications;
+                            approvedViewable python:view.viewable("Publications");
+                    '>
                         <h2 i18n:translate='bm_PublicationsTab'
                             tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
                             Publications
@@ -294,7 +302,7 @@
                         <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
                             Log in to view this section, if necessary.
                         </div>
-                        <div tal:condition='view/viewable'>
+                        <div tal:condition='approvedViewable'>
                             <p class='discreet' tal:condition='not:publications' i18n:translate='bm_noPubs'>
                                 No associated publications found.
                             </p>
@@ -306,7 +314,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class='tabbertab' tal:define='resources context/resources'>
+                    <div class='tabbertab' tal:define='
+                            resources context/resources;
+                            approvedViewable python:view.viewable("Resources");
+                    '>
                         <h2 i18n:translate='bm_ResourcesTab'
                             tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
                             Organs
@@ -314,7 +325,7 @@
                         <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
                             Log in to view this section, if necessary.
                         </div>
-                        <div tal:condition='view/viewable'>
+                        <div tal:condition='approvedViewable'>
                             <p class='discreet' tal:condition='not:resources' i18n:translate='bm_noResources'>
                                 No associated resources found.
                             </p>

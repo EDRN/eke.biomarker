@@ -8,6 +8,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 1.1.11 — TBD
 ------------
 
+• CA-1156 - Show more attributes for biomarkers that are "mostly public"
 • CA-1163 - Make RDF ingest defensive against bad protocols from BMDB
 • CA-1182 - Recognize "Private" QA State of Biomarker
 • CA-1184 - Biomarker "report" by Organ

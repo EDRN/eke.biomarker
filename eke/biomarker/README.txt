@@ -189,7 +189,7 @@ Now we can create a testing Elemental Biomarker::
     >>> browser.getControl(name='shortName').value = 'Phbtbthpt!'
     >>> browser.getControl(name='bmAliases:lines').value = 'anal ahem\nbackfire\nbean blower\nBlow the big brown horn'
     >>> browser.getControl(name='biomarkerType').value = 'Gas'
-    >>> browser.getControl(name='qaState').value = 'Awful'
+    >>> browser.getControl(name='qaState').value = 'Under Review'
     >>> browser.getControl(name='protocols:list').displayValue = ["Public Safety"]
     >>> browser.getControl(name='publications:list').displayValue = ["Glazed Roast Chicken"]
     >>> browser.getControl(name='resources:list').displayValue = ['A search engine', 'A web index']
@@ -212,7 +212,7 @@ Now we can create a testing Elemental Biomarker::
     >>> biomarker.biomarkerType
     'Gas'
     >>> biomarker.qaState
-    'Awful'
+    'Under Review'
     >>> biomarker.protocols[0].title
     'Public Safety'
     >>> biomarker.publications[0].title
@@ -951,6 +951,75 @@ And our unprivileged user gets redirected to a log in page::
     '...Login Name...Password...'
 
 Yay!
+
+
+Openness
+--------
+
+CA-1156 wants us to show more attributes of biomarkers, even those that
+haven't yet been "accepted".  To support this, there's another new "QAState"
+called "Curated" which comes after "Under Review" but before "Accepted".
+Let's revisit our "Phthalate" biomarker and change its QA state::
+
+    >>> unprivilegedBrowser.open(portalURL + '/questionable-biomarkers/phthalate')
+    >>> unprivilegedBrowser.contents
+    '...QA State...Under Review...Organs...under review...Studies...under review...Publications...under review...Resources...under review...'
+
+As you can see, a biomarker under view doesn't reveal very much at all.  Now,
+let's change the QA state of Phthalate to "Curated"::
+
+    >>> browser.open(portalURL + '/questionable-biomarkers/phthalate/edit')
+    >>> browser.getControl(name='qaState').value = 'Curated'
+    >>> browser.getControl(name='form.button.save').click()
+
+Revisiting, we see that some additional organ information is available
+(description and performance comment), but none of the supporting data or
+statistical information is present::
+
+    >>> unprivilegedBrowser.open(portalURL + '/questionable-biomarkers/phthalate')
+    >>> unprivilegedBrowser.contents
+    '...QA State...Curated...'
+    >>> unprivilegedBrowser.contents
+    '...The following organs...Anus...Flatus-based biomarkers...The biomarker failed to perform as expected...'
+    >>> 'Supporting Study Data' in unprivilegedBrowser.contents
+    False
+    >>> 'Mr Goatse: A Closer Look at the Anus' in unprivilegedBrowser.contents
+    False
+    >>> 'Biomarker Characteristics Summary' in unprivilegedBrowser.contents
+    False
+    >>> 'Sensitivity' in unprivilegedBrowser.contents
+    False
+    >>> 'Decision Rule' in unprivilegedBrowser.contents
+    False
+    >>> 'Additional Study-Specific Protocols' in unprivilegedBrowser.contents
+    False
+    >>> 'Study-Specific Publications' in unprivilegedBrowser.contents
+    False
+    >>> 'Study-Specific Resources' in unprivilegedBrowser.contents
+    False
+    >>> 'Organ-Specific Protocols' in unprivilegedBrowser.contents
+    False
+    >>> 'Organ-Specific Publications' in unprivilegedBrowser.contents
+    False
+    >>> 'Organ-Specific Resources' in unprivilegedBrowser.contents
+    False
+
+No information from the Studies tab should show up::
+
+    >>> unprivilegedBrowser.contents
+    '...QA State...Curated...Organs...Studies...under review...'
+
+But publications are fine::
+
+    >>> unprivilegedBrowser.contents
+    '...QA State...Curated...Organs...Studies...Publications...Glazed Roast Chicken...'
+
+And resources are OK too::
+
+    >>> unprivilegedBrowser.contents
+    '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
+
+And that's it.
 
 
 .. References:

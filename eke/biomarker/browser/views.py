@@ -12,8 +12,15 @@ from eke.biomarker.interfaces import IBiomarkerFolder, IBiomarker, IBiomarkerBod
 from eke.knowledge.browser.views import KnowledgeFolderView, KnowledgeObjectView
 from plone.memoize.instance import memoize
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+CURATED_SECTIONS = {
+    'Organs': True,
+    'Studies': False,
+    'Publications': True,
+    'Resources': True,
+    'Organs-Supplemental': False,
+}
 
 class BiomarkerFolderView(KnowledgeFolderView):
     '''Default view of a Biomarker Folder.'''
@@ -128,12 +135,16 @@ class BiomarkerView(KnowledgeObjectView):
             prev=massage(i.getObject().prevalence, deterministic=False),
         ) for i in results]
     @memoize
-    def viewable(self):
-        '''Are details of this biomarker viewable?'''
+    def viewable(self, section):
+        '''Are details from the named ``section`` of this biomarker viewable?'''
         context = aq_inner(self.context)
-        # Accepted biomarkers are A-O-K.
+        # Accepted biomarkers are A-O-K no matter what section.
         if context.qaState == u'Accepted':
             return True
+        # Certain sections are viewable for curated-but-not-yet-accepted biomarkers
+        if context.qaState == u'Curated':
+            canView = CURATED_SECTIONS.get(section, False)
+            if canView: return True
         # Anonymous user?  Go away.
         mtool = getToolByName(context, 'portal_membership')
         if mtool.isAnonymousUser():
