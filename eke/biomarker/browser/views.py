@@ -100,7 +100,17 @@ class BiomarkerView(KnowledgeObjectView):
             path=dict(query='/'.join(context.getPhysicalPath()), depth=1),
             sort_on='sortable_title'
         )
-        return [dict(name=i.Title, obj=i.getObject()) for i in results]
+        results = [dict(name=i.Title, obj=i.getObject(), resources=list(i.getObject().resources)) for i in results]
+        for result in results:
+            resources = result['resources']
+            resources.sort(lambda a, b: cmp(a.title, b.title))
+        return results
+    @memoize
+    def resources(self):
+        context = aq_inner(self.context)
+        resources = list(context.resources)
+        resources.sort(lambda a, b: cmp(a.title, b.title))
+        return resources
     @memoize
     def studies(self, bodySystem):
         catalog = getToolByName(bodySystem, 'portal_catalog')

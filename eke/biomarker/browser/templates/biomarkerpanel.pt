@@ -251,8 +251,8 @@
         									No organ-specific publications defined.
         								</p>
         								<h4 i18n:translate='bm_bssResources'>Organ-Specific Resources</h4>
-        								<ul tal:condition='bodySystem/obj/resources'>
-        									<li tal:repeat='res bodySystem/obj/resources'>
+        								<ul tal:condition='bodySystem/resources'>
+        									<li tal:repeat='res bodySystem/resources'>
         										<a href='#' tal:attributes='href res/absolute_url; title res/description|nothing;'
         											tal:content='res/title'>
         											My Happy Resource Was Caressed By My Body System
@@ -260,7 +260,7 @@
         									</li>
         								</ul>
         								<p class='discreet' i18n:translate='bm_noBSSResources'
-        									tal:condition='not:bodySystem/obj/publications'>
+        									tal:condition='not:bodySystem/resources'>
         									No organ-specific resources defined.
         								</p>
                                     </tal:block>
@@ -315,7 +315,7 @@
                         </div>
                     </div>
                     <div class='tabbertab' tal:define='
-                            resources context/resources;
+                            resources view/resources;
                             approvedViewable python:view.viewable("Resources");
                     '>
                         <h2 i18n:translate='bm_ResourcesTab'

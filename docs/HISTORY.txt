@@ -8,6 +8,10 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 1.1.11 — TBD
 ------------
 
+• CA-1206 - "No resources" appears on a biomarker–body-system when there are
+  no publications, not if there are no resources
+• CA-1205 - Sort resources alphabetically on elemental- and panel-based
+  biomarkers
 • CA-1156 - Show more attributes for biomarkers that are "mostly public"
 • CA-1163 - Make RDF ingest defensive against bad protocols from BMDB
 • CA-1182 - Recognize "Private" QA State of Biomarker
