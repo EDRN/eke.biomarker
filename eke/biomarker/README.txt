@@ -530,6 +530,13 @@ faceted view::
     >>> browser.contents
     '...faceted-results...'
 
+Also, there are other views providing what Dan calls "biomarker analytics"::
+
+    >>> browser.contents
+    '...PIs by Biomarker...'
+
+Neat, huh?
+
 
 RDF Ingestion
 -------------

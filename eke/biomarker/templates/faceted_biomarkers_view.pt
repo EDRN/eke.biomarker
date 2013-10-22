@@ -17,10 +17,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
                                 templateId template/getId;
                                 disclaimer context/disclaimer|nothing;">
 
-<!-- FIXME: This belongs in the style_slot, but I have no idea how to override
-@@facetednavigation_view so I can use my own template where I can inject into the
-style_slot, or how to fill a slot from within a called slot.  -sigh-.
--->
+<!-- FIXME: This belongs in the style_slot, but we're being loaded from an iframe, so screw it. -->
 <style type='text/css'>
 #left-area {
     width: 15em;
@@ -28,7 +25,14 @@ style_slot, or how to fill a slot from within a called slot.  -sigh-.
 .left-area-js {
     margin-left: 15em;
 }
+.ui-menu-item {
+    list-item-style: none;
+}
 </style>
+
+    <div metal:use-macro='context/@@reports/macros/reportsMenu'>
+        Menu of possible reports
+    </div>
     
     <metal:listingmacro define-macro="listing">
     <!-- KLUDGE: "listingBar" this text MUST appear in the faceted results.  eea.facetednavigation

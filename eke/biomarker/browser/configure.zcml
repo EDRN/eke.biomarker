@@ -49,6 +49,14 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         template='templates/underreview.pt'
     />
 
+    <!-- Reporting macros -->
+    <browser:page
+        for='*'
+        permission='zope2.Public'
+        name='reports'
+        template='templates/reports.pt'
+    />
+
     <!-- C O N T E N T   T Y P E S -->
     <!-- Biomarker Folder -->
     <browser:resource name='biomarker-folder.gif' file='images/biomarker-folder.gif'/>
@@ -64,12 +72,25 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         name='ingest'
         permission='cmf.ManagePortal'
     />
+    <browser:page
+        class='.views.PIsByBiomarkerView'
+        for='..interfaces.IBiomarkerFolder'
+        name='pis_by_biomarker'
+        permission='zope2.View'
+    />
     <browser:menuItem
         action='@@view'
         description='Default representation of a Biomarker Folder.'
         for='..interfaces.IBiomarkerFolder'
         menu='plone_displayviews'
         title='Biomarker Folder view'
+    />
+    <browser:menuItem
+        action='@@pis_by_biomarker'
+        description='Report on the principal investigators, by biomarker'
+        for='..interfaces.IBiomarkerFolder'
+        menu='plone_displayviews'
+        title='PIs by Biomarker'
     />
 
     <!-- Biomarker Body System -->

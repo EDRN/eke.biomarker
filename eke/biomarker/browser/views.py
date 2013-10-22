@@ -22,6 +22,41 @@ CURATED_SECTIONS = {
     'Organs-Supplemental': False,
 }
 
+class PIsByBiomarkerView(KnowledgeFolderView):
+    __call__ = ViewPageTemplateFile('templates/pis_by_biomarker.pt')
+    def haveBiomarkers(self):
+        return len(self.biomarkers()) > 0
+    @memoize
+    def biomarkers(self):
+        context, biomarkers, allInvestigators = aq_inner(self.context), {}, set()
+        catalog = getToolByName(context, 'portal_catalog')
+        results = catalog(object_provides=IBiomarker.__identifier__, path=dict(query='/'.join(context.getPhysicalPath()), depth=1))
+        for i in results:
+            biomarker = i.getObject()
+            name, qaState, protocols = biomarker.title.strip(), biomarker.qaState, biomarker.getProtocols()
+            if len(protocols) == 0: continue
+            investigators = set()
+            for protocol in protocols:
+                if protocol.piName is not None and len(protocol.piName.strip()) > 0:
+                    investigators.add(protocol.piName.strip())
+                for site in protocol.getInvolvedInvestigatorSites():
+                    pi = site.getPrincipalInvestigator()
+                    if pi is not None and len(pi.title.strip()) > 0:
+                        investigators.add(pi.title.strip())
+            allInvestigators |= investigators
+            pis = biomarkers.get(name, set())
+            pis |= investigators
+            biomarkers[name] = pis
+        bmNames = biomarkers.keys()
+        bmNames.sort()
+        finalResults = []
+        for bmName in bmNames:
+            pis = list(biomarkers[bmName])
+            pis.sort()
+            finalResults.append(dict(bmName=bmName, pis=pis))
+        return finalResults
+        
+
 class BiomarkerFolderView(KnowledgeFolderView):
     '''Default view of a Biomarker Folder.'''
     __call__ = ViewPageTemplateFile('templates/biomarkerfolder.pt')

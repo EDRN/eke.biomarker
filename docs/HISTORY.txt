@@ -8,6 +8,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 1.1.11 — TBD
 ------------
 
+• Adds the PIs-by-Biomarkers report plus a menu of (future) reports
 • CA-1206 - "No resources" appears on a biomarker–body-system when there are
   no publications, not if there are no resources
 • CA-1205 - Sort resources alphabetically on elemental- and panel-based
