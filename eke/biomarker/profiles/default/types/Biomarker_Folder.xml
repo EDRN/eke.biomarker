@@ -18,7 +18,6 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         <element value='Biomarker Folder'/>
         <element value='Biomarker Panel' />
         <element value='Elemental Biomarker'/>
-        <element value='Review Listing'/>
     </property>
     <property name='allow_discussion'>False</property>
     <property name='default_view'>view</property>
@@ -27,6 +26,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         <element value='folder_summary_view'/>
         <element value='folder_tabular_view'/>
         <element value='folder_listing'/>
+        <element value='pis_by_biomarker' />
     </property>
     
     <alias from='(Default)' to='(dynamic view)'/>
