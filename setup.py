@@ -10,7 +10,7 @@ import os.path
 # ------------
 
 _name        = 'eke.biomarker'
-_version     = '1.1.12'
+_version     = '1.1.13'
 _description = 'Biomarkers for the EDRN Knowledge Environment'
 _url         = 'http://cancer.jpl.nasa.gov/products/eke-biomarker'
 _downloadURL = 'http://oodt.jpl.nasa.gov/dist/eke'
