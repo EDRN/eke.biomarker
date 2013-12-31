@@ -17,6 +17,7 @@ _biomarkerA = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/a1'>
         <bmdb:Title>Apogee 1</bmdb:Title>
+        <bmdb:HgncName>APG1</bmdb:HgncName>
         <bmdb:ShortName>A1</bmdb:ShortName>
         <bmdb:BiomarkerID>http://edrn/bmdb/a1</bmdb:BiomarkerID>
         <bmdb:URN>urn:edrn:bmdb:bm1</bmdb:URN>
@@ -134,6 +135,7 @@ _biomarkerB = '''<?xml version='1.0' encoding='UTF-8'?>
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/b1'>
         <bmdb:Title>Bile 1</bmdb:Title>
         <bmdb:ShortName>B1</bmdb:ShortName>
+        <bmdb:HgncName> BB </bmdb:HgncName>
         <bmdb:BiomarkerID>http://edrn/bmdb/b1</bmdb:BiomarkerID>
         <bmdb:URN>urn:edrn:bmdb:bm2</bmdb:URN>
         <bmdb:IsPanel>0</bmdb:IsPanel>
@@ -179,6 +181,7 @@ _biomarkerC = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/msb'>
         <bmdb:Title>My Single Biomarker</bmdb:Title>
+        <bmdb:HgncName></bmdb:HgncName>
         <bmdb:ShortName>MSB</bmdb:ShortName>
         <bmdb:BiomarkerID>http://edrn/bmdb/msb</bmdb:BiomarkerID>
         <bmdb:URN>urn:edrn:bmdb:msb</bmdb:URN>

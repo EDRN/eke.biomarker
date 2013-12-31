@@ -113,6 +113,16 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
         ),
         predicateURI=predicateURIBase + 'ShortName',
     ),
+    atapi.StringField(
+        'hgncName',
+        storage=atapi.AnnotationStorage(),
+        required=False,
+        widget=atapi.StringWidget(
+            label=_(u'HGNC Name'),
+            description=_(u'The name assigned by the HUGO Gene Nomenclature Committee.'),
+        ),
+        predicateURI=predicateURIBase + 'HgncName',
+    ),
     atapi.LinesField(
         'bmAliases',
         storage=atapi.AnnotationStorage(),
@@ -177,6 +187,7 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     resources            = atapi.ATReferenceFieldProperty('resources')
     datasets             = atapi.ATReferenceFieldProperty('datasets')
     shortName            = atapi.ATFieldProperty('shortName')
+    hgncName             = atapi.ATFieldProperty('hgncName')
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]
     def updatedIndicatedBodySystems(self):

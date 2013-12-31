@@ -187,6 +187,7 @@ Now we can create a testing Elemental Biomarker::
     >>> browser.getControl(name='description').value = "It's fun to say."
     >>> browser.getControl(name='identifier').value = 'http://edrn/biomarkers/24'
     >>> browser.getControl(name='shortName').value = 'Phbtbthpt!'
+    >>> browser.getControl(name='hgncName').value = 'X1' # CA-1235
     >>> browser.getControl(name='bmAliases:lines').value = 'anal ahem\nbackfire\nbean blower\nBlow the big brown horn'
     >>> browser.getControl(name='biomarkerType').value = 'Gas'
     >>> browser.getControl(name='qaState').value = 'Under Review'
@@ -207,6 +208,8 @@ Now we can create a testing Elemental Biomarker::
     'http://edrn/biomarkers/24'
     >>> biomarker.shortName
     'Phbtbthpt!'
+    >>> biomarker.hgncName
+    'X1'
     >>> biomarker.bmAliases
     ('anal ahem', 'backfire', 'bean blower', 'Blow the big brown horn')
     >>> biomarker.biomarkerType
@@ -482,6 +485,18 @@ In this section, we'll do some quick functional-esque tests of the page
 templates providing views of a couple objects.
 
 
+HGNC Names
+~~~~~~~~~~
+
+CA-1235 introduces HGNC_ names to biomarkers::
+
+    >>> browser.open(portalURL + '/questionable-biomarkers/phthalate')
+    >>> browser.contents
+    '...HGNC Name:...X1...'
+
+Works!
+
+
 Members of Panels
 ~~~~~~~~~~~~~~~~~
 
@@ -574,13 +589,15 @@ Ingesting::
     >>> browser.open(portalURL + '/tacky-biomarkers/ingest')
     >>> browser.contents
     '...The following items have been created...Apogee 1...'
-    >>> 'apogee-1' in f.objectIds()
+    >>> 'APG1' in f.objectIds()
     True
     >>> 'panel-1' in f.objectIds()
     True
-    >>> a1 = f['apogee-1']
+    >>> a1 = f['APG1']
     >>> a1.title
     u'Apogee 1'
+    >>> a1.hgncName
+    'APG1'
     >>> a1.description
     'A sticky bio-marker.'
     >>> a1.shortName
@@ -595,6 +612,9 @@ Ingesting::
     'Glazed Roast Chicken'
     >>> a1.resources[0].title
     'A web index'
+
+Noticed that the Apogee 1 got its HGNC_ name (APG1) as its object ID. The panel
+doesn't have an HGNC name, so it took its object ID from the title (CA-1235).
 
 I'm seeing non-deterministic behavior from the Plone Catalog, which results in
 no protocols appearing, but just *sometimes*.  Ugh.  So::
@@ -723,14 +743,14 @@ page, even for incorrectly secured biomarkers, is now moot.  There should be
 no lock icons at all.  Are there?  First, let's make one of the biomarkers
 private::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/apogee-1')
+    >>> browser.open(portalURL + '/tacky-biomarkers/APG1')
     >>> browser.contents
     '...State:...Published...'
 
 Sadly, under plone.app.testing, we get a non-snazzy workflow, so although I'd
 like it to be private, it's not::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/apogee-1/content_status_modify?workflow_action=retract')
+    >>> browser.open(portalURL + '/tacky-biomarkers/APG1/content_status_modify?workflow_action=retract')
     >>> browser.contents
     '...State:...Public draft...'
 
@@ -748,10 +768,10 @@ toss a lock icon onto things::
 Looks like we're all clear.  Let's put Apogee 1 back to where it belongs
 (non-snazzy workflow notwithstanding)::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/apogee-1')
+    >>> browser.open(portalURL + '/tacky-biomarkers/APG1')
     >>> browser.contents
     '...State:...Public draft...'
-    >>> browser.open(portalURL + '/tacky-biomarkers/apogee-1/content_status_modify?workflow_action=publish')
+    >>> browser.open(portalURL + '/tacky-biomarkers/APG1/content_status_modify?workflow_action=publish')
     >>> browser.contents
     '...State:...Published...'
 
@@ -767,14 +787,14 @@ private, what groups are allowed to access it.
 To demonstrate this functionality, let's revisit Apogee 1 and note its
 publication state::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/apogee-1')
+    >>> browser.open(portalURL + '/tacky-biomarkers/APG1')
     >>> browser.contents
     '...State:...Published...'
 
 Furthermore, the nested objects should likewise be published (or else CA-342
 isn't fixed)::
 
-    >>> apogee1 = f['apogee-1']
+    >>> apogee1 = f['APG1']
     >>> wfTool = getToolByName(portal, 'portal_workflow')
     >>> rectum = apogee1['rectum']
     >>> wfTool.getInfoFor(rectum, 'review_state')
@@ -800,28 +820,28 @@ source that defines a biomarker that's currently under review::
 
 OK, is it published?
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/bile-1')
+    >>> browser.open(portalURL + '/tacky-biomarkers/BB')
     >>> browser.contents
     '...State:...Published...'
 
 So far so good.  This marker's accessor list should contain the URI of the
 group that is allowed to see it::
 
-    >>> b1 = f['bile-1']
+    >>> b1 = f['BB']
     >>> b1.accessGroups
     ('ldap://edrn/groups/g1',)
 
 The Sharing tab on the marker should also show that the "g1" group is allowed
 full access to the biomarker::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/bile-1/@@sharing')
+    >>> browser.open(portalURL + '/tacky-biomarkers/BB/@@sharing')
     >>> browser.contents
     '...Name...ldap://edrn/groups/g1...'
 
 We're currently logged in with rather superior privileges, so we should be
 able to view information beyond the basics::
 
-    >>> browser.open(portalURL + '/tacky-biomarkers/bile-1')
+    >>> browser.open(portalURL + '/tacky-biomarkers/BB')
     >>> browser.contents
     '...Basics...Ooze...Organs...Anus...Publications...Glazed Roast Chicken...'
     >>> 'This biomarker is currently being annotated or is under review' not in browser.contents
@@ -1034,3 +1054,4 @@ And that's it.
 .. _RDF: http://w3.org/RDF/
 .. _URI: http://w3.org/Addressing/
 .. _BMDB: http://edrn.jpl.nasa.gov/bmdb
+.. _HGNC: http://www.genenames.org/

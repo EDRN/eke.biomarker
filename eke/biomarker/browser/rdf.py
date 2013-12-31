@@ -33,6 +33,7 @@ _bmOrganDataTypeURI                      = URIRef('http://edrn.nci.nih.gov/rdf/r
 _bmTitlePredicateURI                     = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Title')
 _hasBiomarkerStudyDatasPredicateURI      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerStudyDatas')
 _hasBiomarkerOrganStudyDatasPredicateURI = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerOrganStudyDatas')
+_hgncPredicateURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#HgncName')
 _isPanelPredicateURI                     = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#IsPanel')
 _memberOfPanelPredicateURI               = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#memberOfPanel')
 _organPredicateURI                       = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Organ')
@@ -223,7 +224,10 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     continue
                 isPanel = bool(int(predicates[_isPanelPredicateURI][0]))
                 title = unicode(predicates[_bmTitlePredicateURI][0])
-                objID = normalizerFunction(title)
+                hgnc = predicates[_hgncPredicateURI][0] if _hgncPredicateURI in predicates else None
+                if hgnc is not None:
+                    hgnc = hgnc.strip()
+                objID = hgnc if hgnc else normalizerFunction(title)
                 objType = isPanel and 'Biomarker Panel' or 'Elemental Biomarker'
                 obj = context[context.invokeFactory(objType, objID)]
                 self.updateBiomarker(obj, uri, predicates, context, statements)

@@ -4,6 +4,10 @@
         <metal:field use-macro='python:context.widget("shortName", mode="view")'>Fred</metal:field>
     </div>
     <div>
+        <label for='parent-fieldname-hgncName' i18n:translate='label_hgncName'>HGNC Name:</label>
+        <metal:field use-macro='python:context.widget("hgncName", mode="view")'>FRED1</metal:field>
+    </div>
+    <div>
         <label for='parent-fieldname-bmAliases' i18n:translate='label_bmAliases'>Aliases:</label>
         <metal:field use-macro='python:context.widget("bmAliases", mode="view")'>Fredrick, Federico</metal:field>
     </div>

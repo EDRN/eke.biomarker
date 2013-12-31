@@ -111,6 +111,11 @@ class IBiomarker(IKnowledgeObject, IResearchedObject, IQualityAssuredObject):
         description=_(u'A shorter and preferred alias for the biomarker.'),
         required=False
     )
+    hgncName = schema.TextLine(
+        title=_(u'HGNC Name'),
+        description=_(u'The name assigned by the HUGO Gene Nomenclature Committee.'),
+        required=False,
+    )
     bmAliases = schema.List(
         title=_(u'Aliases'),
         description=_(u'Additional names by which the biomarker is known.'),
