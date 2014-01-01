@@ -244,7 +244,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                         except BadRequest:
                             pass
                     if obj is None:
-                        raise BadRequest("Broken RDF? Got more than %d biomarkers with the same ID '%s'!" %
+                        raise BadRequest("Something's wrong. Got more than %d biomarkers with the same ID '%s'!" %
                             (MAX_NON_UNIQUE_BIOMARKER_IDS, objID))
                 self.updateBiomarker(obj, uri, predicates, context, statements)
                 newBiomarkers[uri] = obj
