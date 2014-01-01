@@ -21,6 +21,7 @@ from rdflib import URIRef, ConjunctiveGraph, URLInputSource
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
+from zExceptions import BadRequest
 import uuid, logging
 
 _logger = logging.getLogger(__name__)
@@ -41,6 +42,9 @@ _referencesStudyPredicateURI             = URIRef('http://edrn.nci.nih.gov/rdf/r
 _sensitivityDatasPredicateURI            = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#SensitivityDatas')
 _typeURI                                 = URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
 _visibilityPredicateURI                  = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#QAState')
+
+# How many biomarkers we'll tolerate with the same ID before we balk
+MAX_NON_UNIQUE_BIOMARKER_IDS = 100
 
 # Interface identifier for EDRN Collaborative Group, from edrnsite.collaborations
 _collabGroup = 'edrnsite.collaborations.interfaces.collaborativegroupindex.ICollaborativeGroupIndex'
@@ -229,7 +233,19 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     hgnc = hgnc.strip()
                 objID = hgnc if hgnc else normalizerFunction(title)
                 objType = isPanel and 'Biomarker Panel' or 'Elemental Biomarker'
-                obj = context[context.invokeFactory(objType, objID)]
+                try:
+                    obj = context[context.invokeFactory(objType, objID)]
+                except BadRequest:
+                    obj = None
+                    for appendedNumber in xrange(1, MAX_NON_UNIQUE_BIOMARKER_IDS+1):
+                        try:
+                            obj = context[context.invokeFactory(objType, "%s-%d" % (objID, appendedNumber))]
+                            break
+                        except BadRequest:
+                            pass
+                    if obj is None:
+                        raise BadRequest("Broken RDF? Got more than %d biomarkers with the same ID '%s'!" %
+                            (MAX_NON_UNIQUE_BIOMARKER_IDS, objID))
                 self.updateBiomarker(obj, uri, predicates, context, statements)
                 newBiomarkers[uri] = obj
                 obj.reindexObject()
