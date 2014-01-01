@@ -81,6 +81,8 @@
                                         <td tal:content='context/shortName'>
                                             ANX1
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <th i18n:translate='label_hgncName'>
                                             HGNC Name:
                                         </th>
