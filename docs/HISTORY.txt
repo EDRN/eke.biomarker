@@ -9,6 +9,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 ------------
 
 • CA-1235 - Make biomarkers link ID end with HGNC name
+• CA-1238 - Add free text search to Biomarkers
 
 
 1.1.12 — Let's Not Talk

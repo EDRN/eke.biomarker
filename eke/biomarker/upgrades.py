@@ -29,9 +29,10 @@ def upgradeBiomarkerFolders(setupTool):
         if 'biomarkers' in portal.keys():
             results = [portal['biomarkers']]
     for folder in results:
-        setFacetedNavigation(folder, request)
+        setFacetedNavigation(folder, request, force=True)
         folder.disclaimer = DEFAULT_DISCLAIMER
 
 
 def loadPortalTypes(setupTool):
     setupTool.runImportStepFromProfile(PROFILE_ID, 'typeinfo')
+

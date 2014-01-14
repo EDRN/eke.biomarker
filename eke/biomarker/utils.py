@@ -17,9 +17,9 @@ COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES = {
     u'Prostate and Urologic':           u'Prostate and Urologic Cancers Research Group',
 }
 
-def setFacetedNavigation(folder, request):
+def setFacetedNavigation(folder, request, force=False):
     subtyper = getMultiAdapter((folder, request), name=u'faceted_subtyper')
-    if subtyper.is_faceted or not subtyper.can_enable: return
+    if (subtyper.is_faceted or not subtyper.can_enable) and not force: return
     subtyper.enable()
     urlTool = plone.api.portal.get_tool(name='portal_url')
     path = '/' + '/'.join(urlTool.getRelativeContentPath(folder))
@@ -55,6 +55,8 @@ def setFacetedNavigation(folder, request):
     )
     criteria.add('path', 'bottom', 'default', title='Path Search', hidden=True, index='path', default=path)
     criteria.add('debug', 'top', 'default', title='Debug Criteria', user='kelly')
+    criteria.add('text', 'top', 'default', title=u'Search', hidden=False, index='SearchableText', count=False,
+        onlyallelements=True)
     IFacetedLayout(folder).update_layout('faceted_biomarkers_view')
     noLongerProvides(folder, IHidePloneLeftColumn)
     noLongerProvides(folder, IHidePloneRightColumn)

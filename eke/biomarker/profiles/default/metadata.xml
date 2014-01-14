@@ -4,7 +4,7 @@ Copyright 2009-2011 California Institute of Technology. ALL RIGHTS
 RESERVED. U.S. Government Sponsorship acknowledged.
 -->
 <metadata>
-    <version>5</version>
+    <version>6</version>
     <description>Biomarkers for the EDRN Knowledge Environment</description>
     <dependencies>
         <dependency>profile-eke.knowledge:default</dependency>
