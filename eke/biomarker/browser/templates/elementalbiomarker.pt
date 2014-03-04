@@ -45,6 +45,14 @@
                                     <li tal:repeat='alias aliases'><span tal:content='alias'>Sydney</span>,</li>
                                 </ul>
                             </div>
+                            <p><a
+                                href='#'
+                                title='BioMuta is a curated single-nucleotide variation/disease association database'
+                                i18n:attributes='title'
+                                tal:define='biomuta string:https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php'
+                                tal:attributes='href string:${biomuta}?gene=${context/hgncName}'>
+                                <span i18n:translate='viewInBioMuta'>View in BioMuta</span>
+                            </a></p>
                             <h4 i18n:translate='bm_DescriptionHeading'>Description&#x2026;</h4>
                             <p>
                                 <metal:field use-macro='python:context.widget("description", mode="view")'>

@@ -494,7 +494,13 @@ CA-1235 introduces HGNC_ names to biomarkers::
     >>> browser.contents
     '...HGNC Name:...X1...'
 
-Works!
+Works!  Related to this is CA-1247, which wants links from biomarkers to
+BioMuta_.  Are those links there?  Check it out::
+
+    >>> browser.contents
+    '...a href="https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php?gene=X1"...'    
+
+Wootly.
 
 
 Members of Panels
@@ -1055,3 +1061,5 @@ And that's it.
 .. _URI: http://w3.org/Addressing/
 .. _BMDB: http://edrn.jpl.nasa.gov/bmdb
 .. _HGNC: http://www.genenames.org/
+.. _BioMuta: http://hive.biochemistry.gwu.edu/tools/biomuta/index.php
+
