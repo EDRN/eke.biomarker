@@ -43,6 +43,24 @@ BiomarkerBodySystemSchema = KnowledgeObject.schema.copy() + QualityAssuredObject
         ),
         predicateURI='http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#PerformanceComment',
     ),
+    atapi.BooleanField(
+        'cliaCertification',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.BooleanWidget(
+            label=_(u'CLIA Certification'),
+            description=_(u'True if this biomarker has been certified by CLIA for this organ.'),
+        ),
+    ),
+    atapi.BooleanField(
+        'fdaCertification',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.BooleanWidget(
+            label=_(u'FDA Certification'),
+            description=_(u'True if this biomarker has been certified by the FDA for this organ.'),
+        ),
+    ),
 ))
 
 # FIXME: This should be a Dublin Core description:
@@ -53,16 +71,18 @@ finalizeATCTSchema(BiomarkerBodySystemSchema, folderish=True, moveDiscussion=Fal
 class BiomarkerBodySystem(ATFolder, KnowledgeObject):
     '''Biomarker body system.'''
     implements(IBiomarkerBodySystem)
-    schema       = BiomarkerBodySystemSchema
-    portal_type  = 'Biomarker Body System'
-    bodySystem   = atapi.ATReferenceFieldProperty('bodySystem')
-    phase        = atapi.ATFieldProperty('phase')
-    protocols    = atapi.ATReferenceFieldProperty('protocols')
-    publications = atapi.ATReferenceFieldProperty('publications')
-    qaState      = atapi.ATFieldProperty('qaState')
-    resources    = atapi.ATReferenceFieldProperty('resources')
-    datasets     = atapi.ATReferenceFieldProperty('datasets')
-    description  = atapi.ATFieldProperty('description')
+    schema             = BiomarkerBodySystemSchema
+    portal_type        = 'Biomarker Body System'
+    bodySystem         = atapi.ATReferenceFieldProperty('bodySystem')
+    phase              = atapi.ATFieldProperty('phase')
+    protocols          = atapi.ATReferenceFieldProperty('protocols')
+    publications       = atapi.ATReferenceFieldProperty('publications')
+    qaState            = atapi.ATFieldProperty('qaState')
+    resources          = atapi.ATReferenceFieldProperty('resources')
+    datasets           = atapi.ATReferenceFieldProperty('datasets')
+    description        = atapi.ATFieldProperty('description')
     performanceComment = atapi.ATFieldProperty('performanceComment')
+    cliaCertification  = atapi.ATFieldProperty('cliaCertification')
+    fdaCertification   = atapi.ATFieldProperty('fdaCertification')
     
 atapi.registerType(BiomarkerBodySystem, PROJECTNAME)

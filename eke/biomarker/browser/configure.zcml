@@ -189,5 +189,13 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         name='tabber.js'
         file='tabber-minimized.js'
     />
-
+    <browser:resource
+        name='cliaCert.png'
+        file='images/cliaCert.png'
+    />
+    <browser:resource
+        name='fdaCert.png'
+        file='images/fdaCert.png'
+    />
+    
 </configure>

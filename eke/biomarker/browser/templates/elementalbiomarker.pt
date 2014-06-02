@@ -141,7 +141,24 @@
                                         </div>
                                         <div class='attributebox-bottom'><div></div></div>
                                     </div>
-                                    <h4>Overview</h4>
+                                    <div class='certifications'>
+                                        <p tal:condition='bodySystem/obj/cliaCertification|nothing'>
+                                            <a href='http://www.cms.gov/Regulations-and-Guidance/Legislation/CLIA/index.html' title='Centers for Medicare &amp; Medicaid Services Clinical Laboratory Improvement Amendments' i18n:attributes='title'>
+                                                <img src='#' border='0'
+                                                tal:attributes='src string:${context/++resource++cliaCert.png}'
+                                                alt='CLIA Certified' i18n:attributes='alt'/>
+                                            </a>
+                                        </p>
+                                        <p tal:condition='bodySystem/obj/fdaCertification|nothing'>
+                                            <a href='http://www.fda.gov/regulatoryinformation/guidances/ucm125335.htm'
+                                                title='Food &amp; Drug Administration Certification' i18n:attributes='title'>
+                                                <img src='#'
+                                                tal:attributes='src string:${context/++resource++fdaCert.png}'
+                                                alt='FDA Certified' i18n:attributes='alt'/>
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <h4 i18n:translate='overviewHeadingForOrgan'>Overview</h4>
                                     <p tal:content='bodySystem/obj/description'>
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                                         eiusmod tempor incididunt ut labore et dolore magna aliqua. 

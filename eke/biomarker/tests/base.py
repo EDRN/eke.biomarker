@@ -93,6 +93,7 @@ _biomarkerOrganA = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:Phase>1</bmdb:Phase>
         <bmdb:QAState>Accepted</bmdb:QAState>
         <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1'/>
+        <bmdb:certification rdf:resource='http://www.cms.gov/Regulations-and-Guidance/Legislation/CLIA/index.html'/>
         <bmdb:hasBiomarkerOrganStudyDatas>
             <rdf:Bag>
                 <rdf:li rdf:resource='http://edrn/bmdb/a1/o1#s1'/>
@@ -172,6 +173,7 @@ _biomarkerOrganB = '''<?xml version='1.0' encoding='UTF-8'?>
         <bmdb:Organ>Anus</bmdb:Organ>
         <bmdb:Phase>2</bmdb:Phase>
         <bmdb:QAState>Under Review</bmdb:QAState>
+        <bmdb:certification rdf:resource='http://www.fda.gov/regulatoryinformation/guidances/ucm125335.htm'/>
         <bmdb:AccessGrantedTo rdf:resource='ldap://edrn/groups/g1'/>
         <bmdb:hasBiomarkerOrganStudyDatas/>
     </bmdb:BiomarkerOrganData>

@@ -32,6 +32,7 @@ _biomarkerPredicateURI                   = URIRef('http://edrn.nci.nih.gov/rdf/r
 _biomarkerTypeURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Biomarker')
 _bmOrganDataTypeURI                      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#BiomarkerOrganData')
 _bmTitlePredicateURI                     = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Title')
+_certificationPredicateURI               = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#certification')
 _hasBiomarkerStudyDatasPredicateURI      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerStudyDatas')
 _hasBiomarkerOrganStudyDatasPredicateURI = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerOrganStudyDatas')
 _hgncPredicateURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#HgncName')
@@ -42,6 +43,10 @@ _referencesStudyPredicateURI             = URIRef('http://edrn.nci.nih.gov/rdf/r
 _sensitivityDatasPredicateURI            = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#SensitivityDatas')
 _typeURI                                 = URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
 _visibilityPredicateURI                  = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#QAState')
+
+# Certification URIs
+_cliaCertificationURI = URIRef('http://www.cms.gov/Regulations-and-Guidance/Legislation/CLIA/index.html')
+_fdaCeritificationURI = URIRef('http://www.fda.gov/regulatoryinformation/guidances/ucm125335.htm')
 
 # How many biomarkers we'll tolerate with the same ID before we balk
 MAX_NON_UNIQUE_BIOMARKER_IDS = 100
@@ -202,6 +207,14 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             if _hasBiomarkerOrganStudyDatasPredicateURI in predicates:
                 bags = predicates[_hasBiomarkerOrganStudyDatasPredicateURI]
                 self.addStudiesToOrgan(biomarkerBodySystem, bags, statements, normalizer, catalog)
+            certificationURIs = predicates.get(_certificationPredicateURI, [])
+            # TODO: make a separate Certification type so we don't rely on these fixed values.
+            # Although we'll likely never have ohter certifications.
+            for certificationURI in certificationURIs:
+                if certificationURI == _cliaCertificationURI:
+                    biomarkerBodySystem.cliaCertification = True
+                elif certificationURI == _fdaCeritificationURI:
+                    biomarkerBodySystem.fdaCertification = True
             biomarkerBodySystem.reindexObject()
     def __call__(self):
         '''Ingest and render a results page.'''

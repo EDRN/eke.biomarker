@@ -25,6 +25,12 @@
                     <label for='parent-fieldname-bodySystem' i18n:translate='label_bodySystem'>Organ:</label>
                     <metal:field use-macro='python:context.widget("bodySystem", mode="view")'>Anus</metal:field>
                 </div>
+                <p tal:condition='context/cliaCertification' i18n:translate='cliaCertification'>
+                    This biomarker is CLIA-certified for this organ.
+                </p>
+                <p tal:condition='context/fdaCertification' i18n:translate='fdaCertification'>
+                    This biomarker is FDA-certified for this organ.
+                </p>
                 <div metal:use-macro='context/@@phasingObject/macros/phasingFields'>
                     Standard phased object fields.
                 </div>

@@ -11,6 +11,7 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 • CA-1235 - Make biomarkers link ID end with HGNC name
 • CA-1238 - Add free text search to Biomarkers
 • CA-1247 - Link back to BioMuta from EDRN Portal's biomarkers
+• CA-1264 - Add Clinical Certification flags
 
 
 1.1.12 — Let's Not Talk

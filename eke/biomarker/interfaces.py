@@ -192,6 +192,19 @@ class IBiomarkerBodySystem(IKnowledgeObject, IResearchedObject, IPhasedObject, I
         required=True,
         schema=IBodySystem
     )
+    cliaCertification = schema.Bool(
+        title=_(u'CLIA Certification'),
+        description=_(u'True if this biomarker has been certified by CLIA for this organ.'),
+        required=False,
+        default=False,
+    )
+    fdaCertification = schema.Bool(
+        title=_(u'FDA Certification'),
+        description=_(u'True if this biomarker has been certified by the FDA for this organ.'),
+        required=False,
+        default=False,
+    )
+
 
 class IBodySystemStudy(IKnowledgeObject, IResearchedObject):
     '''Study-specific information on a biomarker's effects on a single organ.'''

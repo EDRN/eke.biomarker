@@ -263,6 +263,8 @@ Body Systems.  They may be added only to Elemental Biomarkers, vis::
     >>> browser.getControl(name='protocols:list').displayValue = ['Public Safety']
     >>> browser.getControl(name='publications:list').displayValue = ['Teriyaki Beef']
     >>> browser.getControl(name='resources:list').displayValue = ['A web index']
+    >>> browser.getControl(name='cliaCertification:boolean').value = True
+    >>> browser.getControl(name='fdaCertification:boolean').value = True
     >>> browser.getControl(name='phase').value = '2'
     >>> browser.getControl(name='qaState').value = 'High'
     >>> browser.getControl(name='form.button.save').click()
@@ -285,6 +287,10 @@ Body Systems.  They may be added only to Elemental Biomarkers, vis::
     'Teriyaki Beef'
     >>> biomarkerOrgan.resources[0].title
     'A web index'
+    >>> biomarkerOrgan.cliaCertification
+    True
+    >>> biomarkerOrgan.fdaCertification
+    True
     >>> biomarkerOrgan.phase
     '2'
     >>> biomarkerOrgan.qaState
@@ -643,6 +649,10 @@ Thanks a lot, ZCatalog.  Continuing::
     'The biomarker failed to perform as expected.'
     >>> o1.bodySystem.title
     'Rectum'
+    >>> o1.cliaCertification
+    True
+    >>> o1.fdaCertification
+    False
     >>> o1.phase
     '1'
     >>> o1.qaState
@@ -860,7 +870,15 @@ too::
     >>> 'This icon indicates content for which you must be logged in or do not have permission to view' not in browser.contents
     True
 
-We're ready for the next section!
+And a quick check of certifications (we saw CLIA above with /biomarkerorgans/a,
+so let's see if we get FDA with /biomarkerorgans/b)::
+
+    >>> b1['anus'].cliaCertification
+    False
+    >>> b1['anus'].fdaCertification
+    True
+
+Woot!  We're ready for the next section!
 
 
 Empty <hasBiomarkerStudyDatas/> Element
