@@ -929,7 +929,7 @@ also want to search by body systems.  Let's see if that works.
     >>> catalog = getToolByName(portal, 'portal_catalog')
     >>> results = catalog.unrestrictedSearchResults(SearchableText='Anus Biomarker')
     >>> [i.Title for i in results if i.portal_type == 'Elemental Biomarker']
-    ['Bile 1']
+    ['Bile 1', 'Phthalate']
 
 Works for me.  However, issue http://oodt.jpl.nasa.gov/jira/browse/CA-511 says
 we need to search on alternative biomarker names as well.  Does that work?
