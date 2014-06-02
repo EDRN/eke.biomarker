@@ -192,6 +192,15 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
         return [i.capitalize() for i in self.objectIds()]
     def updatedIndicatedBodySystems(self):
         self.indicatedBodySystems = self._computeIndicatedBodySystems()
+    def SearchableText(self):
+        txt = super(Biomarker, self).SearchableText()
+        certifications = ''
+        for objID, obj in self.contentItems():
+            if obj.cliaCertification:
+                certifications += 'CLIA '
+            if obj.fdaCertification:
+                certifications += 'FDA '
+        return certifications + txt
 
 def BiomarkerVocabularyFactory(context):
     '''Yield a vocabulary for biomarkers.'''
@@ -204,7 +213,9 @@ directlyProvides(BiomarkerVocabularyFactory, IVocabularyFactory)
 
 def BodySystemUpdater(context, event):
     context.updatedIndicatedBodySystems()
-    context.reindexObject(idxs=['indicatedBodySystems'])
+    # We need to update the indicatedBodySystems index, but also SearchableText for certifications,
+    # so just do the whole object.
+    context.reindexObject()
 
 def IndicatedOrgansVocabularyFactory(context):
     '''Get a vocab for indicated organs'''
