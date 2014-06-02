@@ -199,7 +199,7 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
             if obj.cliaCertification:
                 certifications += 'CLIA ' * 5
             if obj.fdaCertification:
-                certifications += 'FDA ' * 5
+                certifications += 'FDA ' * 20
         return certifications + txt
 
 def BiomarkerVocabularyFactory(context):
