@@ -5,6 +5,15 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
+1.1.14 — Download URL
+---------------------
+
+This release specifies a full path to the download URL for this package.  This
+is necessary since JPL now blocks directory listings of our distribution server,
+and previously Python would use the directory listing to find the matching
+file by version to download.
+
+
 1.1.13 — Certified HGNNNNNNNC!
 ------------------------------
 
