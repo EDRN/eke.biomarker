@@ -5,8 +5,8 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
-1.1.13 — TBD
-------------
+1.1.13 — Certified HGNNNNNNNC!
+------------------------------
 
 • CA-1235 - Make biomarkers link ID end with HGNC name
 • CA-1238 - Add free text search to Biomarkers
