@@ -6,6 +6,13 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.16 — TBD
+------------
+
+• This release addresses an RDF ingest issue where a biomarker-bodysystem object
+  refers to a biomarker that doesn't exist.
+
+
 1.1.15 — I Had Some Chicken; Pass Me the FLOSS
 ----------------------------------------------
 

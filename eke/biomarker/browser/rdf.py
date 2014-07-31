@@ -191,9 +191,9 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             try:
                 if predicates[_typeURI][0] != _bmOrganDataTypeURI:
                     continue
+                biomarker = biomarkers[predicates[_biomarkerPredicateURI][0]]
             except KeyError:
                 continue
-            biomarker = biomarkers[predicates[_biomarkerPredicateURI][0]]
             organName = unicode(predicates[_organPredicateURI][0])
             results = catalog(Title=organName, object_provides=IBodySystem.__identifier__)
             if len(results) < 1:
