@@ -207,8 +207,8 @@ def BiomarkerVocabularyFactory(context):
     catalog = getToolByName(context, 'portal_catalog')
     # TODO: filter by review_state?
     results = catalog(object_provides=IBiomarker.__identifier__, sort_on='sortable_title')
-    items = [(i.Title, i.UID) for i in results]
-    return SimpleVocabulary.fromItems(items)
+    terms = [SimpleVocabulary.createTerm(i.UID, i.UID, i.Title.decode('utf-8')) for i in results]
+    return SimpleVocabulary(terms)
 directlyProvides(BiomarkerVocabularyFactory, IVocabularyFactory)
 
 def BodySystemUpdater(context, event):
@@ -221,5 +221,5 @@ def IndicatedOrgansVocabularyFactory(context):
     '''Get a vocab for indicated organs'''
     catalog = getToolByName(context, 'portal_catalog')
     results = catalog.uniqueValuesFor('indicatedBodySystems')
-    return SimpleVocabulary.fromItems([(i, i) for i in results])
+    return SimpleVocabulary.fromItems([(i.decode('utf-8'), i.decode('utf-8')) for i in results])
 directlyProvides(IndicatedOrgansVocabularyFactory, IVocabularyFactory)    
