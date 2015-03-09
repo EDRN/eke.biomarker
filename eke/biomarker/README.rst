@@ -192,7 +192,7 @@ Now we can create a testing Elemental Biomarker::
     >>> browser.getControl(name='biomarkerType').value = 'Gas'
     >>> browser.getControl(name='qaState').value = 'Under Review'
     >>> browser.getControl(name='protocols:list').displayValue = ["Public Safety"]
-    >>> browser.getControl(name='publications:list').displayValue = ["Glazed Roast Chicken"]
+    >>> browser.getControl(name='publications:list').displayValue = ["Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information."]
     >>> browser.getControl(name='resources:list').displayValue = ['A search engine', 'A web index']
     >>> browser.getControl(name='datasets:list').displayValue = ['Get Bent']
     >>> browser.getControl(name='accessGroups:lines').value = 'ldap://access.this/1'
@@ -219,7 +219,7 @@ Now we can create a testing Elemental Biomarker::
     >>> biomarker.protocols[0].title
     'Public Safety'
     >>> biomarker.publications[0].title
-    'Glazed Roast Chicken'
+    'Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.'
     >>> resources = [i.title for i in biomarker.resources]
     >>> resources.sort()
     >>> resources
@@ -261,7 +261,7 @@ Body Systems.  They may be added only to Elemental Biomarkers, vis::
     >>> browser.getControl(name='identifier').value = 'http://edrn/biomarkers/24/3'
     >>> browser.getControl(name='bodySystem:list').displayValue = ['Anus']
     >>> browser.getControl(name='protocols:list').displayValue = ['Public Safety']
-    >>> browser.getControl(name='publications:list').displayValue = ['Teriyaki Beef']
+    >>> browser.getControl(name='publications:list').displayValue = ['Early detection biomarkers for ovarian cancer.']
     >>> browser.getControl(name='resources:list').displayValue = ['A web index']
     >>> browser.getControl(name='cliaCertification:boolean').value = True
     >>> browser.getControl(name='fdaCertification:boolean').value = True
@@ -284,7 +284,7 @@ Body Systems.  They may be added only to Elemental Biomarkers, vis::
     >>> biomarkerOrgan.protocols[0].title
     'Public Safety'
     >>> biomarkerOrgan.publications[0].title
-    'Teriyaki Beef'
+    'Early detection biomarkers for ovarian cancer.'
     >>> biomarkerOrgan.resources[0].title
     'A web index'
     >>> biomarkerOrgan.cliaCertification
@@ -325,7 +325,7 @@ solely within Biomarker Body Systems::
     >>> browser.getControl(name='identifier').value = 'http://edrn/biomarkers/24/3/6'
     >>> browser.getControl(name='protocol:list').displayValue = ['Public Safety']
     >>> browser.getControl(name='protocols:list').displayValue = ['Public Safety']
-    >>> browser.getControl(name='publications:list').displayValue = ['Glazed Roast Chicken']
+    >>> browser.getControl(name='publications:list').displayValue = ['Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.']
     >>> browser.getControl(name='resources:list').displayValue = ['A web index']
     >>> browser.getControl(name='form.button.save').click()
     >>> bodySystemStudy = biomarkerOrgan['mr-goatse-a-closer-look-at-the-anus']
@@ -340,7 +340,7 @@ solely within Biomarker Body Systems::
     >>> bodySystemStudy.protocols[0].title
     'Public Safety'
     >>> bodySystemStudy.publications[0].title
-    'Glazed Roast Chicken'
+    'Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.'
     >>> bodySystemStudy.resources[0].title
     'A web index'
 
@@ -456,7 +456,7 @@ objects, which contain Study Statistics). Adding those objects to our panel::
     >>> browser.getControl(name='identifier').value = 'urn:edrn:various-secretions:rectum'
     >>> browser.getControl(name='bodySystem:list').displayValue = ['Rectum']
     >>> browser.getControl(name='protocols:list').displayValue = ['Public Safety']
-    >>> browser.getControl(name='publications:list').displayValue = ['Teriyaki Beef']
+    >>> browser.getControl(name='publications:list').displayValue = ['Early detection biomarkers for ovarian cancer.']
     >>> browser.getControl(name='resources:list').displayValue = ['A search engine']
     >>> browser.getControl(name='phase').value = '5'
     >>> browser.getControl(name='qaState').value = 'Low'
@@ -466,7 +466,7 @@ objects, which contain Study Statistics). Adding those objects to our panel::
     >>> browser.getControl(name='identifier').value = 'urn:edrn:various-secretions:rectum:anus'
     >>> browser.getControl(name='protocol:list').displayValue = ['Public Safety']
     >>> browser.getControl(name='protocols:list').displayValue = ['Public Safety']
-    >>> browser.getControl(name='publications:list').displayValue = ['Glazed Roast Chicken']
+    >>> browser.getControl(name='publications:list').displayValue = ['Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.']
     >>> browser.getControl(name='resources:list').displayValue = ['A web index']
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.getLink(id='study-statistics').click()
@@ -621,7 +621,7 @@ Ingesting::
     >>> a1.identifier
     'http://edrn/bmdb/a1'
     >>> a1.publications[0].title
-    'Glazed Roast Chicken'
+    'Early detection biomarkers for ovarian cancer.'
     >>> a1.resources[0].title
     'A web index'
 
@@ -660,7 +660,7 @@ Thanks a lot, ZCatalog.  Continuing::
     >>> o1.identifier
     'http://edrn/bmdb/a1/o1'
     >>> o1.publications[0].title
-    'Teriyaki Beef'
+    'Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.'
     >>> s1 = o1['public-safety']
     >>> s1.protocol.title
     'Public Safety'
@@ -859,7 +859,7 @@ able to view information beyond the basics::
 
     >>> browser.open(portalURL + '/tacky-biomarkers/BB')
     >>> browser.contents
-    '...Basics...Ooze...Organs...Anus...Publications...Glazed Roast Chicken...'
+    '...Basics...Ooze...Organs...Anus...Publications...Early detection...'
     >>> 'This biomarker is currently being annotated or is under review' not in browser.contents
     True
 
@@ -1063,7 +1063,7 @@ No information from the Studies tab should show up::
 But publications are fine::
 
     >>> unprivilegedBrowser.contents
-    '...QA State...Curated...Organs...Studies...Publications...Glazed Roast Chicken...'
+    '...QA State...Curated...Organs...Studies...Publications...Letter to the editor...'
 
 And resources are OK too::
 
