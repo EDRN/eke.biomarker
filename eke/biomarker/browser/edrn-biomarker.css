@@ -214,3 +214,18 @@ div#colLeftContent h4 {
 	margin-top:20px;
 	border-bottom:dotted 1px #bcbcbc;
 }
+.biomuta-table table td {
+    padding: 4px;
+    margin: 2px;
+    border: solid 1px #ccc;
+    border-top: 0;
+    border-right: 0;
+    vertical-align: top;
+}
+.biomuta-table table th {
+    border-bottom: dotted 1px #ccc;
+    border-left: solid 1px #ccc;
+    background-color: #f2f2f2;
+    padding: 5px;
+    text-align: left;
+}

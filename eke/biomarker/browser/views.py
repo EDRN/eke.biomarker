@@ -19,6 +19,7 @@ CURATED_SECTIONS = {
     'Studies': False,
     'Publications': True,
     'Resources': True,
+    'Biomuta': True,
     'Organs-Supplemental': False,
 }
 

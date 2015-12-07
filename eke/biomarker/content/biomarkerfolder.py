@@ -26,6 +26,16 @@ BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Sch
             size=60,
         ),
     ),
+    atapi.StringField(
+        'bmuDataSource',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Biomarker-BioMuta RDF Data Source'),
+            description=_(u'URL to a source of RDF data that supplements the RDF data source with biomarker-BioMuta data.'),
+            size=60,
+        ),
+    ),
     atapi.TextField(
         'disclaimer',
         required=False,
@@ -50,6 +60,7 @@ class BiomarkerFolder(knowledgefolder.KnowledgeFolder):
     _at_rename_after_creation = True
     schema                    = BiomarkerFolderSchema
     bmoDataSource             = atapi.ATFieldProperty('bmoDataSource')
+    bmuDataSource             = atapi.ATFieldProperty('bmuDataSource')
     disclaimer                = atapi.ATFieldProperty('disclaimer')
 
 atapi.registerType(BiomarkerFolder, PROJECTNAME)

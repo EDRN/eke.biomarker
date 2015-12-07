@@ -5,6 +5,15 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
+1.1.17 ?~@~T Biomuta
+------------------
+
+?~@? Added Biomuta tab to a Biomarker's elemental page and also removed biomuta 
+  link from "basic" tab. Biomuta tab was not added to Panel since Biomuta entries
+  reference single biomarker entities. Biomuta stats are added as an attribute 
+  of a Biomarker since they are characteristics associated directly with the 
+  biomarker.
+
 
 1.1.17 — Bug Fixes
 ------------------

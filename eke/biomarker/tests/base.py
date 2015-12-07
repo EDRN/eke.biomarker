@@ -131,6 +131,30 @@ _biomarkerOrganA = '''<?xml version='1.0' encoding='UTF-8'?>
     </bmdb:SensitivityData>
 </rdf:RDF>'''
 
+_biomutaA = '''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#"
+  xmlns:ns2="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/APG1">
+    <ns1:mutationCount>12</ns1:mutationCount>
+    <ns1:cancerDOCount>11</ns1:cancerDOCount>
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:geneName>APG1</ns1:geneName>
+    <ns1:uniprotAccession>P18847</ns1:uniprotAccession>
+    <ns1:pubmedIDCount>8</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/IGFBP2">
+    <ns1:cancerDOCount>11</ns1:cancerDOCount>
+    <ns1:uniprotAccession>Q8N196</ns1:uniprotAccession>
+    <ns1:affectedProtFuncSiteCount>1</ns1:affectedProtFuncSiteCount>
+    <ns1:mutationCount>24</ns1:mutationCount>
+    <ns1:geneName>SIX5</ns1:geneName>
+    <ns1:pubmedIDCount>10</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+</rdf:RDF>'''
+
 _biomarkerB = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/b1'>
@@ -179,6 +203,30 @@ _biomarkerOrganB = '''<?xml version='1.0' encoding='UTF-8'?>
     </bmdb:BiomarkerOrganData>
 </rdf:RDF>'''
 
+_biomutaB = '''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#"
+  xmlns:ns2="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/TM4SF1">
+    <ns1:geneName>TM4SF1</ns1:geneName>
+    <ns1:cancerDOCount>11</ns1:cancerDOCount>
+    <ns1:mutationCount>16</ns1:mutationCount>
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:pubmedIDCount>4</ns1:pubmedIDCount>
+    <ns1:uniprotAccession>P30408</ns1:uniprotAccession>
+  </ns2:Biomarker>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/DDTL">
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:uniprotAccession>A6NHG4</ns1:uniprotAccession>
+    <ns1:cancerDOCount>3</ns1:cancerDOCount>
+    <ns1:mutationCount>2</ns1:mutationCount>
+    <ns1:geneName>DDTL</ns1:geneName>
+    <ns1:pubmedIDCount>2</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+</rdf:RDF>'''
+
 _biomarkerC = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/msb'>
@@ -213,6 +261,30 @@ _biomarkerC = '''<?xml version='1.0' encoding='UTF-8'?>
 
 _biomarkerOrganC = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>'''
+
+_biomutaC = '''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#"
+  xmlns:ns2="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/GLUD2">
+    <ns1:pubmedIDCount>3</ns1:pubmedIDCount>
+    <ns1:uniprotAccession>P49448</ns1:uniprotAccession>
+    <ns1:geneName>GLUD2</ns1:geneName>
+    <ns1:mutationCount>52</ns1:mutationCount>
+    <ns1:affectedProtFuncSiteCount>1</ns1:affectedProtFuncSiteCount>
+    <ns1:cancerDOCount>13</ns1:cancerDOCount>
+  </ns2:Biomarker>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/GIMAP8">
+    <ns1:uniprotAccession>Q8ND71</ns1:uniprotAccession>
+    <ns1:mutationCount>89</ns1:mutationCount>
+    <ns1:geneName>GIMAP8</ns1:geneName>
+    <ns1:cancerDOCount>21</ns1:cancerDOCount>
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:pubmedIDCount>20</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+</rdf:RDF>'''
 
 _badStudyBiomarker = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
@@ -250,6 +322,21 @@ _badStudyBiomarkerOrgan = '''<?xml version='1.0' encoding='UTF-8'?>
   </bmdb:BiomarkerOrganStudyData>
 </rdf:RDF>'''
 
+_badStudyBiomutaC = '''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#"
+  xmlns:ns2="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/BS">
+    <ns1:uniprotAccession>BSACC</ns1:uniprotAccession>
+    <ns1:mutationCount>0</ns1:mutationCount>
+    <ns1:geneName>BS</ns1:geneName>
+    <ns1:cancerDOCount>0</ns1:cancerDOCount>
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:pubmedIDCount>0</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+</rdf:RDF>'''
 
 _privateBiomarker = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
@@ -285,6 +372,22 @@ _privateBiomarkerOrgan = '''<?xml version='1.0' encoding='UTF-8'?>
     </bmdb:BiomarkerOrganData>
 </rdf:RDF>'''
 
+_privateBiomuta = '''<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#"
+  xmlns:ns2="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns2:Biomarker rdf:about="http://edrn.nci.nih.gov/data/biomuta/S1">
+    <ns1:uniprotAccession>S1ACC</ns1:uniprotAccession>
+    <ns1:mutationCount>0</ns1:mutationCount>
+    <ns1:geneName>S1</ns1:geneName>
+    <ns1:cancerDOCount>0</ns1:cancerDOCount>
+    <ns1:affectedProtFuncSiteCount>0</ns1:affectedProtFuncSiteCount>
+    <ns1:pubmedIDCount>0</ns1:pubmedIDCount>
+  </ns2:Biomarker>
+</rdf:RDF>'''
+
 
 # BiomarkerIngestException: Study "http://edrn.nci.nih.gov/data/protocols/" not found for biomarker body system "'http://tumor.jpl.nasa.gov/bmdb/biomarkers/organs/100/120'"
 
@@ -295,12 +398,17 @@ def registerLocalTestData():
     ekeECASBase.registerLocalTestData()
     ekeKnowledgeBase.registerTestData('/biomarkers/a', _biomarkerA)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/a', _biomarkerOrganA)
+    ekeKnowledgeBase.registerTestData('/biomuta/a', _biomutaA)
     ekeKnowledgeBase.registerTestData('/biomarkers/b', _biomarkerB)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/b', _biomarkerOrganB)
+    ekeKnowledgeBase.registerTestData('/biomuta/b', _biomutaB)
     ekeKnowledgeBase.registerTestData('/biomarkers/c', _biomarkerC)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/c', _biomarkerOrganC)
+    ekeKnowledgeBase.registerTestData('/biomuta/c', _biomutaC)
     ekeKnowledgeBase.registerTestData('/biomarkers/bad-study', _badStudyBiomarker)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/bad-study', _badStudyBiomarkerOrgan)
+    ekeKnowledgeBase.registerTestData('/biomuta/bad-study', _badStudyBiomutaC)
     ekeKnowledgeBase.registerTestData('/biomarkers/private', _privateBiomarker)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/private', _privateBiomarkerOrgan)
+    ekeKnowledgeBase.registerTestData('/biomuta/private', _privateBiomuta)
 

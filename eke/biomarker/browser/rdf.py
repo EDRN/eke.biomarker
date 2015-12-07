@@ -54,6 +54,9 @@ MAX_NON_UNIQUE_BIOMARKER_IDS = 100
 # Interface identifier for EDRN Collaborative Group, from edrnsite.collaborations
 _collabGroup = 'edrnsite.collaborations.interfaces.collaborativegroupindex.ICollaborativeGroupIndex'
 
+# Biomuta Subject URI Prefix. Used to locate which biomuta gene name belongs to which objectID in biomarkers
+_biomutaSubjectPrefix = 'http://edrn.nci.nih.gov/data/biomuta/'
+
 def flatten(l):
     '''Flatten a list.'''
     for i in l:
@@ -185,6 +188,13 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 bags = bmStudyDataPredicates[_sensitivityDatasPredicateURI]
                 self.addStatistics(bodySystemStudy, bags, statements, normalizer, catalog)
             bodySystemStudy.reindexObject()
+    def addMutationSpecificInformation(self, bmId, predicates, biomutastatements):
+        '''Populate biomarkers with biomuta (aka "mutation") details.'''
+        biomutalookup = URIRef(_biomutaSubjectPrefix + bmId)
+        #look for gene name in biomuta list, if exists, then add biomuta predicates to biomarker's
+        if biomutalookup in biomutastatements.keys():
+            predicates.update(biomutastatements[biomutalookup])
+
     def addOrganSpecificInformation(self, biomarkers, statements, normalizer, catalog):
         '''Populate biomarkers with body system (aka "organ") details.'''
         for uri, predicates in statements.items():
@@ -219,8 +229,8 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
     def __call__(self):
         '''Ingest and render a results page.'''
         context = aq_inner(self.context)
-        rdfDataSource, bmoDataSource = context.rdfDataSource, context.bmoDataSource
-        if not rdfDataSource or not bmoDataSource:
+        rdfDataSource, bmoDataSource, bmuDataSource = context.rdfDataSource, context.bmoDataSource, context.bmuDataSource
+        if not rdfDataSource or not bmoDataSource or not bmuDataSource:
             raise RDFIngestException(_(u'This biomarker folder lacks one or both of its RDF source URLs.'))
         # Weapons at ready
         catalog = getToolByName(context, 'portal_catalog')
@@ -228,6 +238,12 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         graph = ConjunctiveGraph()
         graph.parse(URLInputSource(rdfDataSource))
         statements = self._parseRDF(graph)
+
+        # Add mutation-specific information
+        graph = ConjunctiveGraph()
+        graph.parse(URLInputSource(bmuDataSource))
+        mutationStatements = self._parseRDF(graph)
+
         # Clean the slate (but not the subfolders)
         results = catalog(path=dict(query='/'.join(context.getPhysicalPath()), depth=1),
             object_provides=IBiomarker.__identifier__)
@@ -242,6 +258,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 isPanel = bool(int(predicates[_isPanelPredicateURI][0]))
                 title = unicode(predicates[_bmTitlePredicateURI][0])
                 hgnc = predicates[_hgncPredicateURI][0] if _hgncPredicateURI in predicates else None
+
                 if hgnc is not None:
                     hgnc = hgnc.strip()
                 objID = hgnc if hgnc else normalizerFunction(title)
@@ -259,6 +276,10 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     if obj is None:
                         raise BadRequest("Something's wrong. Got more than %d biomarkers with the same ID '%s'!" %
                             (MAX_NON_UNIQUE_BIOMARKER_IDS, objID))
+                if not isPanel:
+                    #Append biomuta's predicates if gene symbol exists in biomuta's list as well
+                    self.addMutationSpecificInformation(objID, predicates, mutationStatements)
+                #Update biomarker, if biomuta was added, biomuta predicates will be updated as well
                 self.updateBiomarker(obj, uri, predicates, context, statements)
                 newBiomarkers[uri] = obj
                 obj.reindexObject()
@@ -277,6 +298,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     current = [i.UID() for i in panel.members]
                     current.append(biomarkerUID)
                     panel.setMembers(current)
+
             except KeyError:
                 pass
         # Add organ-specific information
@@ -287,7 +309,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         # Update indicated organs:
         for biomarker in newBiomarkers.values():
             biomarker.updatedIndicatedBodySystems()
-            biomarker.reindexObject()
+            biomarker.reindexObject() 
         # Publish as necessary
         for uri, predicates in statements.items():
             if uri in newBiomarkers:

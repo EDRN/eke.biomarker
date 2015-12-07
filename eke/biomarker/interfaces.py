@@ -25,6 +25,11 @@ class IBiomarkerFolder(IKnowledgeFolder):
         description=_(u'URL to a source of RDF data that supplements the RDF data source with biomarker-organ data.'),
         required=True
     )
+    bmuDataSource = schema.TextLine(
+        title=_(u'Biomarker-BioMuta RDF Data Source'),
+        description=_(u'URL to a source of RDF data that supplements the RDF data source with biomarker-biomuta data.'),
+        required=True
+    )
     disclaimer = schema.Text(
         title=_(u'Disclaimer'),
         description=_(u'Legal disclaimer to display on Biomarker Folder pages.'),
@@ -148,7 +153,36 @@ class IBiomarker(IKnowledgeObject, IResearchedObject, IQualityAssuredObject):
         description=_(u'What kind of biomarker.'),
         required=False,
     )
-    
+    geneName = schema.TextLine(
+        title=_(u'Gene Symbol/Name'),
+        description=_(u'The biomarker annotation that indicates gene symbol or name.'),
+        required=False,
+    )
+    uniProtAC = schema.TextLine(
+        title=_(u'Uniprot Accession'),
+        description=_(u'The biomarker annotation that indicates the associated uniprot accession.'),
+        required=False,
+    )
+    mutCount = schema.TextLine(
+        title=_(u'Number of Mutation Sites'),
+        description=_(u'The biomarker annotation that indicates the number of mutation sites.'),
+        required=False,
+    )
+    pmidCount = schema.TextLine(
+        title=_(u'Pubmed ID Count'),
+        description=_(u'The biomarker annotation that indicates the number of associated pubmed ids.'),
+        required=False,
+    )
+    cancerDOCount = schema.TextLine(
+        title=_(u'CancerDO Count'),
+        description=_(u'The biomarker annotation that indicates the CancerDO.'),
+        required=False,
+    )
+    affProtFuncSiteCount = schema.TextLine(
+        title=_(u'Affected Protein Function Site Count'),
+        description=_(u'The biomarker annotation that indicates the number of affected protein function sites.'),
+        required=False,
+    )
 
 class IBiomarkerPanel(IBiomarker):
     '''A panel of biomarkers that itself behaves as a single (yet composite) biomarker.'''

@@ -14,16 +14,17 @@ from zope.interface import implements, directlyProvides
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
 
-predicateURIBase = 'http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#'
+predicateURIBase     = 'http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#'
+predicateURIBaseEdrn = 'http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#'
 
 QualityAssuredObjectSchema = atapi.Schema((
     atapi.StringField(
         'qaState',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         widget=atapi.StringWidget(
             label=_(u'QA State'),
-            description='The current status with regard to quality assurance of this object.',
+            
         ),
         predicateURI=predicateURIBase + 'QAState',
     ),
@@ -33,10 +34,10 @@ PhasedObjectSchema = atapi.Schema((
     atapi.StringField(
         'phase',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         widget=atapi.StringWidget(
             label=_(u'Phase'),
-            description=_(u"The current phase of the biomarker's development with regard to this organ."),
+            
         ),
         predicateURI=predicateURIBase + 'Phase',
     ),
@@ -53,7 +54,7 @@ ResearchedObjectSchema = atapi.Schema((
         vocabulary_display_path_bound=-1,
         widget=atapi.ReferenceWidget(
             label=_(u'Protocols & Studies'),
-            description=_(u'Protocols and studies that are studying this object.'),
+            
         ),
         predicateURI=predicateURIBase + 'referencesStudy',
     ),
@@ -67,7 +68,7 @@ ResearchedObjectSchema = atapi.Schema((
         vocabulary_display_path_bound=-1,
         widget=atapi.ReferenceWidget(
             label=_(u'Publications'),
-            description=_(u'Publications that have been written talking about this object.'),
+            
         ),
         predicateURI=predicateURIBase + 'referencedInPublication',
     ),
@@ -81,7 +82,7 @@ ResearchedObjectSchema = atapi.Schema((
         vocabulary_display_path_bound=-1,
         widget=atapi.ReferenceWidget(
             label=_(u'Resources'),
-            description=_(u'Additional resources about this object.'),
+            
         ),
         predicateURI=predicateURIBase + 'referencesResource',
     ),
@@ -95,7 +96,7 @@ ResearchedObjectSchema = atapi.Schema((
         vocabulary_display_path_bound=-1,
         widget=atapi.ReferenceWidget(
             label=_(u'Datasets'),
-            description=_(u'Datasets providing measured scientific bases for this object.'),
+            
         ),
         predicateURI=predicateURIBase + 'AssociatedDataset',
     ),
@@ -106,51 +107,51 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
     atapi.StringField(
         'shortName',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         widget=atapi.StringWidget(
             label=_(u'Short Name'),
-            description=_(u'A shorter and preferred alias for the biomarker'),
+            
         ),
         predicateURI=predicateURIBase + 'ShortName',
     ),
     atapi.StringField(
         'hgncName',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         widget=atapi.StringWidget(
             label=_(u'HGNC Name'),
-            description=_(u'The name assigned by the HUGO Gene Nomenclature Committee.'),
+            
         ),
         predicateURI=predicateURIBase + 'HgncName',
     ),
     atapi.LinesField(
         'bmAliases',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         multiValued=True,
         searchable=True,
         widget=atapi.LinesWidget(
             label=_(u'Aliases'),
-            description=_(u'Additional names by which the biomarker is known.'),
+            
         ),
         predicateURI=predicateURIBase + 'Alias'
     ),
     atapi.LinesField(
         'indicatedBodySystems',
         storage=atapi.AnnotationStorage(),
-        required=False,
+        
         multiValued=True,
         searchable=True,
         widget=atapi.LinesWidget(
             label=_(u'Indicated Organs'),
-            description=_(u'Organs for which this biomarker is an indicator.'),
+            
             visible={'view': 'invisible', 'edit': 'invisible'},
         ),
     ),
     atapi.ComputedField(
         'biomarkerKind',
         searchable=True,
-        required=False,
+        
         expression='u"Biomarker"',
         modes=('view',),
         widget=atapi.ComputedWidget(
@@ -167,6 +168,60 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
             description=_(u'URIs identifying groups that may access this biomarker.'),
         ),
     ),
+    atapi.StringField(
+        'geneName',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Gene Name'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'geneName',
+    ),
+    atapi.StringField(
+        'uniProtAC',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Uniprot Accession'),
+        ),
+        predicateURI=predicateURIBaseEdrn+ 'uniprotAccession',
+    ),
+    atapi.StringField(
+        'mutCount',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Number of Mutation Sites'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'mutationCount',
+    ),
+    atapi.StringField(
+        'pmidCount',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Pubmed ID Count'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'pubmedIDCount',
+    ),
+    atapi.StringField(
+        'cancerDOCount',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'CancerDO  Count'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'cancerDOCount',
+    ),
+    atapi.StringField(
+        'affProtFuncSiteCount',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Affected Protein Function Site Count'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'affectedProtFuncSiteCount',
+    )
 ))
 
 # FIXME: These should probably both be Dublin Core some day:
@@ -188,6 +243,13 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     datasets             = atapi.ATReferenceFieldProperty('datasets')
     shortName            = atapi.ATFieldProperty('shortName')
     hgncName             = atapi.ATFieldProperty('hgncName')
+    geneName             = atapi.ATFieldProperty('geneName')
+    uniProtAC            = atapi.ATFieldProperty('uniProtAC')
+    mutCount             = atapi.ATFieldProperty('mutCount')
+    pmidCount            = atapi.ATFieldProperty('pmidCount')
+    cancerDOCount        = atapi.ATFieldProperty('cancerDOCount')
+    affProtFuncSiteCount = atapi.ATFieldProperty('affProtFuncSiteCount')
+
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]
     def updatedIndicatedBodySystems(self):

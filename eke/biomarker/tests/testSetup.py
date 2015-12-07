@@ -52,6 +52,7 @@ class SetupTest(unittest.TestCase):
         '''Ensure fields for URLs are extra wide.'''
         from eke.biomarker.content.biomarkerfolder import BiomarkerFolderSchema
         self.failUnless(BiomarkerFolderSchema['bmoDataSource'].widget.size >= 60)
+        self.failUnless(BiomarkerFolderSchema['bmuDataSource'].widget.size >= 60)
     def testVocabularies(self):
         vocabs = (u'eke.biomarker.BiomarkersVocabulary', u'eke.biomarker.IndicatedOrgansVocabulary')
         for v in vocabs:

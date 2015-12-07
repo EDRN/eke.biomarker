@@ -85,6 +85,7 @@ be created anywhere in the portal::
     >>> browser.getControl(name='description').value = 'This folder is just for functional tests.'
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/a'
     >>> browser.getControl(name='disclaimer').value = u'You are legally obligated to not use these biomarkers.'
     >>> browser.getControl(name='form.button.save').click()
     >>> 'questionable-biomarkers' in portal.objectIds()
@@ -98,6 +99,8 @@ be created anywhere in the portal::
     'testscheme://localhost/biomarkers/a'
     >>> f.bmoDataSource
     'testscheme://localhost/biomarkerorgans/a'
+    >>> f.bmuDataSource
+    'testscheme://localhost/biomuta/a'
     >>> f.disclaimer
     'You are legally obligated to not use these biomarkers.'
 
@@ -196,6 +199,12 @@ Now we can create a testing Elemental Biomarker::
     >>> browser.getControl(name='resources:list').displayValue = ['A search engine', 'A web index']
     >>> browser.getControl(name='datasets:list').displayValue = ['Get Bent']
     >>> browser.getControl(name='accessGroups:lines').value = 'ldap://access.this/1'
+    >>> browser.getControl(name='geneName').value = 'P55' # CA-1235
+    >>> browser.getControl(name='uniProtAC').value = 'X2' # CA-1235
+    >>> browser.getControl(name='mutCount').value = '8' # CA-1235
+    >>> browser.getControl(name='pmidCount').value = '200' # CA-1235
+    >>> browser.getControl(name='cancerDOCount').value = '5' # CA-1235
+    >>> browser.getControl(name='affProtFuncSiteCount').value = '15' # CA-1235
     >>> browser.getControl(name='form.button.save').click()
     >>> 'phthalate' in f.objectIds()
     True
@@ -228,6 +237,18 @@ Now we can create a testing Elemental Biomarker::
     'Get Bent'
     >>> biomarker.accessGroups
     ('ldap://access.this/1',)
+    >>> biomarker.geneName
+    'P55'
+    >>> biomarker.uniProtAC
+    'X2'
+    >>> biomarker.mutCount
+    '8'
+    >>> biomarker.pmidCount
+    '200'
+    >>> biomarker.cancerDOCount
+    '5'
+    >>> biomarker.affProtFuncSiteCount
+    '15'
 
 Heather Kincaid reported (not via the issue tracker, unfortunately) that the
 URLs to datasets should go into ECAS.  Do they?  Let's look::
@@ -501,10 +522,10 @@ CA-1235 introduces HGNC_ names to biomarkers::
     '...HGNC Name:...X1...'
 
 Works!  Related to this is CA-1247, which wants links from biomarkers to
-BioMuta_.  Are those links there?  Check it out::
+BioMuta_.  These links have been automatically ingested and displayed as a new table based on a newer requirement from Sean Kelly. Are those links there? Hopefully not anymore, lets check it out::
 
-    >>> browser.contents
-    '...a href="https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php?gene=X1"...'    
+    >>> 'a href="https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php?gene=X1"' in browser.contents
+    False 
 
 Wootly.
 
@@ -588,6 +609,7 @@ So, let's create a new biomarker folder and have it ingest some RDF::
     >>> browser.getControl(name='title').value = 'Tacky Biomarkers'
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/a'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.open(portalURL + '/tacky-biomarkers/content_status_modify?workflow_action=publish')
     >>> f = portal['tacky-biomarkers']
@@ -624,6 +646,19 @@ Ingesting::
     'Early detection biomarkers for ovarian cancer.'
     >>> a1.resources[0].title
     'A web index'
+    >>> a1.geneName
+    'APG1'
+    >>> a1.uniProtAC
+    'P18847'
+    >>> a1.mutCount
+    '12'
+    >>> a1.pmidCount
+    '8'
+    >>> a1.cancerDOCount
+    '11'
+    >>> a1.affProtFuncSiteCount
+    '0'
+
 
 Noticed that the Apogee 1 got its HGNC_ name (APG1) as its object ID. The panel
 doesn't have an HGNC name, so it took its object ID from the title (CA-1235).
@@ -831,6 +866,7 @@ source that defines a biomarker that's currently under review::
     >>> browser.open(portalURL + '/tacky-biomarkers/edit')
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/b'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/b'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/b'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.getLink('Ingest').click()
 
@@ -893,6 +929,7 @@ empty element.  Ingesting::
     >>> browser.open(portalURL + '/tacky-biomarkers/edit')
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/b'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/b'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/b'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.getLink('Ingest').click()
     >>> browser.contents
@@ -953,6 +990,7 @@ an error::
     >>> browser.open(portalURL + '/tacky-biomarkers/edit')
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/bad-study'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/bad-study'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/bad-study'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.getLink('Ingest').click()
     >>> browser.contents
@@ -986,6 +1024,7 @@ Now let's ingest a private one::
     >>> browser.open(portalURL + '/tacky-biomarkers/edit')
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/private'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/private'
+    >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/private'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.getLink('Ingest').click()
 
@@ -1014,7 +1053,7 @@ Let's revisit our "Phthalate" biomarker and change its QA state::
 
     >>> unprivilegedBrowser.open(portalURL + '/questionable-biomarkers/phthalate')
     >>> unprivilegedBrowser.contents
-    '...QA State...Under Review...Organs...under review...Studies...under review...Publications...under review...Resources...under review...'
+    '...QA State...Under Review...Organs...under review...Studies...under review...Publications...under review...Resources...under review...Biomuta...under review...'
 
 As you can see, a biomarker under view doesn't reveal very much at all.  Now,
 let's change the QA state of Phthalate to "Curated"::
@@ -1065,10 +1104,15 @@ But publications are fine::
     >>> unprivilegedBrowser.contents
     '...QA State...Curated...Organs...Studies...Publications...Letter to the editor...'
 
-And resources are OK too::
+And resources are OK::
 
     >>> unprivilegedBrowser.contents
     '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
+
+And Biomuta is OK too::
+
+    >>> unprivilegedBrowser.contents
+    '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...Biomuta...'
 
 And that's it.
 

@@ -45,14 +45,6 @@
                                     <li tal:repeat='alias aliases'><span tal:content='alias'>Sydney</span>,</li>
                                 </ul>
                             </div>
-                            <p><a
-                                href='#'
-                                title='BioMuta is a curated single-nucleotide variation/disease association database'
-                                i18n:attributes='title'
-                                tal:define='biomuta string:https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php'
-                                tal:attributes='href string:${biomuta}?gene=${context/hgncName}'>
-                                <span i18n:translate='viewInBioMuta'>View in BioMuta</span>
-                            </a></p>
                             <h4 i18n:translate='bm_DescriptionHeading'>Description&#x2026;</h4>
                             <p>
                                 <metal:field use-macro='python:context.widget("description", mode="view")'>
@@ -400,6 +392,80 @@
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </div>
+                    <div class='tabbertab' tal:define='
+                            mutCount context/mutCount;
+                            approvedViewable python:view.viewable("Biomuta");
+                    '>
+                        <h2 i18n:translate='bm_ResourcesTab'
+                            tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
+                            Biomuta
+                        </h2>
+                        <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
+                            Log in to view this section, if necessary.
+                        </div>
+                        <div tal:condition='approvedViewable'>
+                            <center>
+                            <p class='discreet' tal:condition='not:mutCount' i18n:translate='bm_nomutCount'>
+                                No associated Biomuta entries found.
+                            </p>
+                            <div class="biomuta-table" tal:condition='mutCount'>    
+                                <H3>Mutation Statistics</H3>
+                            <table>
+                                <tr>
+                                    <th i18n:translate='label_geneName'>
+                                        Gene Name:
+                                    </th>
+                                    <td tal:content='context/geneName'>
+                                        ANX1
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th i18n:translate='label_uniProtAC'>
+                                        UniProt Accession #:
+                                    </th>
+                                    <td tal:content='context/uniProtAC'>
+                                        Q8N196
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th i18n:translate='label_mutCount'>
+                                        Mutated Sites Count:
+                                    </th>
+                                    <td tal:content='context/mutCount'>
+                                        0
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th i18n:translate='label_pmidCount'>
+                                        Associated Pubmed ID Count
+                                    </th>
+                                    <td tal:content='context/pmidCount'>
+                                        1
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th i18n:translate='label_cancerDOCount'>
+                                        CancerDO Count
+                                    </th>
+                                    <td tal:content='context/cancerDOCount'>
+                                        2
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th i18n:translate='label_affProtFuncSiteCount'>
+                                        Affected Protein Function Sites Count:
+                                    </th>
+                                    <td tal:content='context/affProtFuncSiteCount'>
+                                        1
+                                    </td>
+                                </tr>
+                            </table>
+                                <br><br>
+                                <I>BioMuta is a curated single-nucleotide variation/disease association database.</I>
+                            </div>
+                            </center>
                         </div>
                     </div>
                 </div>
