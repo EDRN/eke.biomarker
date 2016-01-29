@@ -525,7 +525,7 @@ Works!  Related to this is CA-1247, which wants links from biomarkers to
 BioMuta_.  These links have been automatically ingested and displayed as a new table based on a newer requirement from Sean Kelly. Are those links there? Hopefully not anymore, lets check it out::
 
     >>> 'a href="https://hive.biochemistry.gwu.edu/tools/biomuta/biomuta.php?gene=X1"' in browser.contents
-    False 
+    True
 
 Wootly.
 
@@ -1108,6 +1108,8 @@ And resources are OK::
 
     >>> unprivilegedBrowser.contents
     '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
+    >>> '...Resources...gquery...geoprofiles...nuccore...gds...ncbi..snp...' in unprivilegedBrowser.contents
+    True
 
 And Biomuta is OK too::
 

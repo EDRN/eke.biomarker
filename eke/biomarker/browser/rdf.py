@@ -1,5 +1,4 @@
-# encoding: utf-8
-# Copyright 2009 California Institute of Technology. ALL RIGHTS
+# encoding: utf-8 # Copyright 2009 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 '''
@@ -17,7 +16,7 @@ from eke.study.interfaces import IProtocol
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
-from rdflib import URIRef, ConjunctiveGraph, URLInputSource
+from rdflib import URIRef, ConjunctiveGraph, URLInputSource, Literal
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
@@ -30,6 +29,7 @@ _logger = logging.getLogger(__name__)
 _accessPredicateURI                      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#AccessGrantedTo')
 _biomarkerPredicateURI                   = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Biomarker')
 _biomarkerTypeURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Biomarker')
+_bmRefResourceURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#referencesResource')
 _bmOrganDataTypeURI                      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#BiomarkerOrganData')
 _bmTitlePredicateURI                     = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Title')
 _certificationPredicateURI               = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#certification')
@@ -194,6 +194,34 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         #look for gene name in biomuta list, if exists, then add biomuta predicates to biomarker's
         if biomutalookup in biomutastatements.keys():
             predicates.update(biomutastatements[biomutalookup])
+    def addExternaResourcesInformation(self, bmId, predicates):
+        #This function is a temporary workaround until we generate the knowledge rdfs for these external resources
+        extres = {}
+        for res in predicates[_bmRefResourceURI]:
+            if "http://www.genenames.org/data/hgnc_data.php" in res.n3():
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#reshgnc')] = [res]
+                predicates[_bmRefResourceURI].remove(res)
+            elif "http://www.genome.jp/dbget-bin/www_bget" in res.n3():
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#reskegg')] = [res]
+                predicates[_bmRefResourceURI].remove(res)
+            elif "http://www.uniprot.org/uniprot" in res.n3():
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resuniprot')] = [res]
+                predicates[_bmRefResourceURI].remove(res)
+            elif "http://www.ncbi.nlm.nih.gov/protein" in res.n3():
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#proteinref')] = [res]
+                predicates[_bmRefResourceURI].remove(res)
+            elif "http://www.fda.gov" in res.n3():
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resfda')] = res.n3()
+                predicates[_bmRefResourceURI].remove(res)
+
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#geoprofile')] = [u'http://www.ncbi.nlm.nih.gov/geoprofiles/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#geodataset')] = [u'http://www.ncbi.nlm.nih.gov/gds/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resentrez')] = [u'http://www.ncbi.nlm.nih.gov/gquery/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#ressnp')] = [u'http://www.ncbi.nlm.nih.gov/snp/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#ressnp')] = [u'http://www.ncbi.nlm.nih.gov/snp/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#generef')] = [u'http://www.ncbi.nlm.nih.gov/nuccore/?term={}{}+{}{}+{}{}'.format(bmId,"[Gene Name]", "Homo Sapiens", "[Organism]", "RefSeqGene", "[Keyword]")]
+
+        predicates.update(extres)
 
     def addOrganSpecificInformation(self, biomarkers, statements, normalizer, catalog):
         '''Populate biomarkers with body system (aka "organ") details.'''
@@ -279,6 +307,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 if not isPanel:
                     #Append biomuta's predicates if gene symbol exists in biomuta's list as well
                     self.addMutationSpecificInformation(objID, predicates, mutationStatements)
+                    self.addExternaResourcesInformation(objID, predicates)
                 #Update biomarker, if biomuta was added, biomuta predicates will be updated as well
                 self.updateBiomarker(obj, uri, predicates, context, statements)
                 newBiomarkers[uri] = obj
