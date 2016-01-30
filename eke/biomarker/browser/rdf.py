@@ -197,29 +197,35 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
     def addExternaResourcesInformation(self, bmId, predicates):
         #This function is a temporary workaround until we generate the knowledge rdfs for these external resources
         extres = {}
+        remove = []
         for res in predicates[_bmRefResourceURI]:
-            if "http://www.genenames.org/data/hgnc_data.php" in res.n3():
+            if "genenames" in str(res) and "hgnc_data" in str(res) and "hgnc_id" in str(res):
                 extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#reshgnc')] = [res]
-                predicates[_bmRefResourceURI].remove(res)
-            elif "http://www.genome.jp/dbget-bin/www_bget" in res.n3():
+                remove.append(res)
+            elif "http://www.genome.jp/dbget-bin/www_bget" in str(res):
                 extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#reskegg')] = [res]
-                predicates[_bmRefResourceURI].remove(res)
-            elif "http://www.uniprot.org/uniprot" in res.n3():
+                remove.append(res)
+            elif "http://www.uniprot.org/uniprot" in str(res):
                 extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resuniprot')] = [res]
-                predicates[_bmRefResourceURI].remove(res)
-            elif "http://www.ncbi.nlm.nih.gov/protein" in res.n3():
+                remove.append(res)
+            elif "http://www.ncbi.nlm.nih.gov/protein" in str(res):
                 extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#proteinref')] = [res]
-                predicates[_bmRefResourceURI].remove(res)
-            elif "http://www.fda.gov" in res.n3():
-                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resfda')] = res.n3()
-                predicates[_bmRefResourceURI].remove(res)
-
+                remove.append(res)
+            elif "http://www.fda.gov" in str(res):
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resfda')] = [res]
+                remove.append(res)
+            elif "http://www.genecards.org/cgi-bin/" in str(res):
+                extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resgenecard')] = [res]
+                remove.append(res)
+        for res in remove:
+            predicates[_bmRefResourceURI].remove(res)
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#geoprofile')] = [u'http://www.ncbi.nlm.nih.gov/geoprofiles/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#geodataset')] = [u'http://www.ncbi.nlm.nih.gov/gds/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resentrez')] = [u'http://www.ncbi.nlm.nih.gov/gquery/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#ressnp')] = [u'http://www.ncbi.nlm.nih.gov/snp/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
-        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#ressnp')] = [u'http://www.ncbi.nlm.nih.gov/snp/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#resgene')] = [u'http://www.ncbi.nlm.nih.gov/gene/?term={}{}+{}{}'.format(bmId,"[Gene]", "Homo Sapiens", "[Organism]")]
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#generef')] = [u'http://www.ncbi.nlm.nih.gov/nuccore/?term={}{}+{}{}+{}{}'.format(bmId,"[Gene Name]", "Homo Sapiens", "[Organism]", "RefSeqGene", "[Keyword]")]
+        extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#gwasref')] = [u'http://www.gwascentral.org/generegion/phenotypes?q={}&t=ZERO&m=all&page=1&format=html'.format(bmId)]
 
         predicates.update(extres)
 

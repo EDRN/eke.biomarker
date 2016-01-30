@@ -379,72 +379,82 @@
                             Log in to view this section, if necessary.
                         </div>
                         <div tal:condition='approvedViewable'>
+                            <H3>Gene</H3>
+                            <ul>
+                                <li>
+                                    <a href='#' tal:attributes='href context/reshgnc'>
+                                      HGNC entry for <span tal:content='context/hgncName'/> from Genenames
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/reskegg'>
+                                      KEGG entry for <span tal:content='context/hgncName'/> from Genome.jp
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/resentrez'>
+                                      Entrez entry for <span tal:content='context/hgncName'/> all NCBI Databasese
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/geoprofile'>
+                                      Human GEO Profiles for <span tal:content='context/hgncName'/> from NCBI GEO Profiles
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/geodataset'>
+                                      Human Geo Datasets containing term <span tal:content='context/hgncName'/> from NCBI GEO Datasets
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/gwasref'>
+                                      GWAS Study Datasets containing gene <span tal:content='context/hgncName'/> from GWAS
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/ressnp'>
+                                      Human Single Nucleotide Polymorphisms info for <span tal:content='context/hgncName'/>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/resgene'>
+                                      Human Gene(s) with '<span tal:content='context/hgncName'/>' as Gene Name/Alias
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/generef'>
+                                      Human Gene RefSeq for <span tal:content='context/hgncName'/> from NCBI
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/resgenecard'>
+                                      GeneCards entry for human <span tal:content='context/hgncName'/>
+                                    </a>
+                                </li>
+                            </ul>
+                            <H3>Protein</H3>
+                            <ul>
+                                <li>
+                                    <a href='#' tal:attributes='href context/resuniprot'>
+                                        UniProtKB/Swiss-Prot entry for <span tal:content='context/hgncName'/> from Uniprot
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/proteinref'>
+                                        Human Protein RefSeq for <span tal:content='context/hgncName'/> from NCBI
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' tal:attributes='href context/resfda'>
+                                        FDA web page describing approval of <span tal:content='context/hgncName'/>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h3>Other</H3>
                             <p class='discreet' tal:condition='not:resources' i18n:translate='bm_noResources'>
-                                No associated resources found.
+                                No other associated resources found.
                             </p>
                             <div tal:condition='resources'>
-                                <H3>Gene</H3>
-                                <ul>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/reshgnc'>
-                                          HGNC entry for <span tal:content='context/hgncName'/> from Genenames
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/reskegg'>
-                                          KEGG entry for <span tal:content='context/hgncName'/> from Genome.jp
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/resentrez'>
-                                          Entrez entry for <span tal:content='context/hgncName'/> all NCBI Databasese
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/geoprofile'>
-                                          Human GEO Profiles for <span tal:content='context/hgncName'/> from NCBI GEO Profiles
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/geodataset'>
-                                          Human Geo Datasets containing term <span tal:content='context/hgncName'/> from NCBI GEO Datasets
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/ressnp'>
-                                          Human Single Nucleotide Polymorphisms info for <span tal:content='context/hgncName'/>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/resgene'>
-                                          Human Gene(s) with '<span tal:content='context/hgncName'/>' as Gene Name/Alias
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/generef'>
-                                          Human Gene RefSeq for <span tal:content='context/hgncName'/> from NCBI
-                                        </a>
-                                    </li>
-                                </ul>
-                                <H3>Protein</H3>
-                                <ul>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/resuniprot'>
-                                            UniProtKB/Swiss-Prot entry for <span tal:content='context/hgncName'/> from Uniprot
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/proteinref'>
-                                            Human Protein RefSeq for <span tal:content='context/hgncName'/> from NCBI
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href='#' tal:attributes='href context/resfda'>
-                                            FDA web page describing approval of <span tal:content='context/hgncName'/>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <h3>Other</H3>
                                 <ul>
                                     <li tal:repeat='resource resources'>
                                         <a href='#' tal:content='resource/title' title='Bittorrent index'
