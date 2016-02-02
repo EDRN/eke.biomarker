@@ -426,7 +426,7 @@
                                       Human Gene RefSeq for <span tal:content='context/hgncName'/> from NCBI
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/resgenecard'>
                                     <a href='#' tal:attributes='href context/resgenecard'>
                                       GeneCards entry for human <span tal:content='context/hgncName'/>
                                     </a>
