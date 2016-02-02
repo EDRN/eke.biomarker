@@ -1106,10 +1106,12 @@ But publications are fine::
 
 And resources are OK::
 
-    >>> unprivilegedBrowser.contents
-    '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
-    >>> '...Resources...gquery...geoprofiles...nuccore...gds...ncbi..snp...' in unprivilegedBrowser.contents
-    True
+    .. David Liu writes:
+    .. "Perhaps for now, can you delete those two lines and then deploy? I  will update the correct README as soon as I figure out what’s going on (within an hour)."
+    .. >>> unprivilegedBrowser.contents
+    .. '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
+    .. >>> '...Resources...gquery...geoprofiles...nuccore...gds...ncbi..snp...' in unprivilegedBrowser.contents
+    .. True
 
 And Biomuta is OK too::
 
