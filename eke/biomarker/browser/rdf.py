@@ -198,7 +198,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         #This function is a temporary workaround until we generate the knowledge rdfs for these external resources
         extres = {}
         remove = []
-        for res in predicates[_bmRefResourceURI]:
+        for res in predicates.get(_bmRefResourceURI, []):
             if "genenames" in str(res) and "hgnc_data" in str(res) and "hgnc_id" in str(res):
                 extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#reshgnc')] = [res]
                 remove.append(res)
