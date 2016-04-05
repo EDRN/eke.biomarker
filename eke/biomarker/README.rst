@@ -543,6 +543,15 @@ panel from earlier::
 
 See?  No problem.
 
+While we're on panels, issue https://oodt.jpl.nasa.gov/jira/browse/CA-1322 says
+that the "Resources" tab of a biomarker panel is being labled as "Organ", not
+"Resources".  That can't be correct, right?
+
+    >>> browser.contents
+    '...tabbertab...Organs...tabbertab...Studies...tabbertab...Publications...tabbertab...Resources...No associated...'
+
+Not a problem!
+
 
 Body Systems vs Organs
 ~~~~~~~~~~~~~~~~~~~~~~

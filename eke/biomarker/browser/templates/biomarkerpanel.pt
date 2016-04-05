@@ -346,7 +346,7 @@
                     '>
                         <h2 i18n:translate='bm_ResourcesTab'
                             tal:attributes='class python:approvedViewable and "approved" or "unapprovedGrayedOut"'>
-                            Organs
+                            Resources
                         </h2>
                         <div metal:use-macro='context/@@unacceptedBiomarker/macros/unacceptedBiomarker'>
                             Log in to view this section, if necessary.
