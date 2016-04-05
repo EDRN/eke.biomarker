@@ -49,6 +49,25 @@ BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Sch
             rows=10,
         )
     ),
+    atapi.StringField(
+        'bmSumDataSource',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Biomarker Summary Statistics Data Source'),
+            description=_(u'URL to a source of summary statistics json that describes biomarker data.'),
+            size=60,
+        ),
+    ),
+    atapi.StringField(
+        'dataSummary',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Biomarker Summary Statistics Data'),            description=_(u'Summary statistics json that describes biomarker data.'),
+            size=10000,
+        ),
+    ),
 ))
 
 finalizeATCTSchema(BiomarkerFolderSchema, folderish=True, moveDiscussion=False)
@@ -61,6 +80,8 @@ class BiomarkerFolder(knowledgefolder.KnowledgeFolder):
     schema                    = BiomarkerFolderSchema
     bmoDataSource             = atapi.ATFieldProperty('bmoDataSource')
     bmuDataSource             = atapi.ATFieldProperty('bmuDataSource')
+    bmSumDataSource           = atapi.ATFieldProperty('bmSumDataSource')
+    dataSummary               = atapi.ATFieldProperty('dataSummary')
     disclaimer                = atapi.ATFieldProperty('disclaimer')
 
 atapi.registerType(BiomarkerFolder, PROJECTNAME)

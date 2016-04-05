@@ -22,6 +22,7 @@ from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
 from zExceptions import BadRequest
 import uuid, logging
+from urllib2 import urlopen
 
 _logger = logging.getLogger(__name__)
 
@@ -36,6 +37,7 @@ _certificationPredicateURI               = URIRef('http://edrn.nci.nih.gov/rdf/r
 _hasBiomarkerStudyDatasPredicateURI      = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerStudyDatas')
 _hasBiomarkerOrganStudyDatasPredicateURI = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#hasBiomarkerOrganStudyDatas')
 _hgncPredicateURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#HgncName')
+_typePredicateURI                        = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Type')
 _isPanelPredicateURI                     = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#IsPanel')
 _memberOfPanelPredicateURI               = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#memberOfPanel')
 _organPredicateURI                       = URIRef('http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#Organ')
@@ -56,6 +58,7 @@ _collabGroup = 'edrnsite.collaborations.interfaces.collaborativegroupindex.IColl
 
 # Biomuta Subject URI Prefix. Used to locate which biomuta gene name belongs to which objectID in biomarkers
 _biomutaSubjectPrefix = 'http://edrn.nci.nih.gov/data/biomuta/'
+
 
 def flatten(l):
     '''Flatten a list.'''
@@ -101,6 +104,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 if biomarker not in currentBiomarkers:
                     currentBiomarkers.append(biomarker)
                     collabGroup.setBiomarkers(currentBiomarkers)
+
     def updateBiomarker(self, obj, uri, predicates, context, statements):
         '''Update a biomarker. Sets various attributes and then adjusts workflow & security.'''
         updateObject(obj, uri, predicates, context)
@@ -238,6 +242,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 biomarker = biomarkers[predicates[_biomarkerPredicateURI][0]]
             except KeyError:
                 continue
+            
             organName = unicode(predicates[_organPredicateURI][0])
             results = catalog(Title=organName, object_provides=IBodySystem.__identifier__)
             if len(results) < 1:
@@ -260,10 +265,20 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 elif certificationURI == _fdaCeritificationURI:
                     biomarkerBodySystem.fdaCertification = True
             biomarkerBodySystem.reindexObject()
+    def getSummaryData(self, source):
+        jsonlines = urlopen(source)
+        json = ""
+        for line in jsonlines:
+            json += line
+        return json
+
     def __call__(self):
         '''Ingest and render a results page.'''
         context = aq_inner(self.context)
-        rdfDataSource, bmoDataSource, bmuDataSource = context.rdfDataSource, context.bmoDataSource, context.bmuDataSource
+        rdfDataSource, bmoDataSource, bmuDataSource, bmSumDataSource = context.rdfDataSource, context.bmoDataSource, context.bmuDataSource, context.bmSumDataSource
+        
+        context.dataSummary = self.getSummaryData(bmSumDataSource)
+
         if not rdfDataSource or not bmoDataSource or not bmuDataSource:
             raise RDFIngestException(_(u'This biomarker folder lacks one or both of its RDF source URLs.'))
         # Weapons at ready
@@ -314,6 +329,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     #Append biomuta's predicates if gene symbol exists in biomuta's list as well
                     self.addMutationSpecificInformation(objID, predicates, mutationStatements)
                     self.addExternaResourcesInformation(objID, predicates)
+                    #Add frequencies for biomarker associated with biomarker type (Gene, Protein, etc...)
                 #Update biomarker, if biomuta was added, biomuta predicates will be updated as well
                 self.updateBiomarker(obj, uri, predicates, context, statements)
                 newBiomarkers[uri] = obj
@@ -341,6 +357,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         graph.parse(URLInputSource(bmoDataSource))
         organStatements = self._parseRDF(graph)
         self.addOrganSpecificInformation(newBiomarkers, organStatements, normalizerFunction, catalog)
+
         # Update indicated organs:
         for biomarker in newBiomarkers.values():
             biomarker.updatedIndicatedBodySystems()

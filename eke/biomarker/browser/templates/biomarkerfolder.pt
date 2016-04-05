@@ -40,6 +40,12 @@
                     </label>
                     <metal:field use-macro='python:context.widget("bmuDataSource", mode="view")'>http://bmu.com/bmu</metal:field>
                 </div>
+                <div tal:condition='isManager'>
+                    <label for='parent-fieldname-dataSummary' i18n:translate='label_dataSummary'>
+                        Biomarker statistics
+                    </label>
+                    <metal:field use-macro='python:context.widget("dataSummary", mode="view")'>http://dsu.com/dsu</metal:field>
+                </div>
 
                 <div tal:condition='subfolders' tal:omit-tag=''>
                     <h3 i18n:translate='biomarkerFolder_subfolders'>Subfolders in this Folder</h3>

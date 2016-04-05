@@ -10,6 +10,7 @@ from Acquisition import aq_inner
 from eke.biomarker.interfaces import IBiomarkerFolder, IBiomarker, IBiomarkerBodySystem, IBodySystemStudy, IStudyStatistics, \
     IReviewListing
 from eke.knowledge.browser.views import KnowledgeFolderView, KnowledgeObjectView
+from Products.Five.browser import BrowserView
 from plone.memoize.instance import memoize
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -224,3 +225,8 @@ class StudyStatisticsView(KnowledgeObjectView):
     '''Default view of Study Statistics.'''
     __call__ = ViewPageTemplateFile('templates/studystatistics.pt')
     
+class BiomarkerFolderSummary(BrowserView):
+    def __call__(self):
+        self.request.RESPONSE.setHeader('Content-type', 'application/json')
+        context = aq_inner(self.context)
+        return context.dataSummary

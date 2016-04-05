@@ -49,6 +49,14 @@ RESERVED. U.S. Government Sponsorship acknowledged.
         template='templates/underreview.pt'
     />
 
+    <!-- Reporting graphs -->
+    <browser:resource name='biomarker_analytics_thumbnail.png' file='images/biomarker_analytics_thumbnail.png'/>
+    <browser:page
+        for='*'
+        permission='zope2.Public'
+        name='biomarker_summary_report'
+        template='templates/biomarker_summary_report.pt'
+    />
     <!-- Reporting macros -->
     <browser:page
         for='*'
@@ -196,6 +204,12 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     <browser:resource
         name='fdaCert.png'
         file='images/fdaCert.png'
+    />
+    <browser:page
+        class='.views.BiomarkerFolderSummary'
+        for='..interfaces.IBiomarkerFolder'
+        name='summary'
+        permission='zope2.View'
     />
     
 </configure>
