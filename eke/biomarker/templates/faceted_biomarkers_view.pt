@@ -62,7 +62,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     <center><U><h4>Biomarker Statistics:</h4></U></center>
     <span id="analytics-display"><div>
         <!--<img src="/++resource++biomarker_analytics_thumbnail.png" width="550px" height="170px"/>-->
-        <iframe width="100%" height="170px" frameborder="0" src="/edrn/biomarker_summary_report"/>
+        <iframe width="100%" height="170px" frameborder="0" src="biomarker_summary_report"/>
     </div></span> 
     </div>
     <div metal:use-macro='context/@@reports/macros/reportsMenu'>

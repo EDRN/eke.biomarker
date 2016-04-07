@@ -255,9 +255,9 @@ function dashboard(id, fData){
         leg= legend(tF);  // create the legend.
 }
 </script>
-<script type="text/javascript" src="/edrn/portal_javascripts/EDRN%20Theme/++resource++plone.app.jquery.js"></script>
-<script type="text/javascript" src="/edrn/portal_javascripts/EDRN%20Theme/jquery-integration.js"></script>
-<script type="text/javascript" src="/edrn/portal_javascripts/EDRN%20Theme/++resource++plone.app.jquerytools.js"></script>
+<script type="text/javascript" src="portal_javascripts/EDRN%20Theme/++resource++plone.app.jquery.js"></script>
+<script type="text/javascript" src="portal_javascripts/EDRN%20Theme/jquery-integration.js"></script>
+<script type="text/javascript" src="portal_javascripts/EDRN%20Theme/++resource++plone.app.jquerytools.js"></script>
 <script>
     document.addEventListener( 'DOMContentLoaded', function () {
         /*var freqData=[
@@ -272,7 +272,7 @@ function dashboard(id, fData){
         ,{State:'Prostate',freq:{Epigenetic:0, Genomic:352, Metabolomic:0, Proteomic:27}}
         ,{State:'Other',freq:{Epigenetic:0, Genomic:16, Metabolomic:0, Proteomic:36}}
         ];*/
-        $.getJSON( "/edrn/biomarkers/@@summary", function( data ) {
+        $.getJSON( "biomarkers/@@summary", function( data ) {
             var items = [];
             $.each( data, function( key, val ) {
               if(key == 'Head and Neck'){
