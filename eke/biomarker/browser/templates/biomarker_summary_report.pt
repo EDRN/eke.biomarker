@@ -21,7 +21,7 @@ rect:hover {  fill:blue; }
 
 .x.axis path {  display: none; }
 .legend{
-    margin-top:40px;
+    margin-top:10px;
     display:inline-block;
     border-collapse: collapse;
     border-spacing: 0px;
@@ -150,7 +150,7 @@ function dashboard(id, fData){
     
     // function to handle pieChart.
     function pieChart(pD){
-        var pC ={},    pieDim ={w:130, h: 130};
+        var pC ={},    pieDim ={w:130, h: 140};
         pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
                 
         // create svg for pie chart.
@@ -260,18 +260,6 @@ function dashboard(id, fData){
 <script type="text/javascript" src="portal_javascripts/EDRN%20Theme/++resource++plone.app.jquerytools.js"></script>
 <script>
     document.addEventListener( 'DOMContentLoaded', function () {
-        /*var freqData=[
-        {State:'Head&Neck',freq:{Epigenetic:0, Genomic:6, Metabolomic:0, Proteomic:0}}
-        ,{State:'Breast',freq:{Epigenetic:0, Genomic:6, Metabolomic:0, Proteomic:185}}
-        ,{State:'Colon',freq:{Epigenetic:1, Genomic:0, Metabolomic:0, Proteomic:3}}
-        ,{State:'Esophagus',freq:{Epigenetic:0, Genomic:8, Metabolomic:0, Proteomic:0}}
-        ,{State:'Liver',freq:{Epigenetic:0, Genomic:0, Metabolomic:0, Proteomic:3}}
-        ,{State:'Lung',freq:{Epigenetic:0, Genomic:44, Metabolomic:0, Proteomic:109}}
-        ,{State:'Ovary',freq:{Epigenetic:0, Genomic:1, Metabolomic:0, Proteomic:197}}
-        ,{State:'Pancreas',freq:{Epigenetic:0, Genomic:0, Metabolomic:0, Proteomic:3}}
-        ,{State:'Prostate',freq:{Epigenetic:0, Genomic:352, Metabolomic:0, Proteomic:27}}
-        ,{State:'Other',freq:{Epigenetic:0, Genomic:16, Metabolomic:0, Proteomic:36}}
-        ];*/
         $.getJSON( "biomarkers/@@summary", function( data ) {
             var items = [];
             $.each( data, function( key, val ) {
