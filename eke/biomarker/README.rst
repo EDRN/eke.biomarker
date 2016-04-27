@@ -619,6 +619,7 @@ So, let's create a new biomarker folder and have it ingest some RDF::
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
     >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/a'
+    >>> browser.getControl(name='bmSumDataSource').value = 'testscheme://localhost/summary/a'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.open(portalURL + '/tacky-biomarkers/content_status_modify?workflow_action=publish')
     >>> f = portal['tacky-biomarkers']

@@ -155,6 +155,8 @@ _biomutaA = '''<?xml version="1.0" encoding="utf-8"?>
   </ns2:Biomarker>
 </rdf:RDF>'''
 
+_summaryA  = '''{"Bladder":{"Genetic":1,"Protein":1},"Liver":{"Protein":9},"Ovary":{"Gene":1,"Protein":202,"Genomic":1},"Breast":{"Gene":3,"Protein":188,"Genomic":3,"":1},"Colon":{"Epigenetic":1,"Protein":10,"Proteomic":2},"Head and Neck":{"Gene":6,"Protein":2},"Pancreas":{"Protein":7},"Prostate":{"Gene":346,"Protein":30,"Genomic":11},"Esophagus":{"Genomic":9},"Lung":{"Proteomic":2,"Gene":34,"Protein":117,"Genomic":21}}'''
+
 _biomarkerB = '''<?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bmdb="http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#">
     <bmdb:Biomarker rdf:about='http://edrn/bmdb/b1'>
@@ -399,6 +401,7 @@ def registerLocalTestData():
     ekeKnowledgeBase.registerTestData('/biomarkers/a', _biomarkerA)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/a', _biomarkerOrganA)
     ekeKnowledgeBase.registerTestData('/biomuta/a', _biomutaA)
+    ekeKnowledgeBase.registerTestData('/summary/a', _summaryA)
     ekeKnowledgeBase.registerTestData('/biomarkers/b', _biomarkerB)
     ekeKnowledgeBase.registerTestData('/biomarkerorgans/b', _biomarkerOrganB)
     ekeKnowledgeBase.registerTestData('/biomuta/b', _biomutaB)
