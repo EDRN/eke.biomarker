@@ -6,8 +6,8 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
-1.1.19 — TBD
-------------
+1.1.19 — Visuals
+----------------
 
 • CA-1322
 • CA-1338: Fix tests for eke.biomarker
