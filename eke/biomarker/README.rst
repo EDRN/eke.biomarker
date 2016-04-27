@@ -156,6 +156,7 @@ And to publications::
     >>> browser.getControl(name='title').value = u'Ye Olde Bookshelfe'
     >>> browser.getControl(name='description').value = u'This folder is just for functional tests.'
     >>> browser.getControl(name='rdfDataSource').value = u'testscheme://localhost/pubs/b'
+    >>> browser.getControl(name='pubSumDataSource').value = u'testscheme://localhost/pubs/f'
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.open(portalURL + '/ye-olde-bookshelfe/ingest')
 
