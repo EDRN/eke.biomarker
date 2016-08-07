@@ -266,11 +266,14 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     biomarkerBodySystem.fdaCertification = True
             biomarkerBodySystem.reindexObject()
     def getSummaryData(self, source):
-        jsonlines = urlopen(source)
-        json = ""
-        for line in jsonlines:
-            json += line
-        return json
+        try:
+            jsonlines = urlopen(source)
+            json = ""
+            for line in jsonlines:
+                json += line
+            return json
+        except:
+            _logger.warning('HTTP Error when trying to access biomarker summary data source. Skipping summarization...')
 
     def __call__(self):
         '''Ingest and render a results page.'''
