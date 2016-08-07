@@ -54,7 +54,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
 }
 .biomarker-summary-report {
     position: relative;
-    margin-left: -15em;
+    margin-left: 0em;
 }
 </style>
 

@@ -276,8 +276,8 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         '''Ingest and render a results page.'''
         context = aq_inner(self.context)
         rdfDataSource, bmoDataSource, bmuDataSource, bmSumDataSource = context.rdfDataSource, context.bmoDataSource, context.bmuDataSource, context.bmSumDataSource
-        
-        context.dataSummary = self.getSummaryData(bmSumDataSource)
+        if bmSumDataSource:
+            context.dataSummary = self.getSummaryData(bmSumDataSource)
 
         if not rdfDataSource or not bmoDataSource or not bmuDataSource:
             raise RDFIngestException(_(u'This biomarker folder lacks one or both of its RDF source URLs.'))
