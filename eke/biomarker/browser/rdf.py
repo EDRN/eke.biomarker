@@ -16,7 +16,7 @@ from eke.study.interfaces import IProtocol
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
-from rdflib import URIRef, ConjunctiveGraph, URLInputSource, Literal
+from rdflib import URIRef, ConjunctiveGraph, URLInputSource
 from zope.component import getMultiAdapter
 from zope.component import queryUtility
 from zope.publisher.browser import TestRequest
@@ -68,6 +68,7 @@ def flatten(l):
                 yield j
         else:
             yield i
+
 
 class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
     '''RDF ingestion for biomarkers.'''
@@ -242,7 +243,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 biomarker = biomarkers[predicates[_biomarkerPredicateURI][0]]
             except KeyError:
                 continue
-            
+
             organName = unicode(predicates[_organPredicateURI][0])
             results = catalog(Title=organName, object_provides=IBodySystem.__identifier__)
             if len(results) < 1:
@@ -272,7 +273,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             for line in jsonlines:
                 json += line
             return json
-        except:
+        except IOError:
             _logger.warning('HTTP Error when trying to access biomarker summary data source. Skipping summarization...')
 
     def __call__(self):
@@ -364,7 +365,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         # Update indicated organs:
         for biomarker in newBiomarkers.values():
             biomarker.updatedIndicatedBodySystems()
-            biomarker.reindexObject() 
+            biomarker.reindexObject()
         # Publish as necessary
         for uri, predicates in statements.items():
             if uri in newBiomarkers:

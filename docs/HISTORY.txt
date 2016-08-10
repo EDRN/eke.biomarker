@@ -5,6 +5,11 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
+1.1.20 — Protection
+-------------------
+
+• CA-1349: Summary ingest should be robust in the face of failures
+
 
 1.1.19 — Visuals
 ----------------
