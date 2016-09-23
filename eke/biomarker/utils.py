@@ -9,6 +9,7 @@ from eea.facetednavigation.layout.interfaces import IFacetedLayout
 from eea.facetednavigation.settings.interfaces import IHidePloneLeftColumn, IHidePloneRightColumn
 from eke.biomarker.interfaces import IBiomarker
 import plone.api
+import json
 
 COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES = {
     u'Breast and Gynecologic':          u'Breast and Gynecologic Cancers Research Group',
@@ -16,6 +17,8 @@ COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES = {
     u'Lung and Upper Aerodigestive':    u'Lung and Upper Aerodigestive Cancers Research Group',
     u'Prostate and Urologic':           u'Prostate and Urologic Cancers Research Group',
 }
+
+IDSEARCH_URI = "http://localhost:4790/cancerdataexpo/idsearch"
 
 def setFacetedNavigation(folder, request, force=False):
     subtyper = getMultiAdapter((folder, request), name=u'faceted_subtyper')
@@ -60,4 +63,9 @@ def setFacetedNavigation(folder, request, force=False):
     IFacetedLayout(folder).update_layout('faceted_biomarkers_view')
     noLongerProvides(folder, IHidePloneLeftColumn)
     noLongerProvides(folder, IHidePloneRightColumn)
-    
+
+def cleanIDSearchJson(j):
+    j= r.text
+    j=j.replace("'", '"')
+    j=j.replace('u"', '"')
+    return json.loads(j)

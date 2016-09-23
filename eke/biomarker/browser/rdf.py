@@ -7,7 +7,7 @@ EKE Biomarkers: RDF ingest for biomarkers.
 
 from Acquisition import aq_inner, aq_parent
 from eke.biomarker.interfaces import IBiomarker
-from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES
+from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES, IDSEARCH_URI, cleanIDSearchJson
 from eke.knowledge import ProjectMessageFactory as _
 from eke.knowledge.browser.rdf import KnowledgeFolderIngestor, CreatedObject, RDFIngestException
 from eke.knowledge.browser.utils import updateObject

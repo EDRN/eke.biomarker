@@ -51,7 +51,7 @@ BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Sch
     ),
     atapi.StringField(
         'bmSumDataSource',
-        required=False,
+        required=True,
         storage=atapi.AnnotationStorage(),
         widget=atapi.StringWidget(
             label=_(u'Biomarker Summary Statistics Data Source'),
