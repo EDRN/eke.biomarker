@@ -5,7 +5,7 @@ What follows is a history of changes from release to release.  Where issue IDs
 are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
-1.0.13 - Updates
+1.1.21 - Updates
 ----------------
 
 • CA-1348: Summary source URLs should be marked as required
