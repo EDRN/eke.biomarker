@@ -86,6 +86,7 @@ be created anywhere in the portal::
     >>> browser.getControl(name='rdfDataSource').value = 'testscheme://localhost/biomarkers/a'
     >>> browser.getControl(name='bmoDataSource').value = 'testscheme://localhost/biomarkerorgans/a'
     >>> browser.getControl(name='bmuDataSource').value = 'testscheme://localhost/biomuta/a'
+    >>> browser.getControl(name='bmSumDataSource').value = 'testscheme://localhost/summary/a'
     >>> browser.getControl(name='disclaimer').value = u'You are legally obligated to not use these biomarkers.'
     >>> browser.getControl(name='form.button.save').click()
     >>> 'questionable-biomarkers' in portal.objectIds()
