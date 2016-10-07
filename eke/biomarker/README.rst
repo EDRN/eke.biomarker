@@ -1120,8 +1120,6 @@ And resources are OK::
 
     >>> unprivilegedBrowser.contents
     '...QA State...Curated...Organs...Studies...Publications...Resources...A search engine...A web index...'
-    >>> unprivilegedBrowser.contents
-    '...Resources...Genenames...KEGG...Entrez...GEO...NCBI...GWAS...Polymorphisms...FDA...'
 
 And Biomuta is OK too::
 

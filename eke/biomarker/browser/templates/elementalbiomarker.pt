@@ -381,72 +381,77 @@
                         <div tal:condition='approvedViewable'>
                             <H3>Gene</H3>
                             <ul>
-                                <li>
+                                <li tal:condition='context/reshgnc'>
                                     <a href='#' tal:attributes='href context/reshgnc'>
-                                      HGNC entry for <span tal:content='context/hgncName'/> from Genenames
+                                      HGNC entry for <span tal:content='context/title'/> from Genenames
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/reskegg'>
                                     <a href='#' tal:attributes='href context/reskegg'>
-                                      KEGG entry for <span tal:content='context/hgncName'/> from Genome.jp
+                                      KEGG entry for <span tal:content='context/title'/> from Genome.jp
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/resensembl'>
+                                    <a href='#' tal:attributes='href context/resensembl'>
+                                      Ensembl entry for <span tal:content='context/title'/>
+                                    </a>
+                                </li>
+                                <li tal:condition='context/resentrez'>
                                     <a href='#' tal:attributes='href context/resentrez'>
-                                      Entrez entry for <span tal:content='context/hgncName'/> all NCBI Databasese
+                                      Entrez entry for <span tal:content='context/title'/> all NCBI Databasese
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/geoprofile'>
                                     <a href='#' tal:attributes='href context/geoprofile'>
-                                      Human GEO Profiles for <span tal:content='context/hgncName'/> from NCBI GEO Profiles
+                                      Human GEO Profiles for <span tal:content='context/title'/> from NCBI GEO Profiles
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/geodataset'>
                                     <a href='#' tal:attributes='href context/geodataset'>
-                                      Human Geo Datasets containing term <span tal:content='context/hgncName'/> from NCBI GEO Datasets
+                                      Human Geo Datasets containing term <span tal:content='context/title'/> from NCBI GEO Datasets
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/gwasref'>
                                     <a href='#' tal:attributes='href context/gwasref'>
-                                      GWAS Study Datasets containing gene <span tal:content='context/hgncName'/> from GWAS
+                                      GWAS Study Datasets containing gene <span tal:content='context/title'/> from GWAS
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/ressnp'>
                                     <a href='#' tal:attributes='href context/ressnp'>
-                                      Human Single Nucleotide Polymorphisms info for <span tal:content='context/hgncName'/>
+                                      Human Single Nucleotide Polymorphisms info for <span tal:content='context/title'/>
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/resgene'>
                                     <a href='#' tal:attributes='href context/resgene'>
-                                      Human Gene(s) with '<span tal:content='context/hgncName'/>' as Gene Name/Alias
+                                      Human Gene(s) with '<span tal:content='context/title'/>' as Gene Name/Alias
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/generef'>
                                     <a href='#' tal:attributes='href context/generef'>
-                                      Human Gene RefSeq for <span tal:content='context/hgncName'/> from NCBI
+                                      Human Gene RefSeq for <span tal:content='context/title'/> from NCBI
                                     </a>
                                 </li>
                                 <li tal:condition='context/resgenecard'>
                                     <a href='#' tal:attributes='href context/resgenecard'>
-                                      GeneCards entry for human <span tal:content='context/hgncName'/>
+                                      GeneCards entry for human <span tal:content='context/title'/>
                                     </a>
                                 </li>
                             </ul>
                             <H3>Protein</H3>
                             <ul>
-                                <li>
+                                <li tal:condition='context/resuniprot'>
                                     <a href='#' tal:attributes='href context/resuniprot'>
-                                        UniProtKB/Swiss-Prot entry for <span tal:content='context/hgncName'/> from Uniprot
+                                        UniProtKB/Swiss-Prot entry for <span tal:content='context/title'/> from Uniprot
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/proteinref'>
                                     <a href='#' tal:attributes='href context/proteinref'>
-                                        Human Protein RefSeq for <span tal:content='context/hgncName'/> from NCBI
+                                        Human Protein RefSeq for <span tal:content='context/title'/> from NCBI
                                     </a>
                                 </li>
-                                <li>
+                                <li tal:condition='context/resfda'>
                                     <a href='#' tal:attributes='href context/resfda'>
-                                        FDA web page describing approval of <span tal:content='context/hgncName'/>
+                                        FDA web page describing approval of <span tal:content='context/title'/>
                                     </a>
                                 </li>
                             </ul>
@@ -461,6 +466,9 @@
                                             tal:attributes='href resource/identifier; title resource/description|nothing'>
                                             http://thepiratebay.org/
                                         </a>
+                                    </li>
+                                    <li tal:condition='context/resprobeid'>
+                                        Probeset ids associated with <span tal:content='context/title'/>: <span tal:content='context/resprobeid'/>
                                     </li>
                                 </ul>
                             </div>

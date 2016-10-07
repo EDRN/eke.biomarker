@@ -36,6 +36,16 @@ BiomarkerFolderSchema = knowledgefolder.KnowledgeFolderSchema.copy() + atapi.Sch
             size=60,
         ),
     ),
+    atapi.StringField(
+        'idDataSource',
+        required=False,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Biomarker ID external resource API'),
+            description=_(u'URL to a api that allows querying biomarker ids for links and alternative ids of external resources.'),
+            size=60,
+        ),
+    ),
     atapi.TextField(
         'disclaimer',
         required=False,
@@ -80,6 +90,7 @@ class BiomarkerFolder(knowledgefolder.KnowledgeFolder):
     schema                    = BiomarkerFolderSchema
     bmoDataSource             = atapi.ATFieldProperty('bmoDataSource')
     bmuDataSource             = atapi.ATFieldProperty('bmuDataSource')
+    idDataSource             = atapi.ATFieldProperty('idDataSource')
     bmSumDataSource           = atapi.ATFieldProperty('bmSumDataSource')
     dataSummary               = atapi.ATFieldProperty('dataSummary')
     disclaimer                = atapi.ATFieldProperty('disclaimer')

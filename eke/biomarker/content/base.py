@@ -306,7 +306,6 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
     atapi.StringField(
         'resuniprot',
         storage=atapi.AnnotationStorage(),
-
         widget=atapi.StringWidget(
             label=_(u'UniProtKB/Swiss-Prot'),
         ),
@@ -338,6 +337,32 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
             label=_(u'Genecards'),
         ),
         predicateURI=predicateURIBaseEdrn + 'resgenecard',
+    ),
+    atapi.StringField(
+        'resensembl',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'Ensembl'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resensembl',
+    ),
+    atapi.StringField(
+        'respdb',
+        storage=atapi.AnnotationStorage(),
+
+        widget=atapi.StringWidget(
+            label=_(u'PDB'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'respdb',
+    ),
+    atapi.StringField(
+        'resprobeid',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Probeset IDs'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resprobeid',
     )
 ))
 
@@ -379,6 +404,9 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     proteinref           = atapi.ATFieldProperty('proteinref')
     resfda               = atapi.ATFieldProperty('resfda')
     resgenecard          = atapi.ATFieldProperty('resgenecard')
+    resensembl           = atapi.ATFieldProperty('resensembl')
+    resprobeid           = atapi.ATFieldProperty('resprobeid')
+    respdb               = atapi.ATFieldProperty('respdb')
 
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]

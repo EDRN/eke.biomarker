@@ -30,6 +30,11 @@ class IBiomarkerFolder(IKnowledgeFolder):
         description=_(u'URL to a source of RDF data that supplements the RDF data source with biomarker-biomuta data.'),
         required=True
     )
+    idDataSource = schema.TextLine(
+        title=_(u'biomarker id external resource API link'),
+        description=_(u'URL to a api that allows querying biomarker ids for links and alternative ids of external resources.'),
+        required=True
+    )
     dataSummary = schema.TextLine(
         title=_(u'Biomarker Statistics'),
         description=_(u'Biomarker statistics.'),

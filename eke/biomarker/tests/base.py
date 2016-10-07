@@ -390,7 +390,6 @@ _privateBiomuta = '''<?xml version="1.0" encoding="utf-8"?>
   </ns2:Biomarker>
 </rdf:RDF>'''
 
-
 # BiomarkerIngestException: Study "http://edrn.nci.nih.gov/data/protocols/" not found for biomarker body system "'http://tumor.jpl.nasa.gov/bmdb/biomarkers/organs/100/120'"
 
 def registerLocalTestData():
