@@ -31,6 +31,7 @@ _externalRequirements = [
     'z3c.autoinclude',
     'eea.facetednavigation',
     'plone.api',
+    'requests'
 ]
 _classifiers = [
     'Development Status :: 4 - Beta',
