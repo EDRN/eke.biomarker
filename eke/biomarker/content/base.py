@@ -357,13 +357,77 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
         predicateURI=predicateURIBaseEdrn + 'respdb',
     ),
     atapi.StringField(
+        'respfam',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Pfam Protein Family'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'respfam',
+    ),
+    atapi.StringField(
         'resprobeid',
         storage=atapi.AnnotationStorage(),
         widget=atapi.StringWidget(
             label=_(u'Probeset IDs'),
         ),
         predicateURI=predicateURIBaseEdrn + 'resprobeid',
-    )
+    ),
+    atapi.StringField(
+        'reskeggpathway',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'General Pathway'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'reskeggpathway',
+    ),
+    atapi.StringField(
+        'reskeggpathwayname',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'General Pathway Name'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'reskeggpathwayname',
+    ),
+    atapi.StringField(
+        'resgenename',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Genename'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resgenename',
+    ),
+    atapi.StringField(
+        'resrnaseq',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'RNA Sequence'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resrnaseq',
+    ),
+    atapi.StringField(
+        'resentrezgene',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Entrez Gene'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resentrezgene',
+    ),
+    atapi.StringField(
+        'restrembl',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Trembl ID'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'restrembl',
+    ),
+    atapi.StringField(
+        'resbiosummary',
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.StringWidget(
+            label=_(u'Biomarker Summary'),
+        ),
+        predicateURI=predicateURIBaseEdrn + 'resbiosummary',
+    ),
 ))
 
 # FIXME: These should probably both be Dublin Core some day:
@@ -407,6 +471,14 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     resensembl           = atapi.ATFieldProperty('resensembl')
     resprobeid           = atapi.ATFieldProperty('resprobeid')
     respdb               = atapi.ATFieldProperty('respdb')
+    respfam              = atapi.ATFieldProperty('respfam')
+    reskeggpathway       = atapi.ATFieldProperty('reskeggpathway')
+    reskeggpathwayname   = atapi.ATFieldProperty('reskeggpathwayname')
+    resgenename          = atapi.ATFieldProperty('resgenename')
+    resrnaseq            = atapi.ATFieldProperty('resrnaseq')
+    resentrezgene        = atapi.ATFieldProperty('resentrezgene')
+    restrembl            = atapi.ATFieldProperty('restrembl')
+    resbiosummary        = atapi.ATFieldProperty('resbiosummary')
 
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]

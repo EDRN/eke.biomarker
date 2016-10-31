@@ -379,10 +379,23 @@
                             Log in to view this section, if necessary.
                         </div>
                         <div tal:condition='approvedViewable'>
+                            <div tal:condition='context/title'>
+                                <H3>External Resources for <span tal:content='context/title'/></H3>
+                                <div tal:condition='context/resbiosummary'>
+                                    <span tal:content='context/resbiosummary'/>
+                                </div><br>
+                                <div tal:condition='context/reskeggpathway'>
+                                    <div tal:condition='context/reskeggpathwayname'>
+                                        <span tal:content='context/title'/> is part of the pathway: <a href='#' tal:attributes='href context/reskeggpathway'>
+                                      <span tal:content='context/reskeggpathwayname'/>
+                                    </a>
+                                    </div>
+                                </div>
+                            </div>
                             <H3>Gene</H3>
                             <ul>
-                                <li tal:condition='context/reshgnc'>
-                                    <a href='#' tal:attributes='href context/reshgnc'>
+                                <li tal:condition='context/resgenename'>
+                                    <a href='#' tal:attributes='href context/resgenename'>
                                       HGNC entry for <span tal:content='context/title'/> from Genenames
                                     </a>
                                 </li>
@@ -406,11 +419,6 @@
                                       Human GEO Profiles for <span tal:content='context/title'/> from NCBI GEO Profiles
                                     </a>
                                 </li>
-                                <li tal:condition='context/geodataset'>
-                                    <a href='#' tal:attributes='href context/geodataset'>
-                                      Human Geo Datasets containing term <span tal:content='context/title'/> from NCBI GEO Datasets
-                                    </a>
-                                </li>
                                 <li tal:condition='context/gwasref'>
                                     <a href='#' tal:attributes='href context/gwasref'>
                                       GWAS Study Datasets containing gene <span tal:content='context/title'/> from GWAS
@@ -418,12 +426,17 @@
                                 </li>
                                 <li tal:condition='context/ressnp'>
                                     <a href='#' tal:attributes='href context/ressnp'>
-                                      Human Single Nucleotide Polymorphisms info for <span tal:content='context/title'/>
+                                      Find Human Single Nucleotide Polymorphisms info for <span tal:content='context/title'/>
                                     </a>
                                 </li>
-                                <li tal:condition='context/resgene'>
-                                    <a href='#' tal:attributes='href context/resgene'>
+                                <li tal:condition='context/resentrezgene'>
+                                    <a href='#' tal:attributes='href context/resentrezgene'>
                                       Human Gene(s) with '<span tal:content='context/title'/>' as Gene Name/Alias
+                                    </a>
+                                </li>
+                                <li tal:condition='context/resrnaseq'>
+                                    <a href='#' tal:attributes='href context/resrnaseq'>
+                                      Human RNA sequence for '<span tal:content='context/title'/>'
                                     </a>
                                 </li>
                                 <li tal:condition='context/generef'>
@@ -439,6 +452,11 @@
                             </ul>
                             <H3>Protein</H3>
                             <ul>
+                                <li tal:condition='context/restrembl'>
+                                    <a href='#' tal:attributes='href context/restrembl'>
+                                        UniProtKB/Trembl entry for <span tal:content='context/title'/> from Uniprot
+                                    </a>
+                                </li>
                                 <li tal:condition='context/resuniprot'>
                                     <a href='#' tal:attributes='href context/resuniprot'>
                                         UniProtKB/Swiss-Prot entry for <span tal:content='context/title'/> from Uniprot
@@ -452,6 +470,16 @@
                                 <li tal:condition='context/resfda'>
                                     <a href='#' tal:attributes='href context/resfda'>
                                         FDA web page describing approval of <span tal:content='context/title'/>
+                                    </a>
+                                </li>
+                                <li tal:condition='context/respdb'>
+                                    <a href='#' tal:attributes='href context/respdb'>
+                                        Search PDB structure for <span tal:content='context/title'/>
+                                    </a>
+                                </li>
+                                <li tal:condition='context/respfam'>
+                                    <a href='#' tal:attributes='href context/respfam'>
+                                        Pfam: Protein family information for <span tal:content='context/title'/>
                                     </a>
                                 </li>
                             </ul>
