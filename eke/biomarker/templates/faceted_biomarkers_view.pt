@@ -57,7 +57,6 @@ RESERVED. U.S. Government Sponsorship acknowledged.
     margin-left: -15em;
 }
 </style>
-
     <div class="biomarker-summary-report">
     <center><U><h4>Biomarker Statistics:</h4></U></center>
     <span id="analytics-display"><div>
