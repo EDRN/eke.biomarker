@@ -14,6 +14,7 @@ import json
 COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES = {
     u'Breast and Gynecologic':          u'Breast and Gynecologic Cancers Research Group',
     u'G.I. and Other Associated':       u'G.I. and Other Associated Cancers Research Group',
+    u'GI and Other Associated':         u'G.I. and Other Associated Cancers Research Group',
     u'Lung and Upper Aerodigestive':    u'Lung and Upper Aerodigestive Cancers Research Group',
     u'Prostate and Urologic':           u'Prostate and Urologic Cancers Research Group',
 }
@@ -57,7 +58,6 @@ def setFacetedNavigation(folder, request, force=False):
         hidezerocount=False
     )
     criteria.add('path', 'bottom', 'default', title='Path Search', hidden=True, index='path', default=path)
-    criteria.add('debug', 'top', 'default', title='Debug Criteria', user='kelly')
     criteria.add('text', 'top', 'default', title=u'Search', hidden=False, index='SearchableText', count=False,
         onlyallelements=True)
     IFacetedLayout(folder).update_layout('faceted_biomarkers_view')
