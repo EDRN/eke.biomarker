@@ -6,6 +6,14 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.22 — Some Day We'll Get This Right
+--------------------------------------
+
+• CA-1454: Biomarker ingest should use the organs specified in the RDF to
+  associate a biomarker with a collaborative group, not the security access
+  group
+
+
 1.1.21 — By Any Other Name
 --------------------------
 

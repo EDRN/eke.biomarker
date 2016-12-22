@@ -19,7 +19,21 @@ COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES = {
     u'Prostate and Urologic':           u'Prostate and Urologic Cancers Research Group',
 }
 
+ORGAN_NAME_TO_COLLABORATIVE_GROUP_NAME = {
+    u'Breast': u'Breast and Gynecologic Cancers Research Group',
+    u'Ovary': u'Breast and Gynecologic Cancers Research Group',
+    u'Colon': u'G.I. and Other Associated Cancers Research Group',
+    u'Esophagus': u'G.I. and Other Associated Cancers Research Group',
+    u'Liver': u'G.I. and Other Associated Cancers Research Group',
+    u'Pancreas': u'G.I. and Other Associated Cancers Research Group',
+    u'Lung': u'Lung and Upper Aerodigestive Cancers Research Group',
+    u'Prostate': u'Prostate and Urologic Cancers Research Group',
+    u'Bladder': u'Prostate and Urologic Cancers Research Group',
+    u'Head & neck, NOS': u'Lung and Upper Aerodigestive Cancers Research Group',
+}
+
 IDSEARCH_URI = "http://localhost:4790/cancerdataexpo/idsearch"
+
 
 def setFacetedNavigation(folder, request, force=False):
     subtyper = getMultiAdapter((folder, request), name=u'faceted_subtyper')
