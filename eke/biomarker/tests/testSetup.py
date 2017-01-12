@@ -38,7 +38,7 @@ class SetupTest(unittest.TestCase):
             'Study Statistics'
         ):
             self.failUnless(i in types.objectIds())
-            self.failIf(types[i].allow_discussion, 'Type "%s" allows discussion, but should not' % i) # CA-1229
+            self.failIf(types[i].allow_discussion, 'Type "%s" allows discussion, but should not' % i)  # CA-1229
     def testObsoleteTypes(self):
         '''Make sure obsolete types are gone.'''
         types = getToolByName(self.portal, 'portal_types').objectIds()
@@ -59,23 +59,8 @@ class SetupTest(unittest.TestCase):
             self.failUnless(queryUtility(IVocabularyFactory, name=v), u'Vocabulary "{}" not available'.format(v))
 
 
-
-class CollaborativeGroupNamingTest(unittest.TestCase):
-    '''Unit tests for the identification of collaborative groups in BMDB'''
-    layer = EKE_BIOMARKER_INTEGRATION_TESTING
-    def setUp(self):
-        super(CollaborativeGroupNamingTest, self).setUp()
-        self.portal = self.layer['portal']
-    def testGroupNameMapping(self):
-        from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES as cgbitn
-        self.assertEquals(u'Breast and Gynecologic Cancers Research Group',         cgbitn[u'Breast and Gynecologic'])
-        self.assertEquals(u'G.I. and Other Associated Cancers Research Group',      cgbitn[u'G.I. and Other Associated'])
-        self.assertEquals(u'Lung and Upper Aerodigestive Cancers Research Group',   cgbitn[u'Lung and Upper Aerodigestive'])
-        self.assertEquals(u'Prostate and Urologic Cancers Research Group',          cgbitn[u'Prostate and Urologic'])
-
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
-    

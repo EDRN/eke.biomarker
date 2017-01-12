@@ -7,7 +7,7 @@ EKE Biomarkers: RDF ingest for biomarkers.
 
 from Acquisition import aq_inner, aq_parent
 from eke.biomarker.interfaces import IBiomarker
-from eke.biomarker.utils import COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES, IDSEARCH_URI, cleanIDSearchJson
+from eke.biomarker.utils import ORGAN_NAME_TO_COLLABORATIVE_GROUP_NAME
 from eke.biomarker.cancerdataexpo_client import getBiomarkerLinks
 from eke.knowledge import ProjectMessageFactory as _
 from eke.knowledge.browser.rdf import KnowledgeFolderIngestor, CreatedObject, RDFIngestException
@@ -97,17 +97,6 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         of the matching objects rather than a sequence of brains.'''
         results = catalog(identifier=[unicode(i) for i in identifiers])
         return [i.getObject() for i in results]
-    def updateCollaborativeGroups(self, context, biomarker):
-        catalog = getToolByName(context, 'portal_catalog')
-        for accessGroup in biomarker.accessGroups:
-            groupName = COLLABORATIVE_GROUP_BMDB_IDS_TO_NAMES.get(accessGroup)
-            if not groupName: continue
-            results = [i.getObject() for i in catalog(object_provides=_collabGroup, Title=groupName)]
-            for collabGroup in results:
-                currentBiomarkers = collabGroup.getBiomarkers()
-                if biomarker not in currentBiomarkers:
-                    currentBiomarkers.append(biomarker)
-                    collabGroup.setBiomarkers(currentBiomarkers)
 
     def updateBiomarker(self, obj, uri, predicates, context, statements):
         '''Update a biomarker. Sets various attributes and then adjusts workflow & security.'''
@@ -118,7 +107,6 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             settings = [dict(type='group', roles=[u'Reader'], id=i) for i in groupIDs]
             sharing = getMultiAdapter((obj, TestRequest()), name=u'sharing')
             sharing.update_role_settings(settings)
-            self.updateCollaborativeGroups(context, obj)
         if _hasBiomarkerStudyDatasPredicateURI in predicates:
             catalog = getToolByName(context, 'portal_catalog')
             protocolUIDs = []
@@ -243,7 +231,6 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         for res in remove:
             predicates[_bmRefResourceURI].remove(res)
 
-
         if idsummary:
             for summary in sum_remove:
                 del idsummary[summary]  #remove summary that have already been populated
@@ -304,7 +291,18 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
         extres[URIRef('http://edrn.nci.nih.gov/xml/rdf/edrn.rdf#ressnp')] = [u'http://www.ncbi.nlm.nih.gov/snp/?term={}{}+{}{}'.format(bmId,"[Gene Symbol]", "Homo Sapiens", "[Organism]")]
 
         predicates.update(extres)
-
+    def addBiomarkerToOrganGroup(self, biomarker, namedOrgan, catalog):
+        u'''Add the given ``biomarker`` to the collaborative group that studies
+        the ``namedOrgan``, using the ``catalog`` to find it.
+        '''
+        groupName = ORGAN_NAME_TO_COLLABORATIVE_GROUP_NAME.get(namedOrgan)
+        if not groupName: return
+        results = [i.getObject() for i in catalog(object_provides=_collabGroup, Title=groupName)]
+        for collabGroup in results:
+            currentBiomarkers = collabGroup.getBiomarkers()
+            if biomarker not in currentBiomarkers:
+                currentBiomarkers.append(biomarker)
+                collabGroup.setBiomarkers(currentBiomarkers)
     def addOrganSpecificInformation(self, biomarkers, statements, normalizer, catalog):
         '''Populate biomarkers with body system (aka "organ") details.'''
         for uri, predicates in statements.items():
@@ -325,6 +323,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             biomarkerBodySystem.setTitle(results[0].Title)
             biomarkerBodySystem.setBodySystem(results[0].UID)
             updateObject(biomarkerBodySystem, uri, predicates, catalog)
+            self.addBiomarkerToOrganGroup(biomarker, organName, catalog)
             if _hasBiomarkerOrganStudyDatasPredicateURI in predicates:
                 bags = predicates[_hasBiomarkerOrganStudyDatasPredicateURI]
                 self.addStudiesToOrgan(biomarkerBodySystem, bags, statements, normalizer, catalog)
