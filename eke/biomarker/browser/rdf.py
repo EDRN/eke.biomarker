@@ -109,7 +109,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
             sharing.update_role_settings(settings)
         if _hasBiomarkerStudyDatasPredicateURI in predicates:
             catalog = getToolByName(context, 'portal_catalog')
-            protocolUIDs = []
+            protocolUIDs, piUIDs = [], []
             bag = statements[predicates[_hasBiomarkerStudyDatasPredicateURI][0]]
             for subjectURI, objects in bag.iteritems():
                 if subjectURI == _typeURI: continue
@@ -122,9 +122,11 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                         object_provides=IProtocol.__identifier__
                     )
                     protocolUIDs.extend([j.UID for j in results])
+                    piUIDs.extend([j.piUID for j in results])
                     for k in [j.getObject() for j in results]:
                         self._addBiomarkerToProtocol(obj, k)
             obj.setProtocols(protocolUIDs)
+            obj.setPiUIDs(piUIDs)
     def addStatistics(self, bodySystemStudy, bags, statements, normalizer, catalog):
         '''Add study statistics to a body system study.  The bags are
         RDF-style collections of URIRefs to statistics found in the

@@ -6,6 +6,13 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.24 — TBD
+------------
+
+• Add a "piUIDs" field to Biomarker objects and set it on ingest so that
+  vanity pages can quickly find Biomarkers studied by a PI.
+
+
 1.1.22 — Some Day We'll Get This Right
 --------------------------------------
 

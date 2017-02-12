@@ -194,6 +194,7 @@ class IBiomarker(IKnowledgeObject, IResearchedObject, IQualityAssuredObject):
         required=False,
     )
 
+
 class IBiomarkerPanel(IBiomarker):
     '''A panel of biomarkers that itself behaves as a single (yet composite) biomarker.'''
     members = schema.List(

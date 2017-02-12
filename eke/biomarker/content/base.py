@@ -428,6 +428,18 @@ BiomarkerSchema = knowledgeobject.KnowledgeObjectSchema.copy() + ResearchedObjec
         ),
         predicateURI=predicateURIBaseEdrn + 'resbiosummary',
     ),
+    atapi.LinesField(
+        'piUIDs',
+        storage=atapi.AnnotationStorage(),
+        searchable=False,
+        required=False,
+        multiValued=True,
+        widget=atapi.LinesWidget(
+            label=_(u'PI UIDs'),
+            description=_(u'Unique identifiers of the principal investigators researching this biomarker.'),
+            visible={'edit': 'visible', 'view': 'invisible'},
+        ),
+    ),
 ))
 
 # FIXME: These should probably both be Dublin Core some day:
@@ -479,6 +491,7 @@ class Biomarker(ATFolder, knowledgeobject.KnowledgeObject):
     resentrezgene        = atapi.ATFieldProperty('resentrezgene')
     restrembl            = atapi.ATFieldProperty('restrembl')
     resbiosummary        = atapi.ATFieldProperty('resbiosummary')
+    piUIDs               = atapi.ATFieldProperty('piUIDs')
 
     def _computeIndicatedBodySystems(self):
         return [i.capitalize() for i in self.objectIds()]
