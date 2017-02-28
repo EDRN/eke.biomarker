@@ -406,7 +406,8 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     self.addMutationSpecificInformation(objID, predicates, mutationStatements)
                     # Disabled because it causes the ingest to take multiple hours instead of just 1 hour
                     # See CA-1434 (kelly 2016-12-06)
-                    # self.addExternaResourcesInformation(objID, predicates, idDataSource)
+                    # Re-enabled to because added blob storage to save existing queries. Only the first query might take 2 hours.
+                     self.addExternaResourcesInformation(objID, predicates, idDataSource)
                     #Add frequencies for biomarker associated with biomarker type (Gene, Protein, etc...)
                 #Update biomarker, if biomuta was added, biomuta predicates will be updated as well
                 self.updateBiomarker(obj, uri, predicates, context, statements)
