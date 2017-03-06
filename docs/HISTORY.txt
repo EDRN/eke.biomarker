@@ -6,6 +6,12 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.24 — TBD
+------------
+
+• CA-1434: Id searching makes biomarker ingest take too long
+
+
 1.1.23 — You're So Vain
 -----------------------
 
@@ -24,7 +30,6 @@ tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 1.1.21 — By Any Other Name
 --------------------------
 
-• CA-1434: Id searching makes biomarker ingest take too long
 • CA-1348: Summary source URLs should be marked as required
 • CA-1388: Pull external resource links from CancerDataExpo
 • CA-1440: Biomarker ingest should accept "GI and Other Associated" as well as
