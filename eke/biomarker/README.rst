@@ -707,7 +707,7 @@ Thanks a lot, ZCatalog.  Continuing::
     >>> o1.identifier
     'http://edrn/bmdb/a1/o1'
     >>> o1.publications[0].title
-    'Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.'
+    'Early detection biomarkers for ovarian cancer.'
     >>> s1 = o1['public-safety']
     >>> s1.protocol.title
     'Public Safety'
