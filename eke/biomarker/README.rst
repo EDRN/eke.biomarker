@@ -907,7 +907,7 @@ able to view information beyond the basics::
 
     >>> browser.open(portalURL + '/tacky-biomarkers/BB')
     >>> browser.contents
-    '...Basics...Ooze...Organs...Anus...Publications...Early detection...'
+    '...Basics...Ooze...Organs...Anus...Publications...Letter to the...'
     >>> 'This biomarker is currently being annotated or is under review' not in browser.contents
     True
 
@@ -1114,7 +1114,7 @@ No information from the Studies tab should show up::
 But publications are fine::
 
     >>> unprivilegedBrowser.contents
-    '...QA State...Curated...Organs...Studies...Publications...Letter to the editor...'
+    '...QA State...Curated...Organs...Studies...Publications...Early detection...'
 
 And resources are OK::
 
