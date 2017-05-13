@@ -1114,7 +1114,7 @@ No information from the Studies tab should show up::
 But publications are fine::
 
     >>> unprivilegedBrowser.contents
-    '...QA State...Curated...Organs...Studies...Publications...Early detection...'
+    '...QA State...Curated...Organs...Studies...Publications...Letter to the...'
 
 And resources are OK::
 
