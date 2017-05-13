@@ -655,7 +655,7 @@ Ingesting::
     >>> a1.identifier
     'http://edrn/bmdb/a1'
     >>> a1.publications[0].title
-    'Early detection biomarkers for ovarian cancer.'
+    'Letter to the editor: SeqXML and OrthoXML: standards for sequence and orthology information.'
     >>> a1.resources[0].title
     'A web index'
     >>> a1.geneName

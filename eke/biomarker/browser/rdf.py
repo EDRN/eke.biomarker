@@ -176,7 +176,11 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                 )
                 continue
             identifier = normalizer(studies[0].title)
-            bodySystemStudy = biomarkerBodySystem[biomarkerBodySystem.invokeFactory('Body System Study', identifier)]
+            bodySystemStudy = None
+            if identifier not in biomarkerBodySystem.keys():
+                bodySystemStudy = biomarkerBodySystem[biomarkerBodySystem.invokeFactory('Body System Study', identifier)]
+            else:
+                bodySystemStudy = biomarkerBodySystem[identifier]
             updateObject(bodySystemStudy, studyURI, bmStudyDataPredicates, catalog)
             bodySystemStudy.title = studies[0].title
             bodySystemStudy.description = studies[0].description
