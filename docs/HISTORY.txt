@@ -6,8 +6,8 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
-1.1.24 — TBD
-------------
+1.1.24 — Fast ingestion aids digestion
+--------------------------------------
 
 • CA-1434: Id searching makes biomarker ingest take too long
 
