@@ -175,7 +175,7 @@ class BiomarkerFolderIngestor(KnowledgeFolderIngestor):
                     biomarkerBodySystem.identifier
                 )
                 continue
-            identifier = normalizer(studies[0].title)
+            identifier = str(studies[0].identifier.split('/')[-1]) + '-' + normalizer(studies[0].title)
             bodySystemStudy = None
             if identifier not in biomarkerBodySystem.keys():
                 bodySystemStudy = biomarkerBodySystem[biomarkerBodySystem.invokeFactory('Body System Study', identifier)]
