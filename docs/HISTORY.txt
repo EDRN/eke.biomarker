@@ -6,6 +6,12 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.25 — Follow the protocols!
+------------------------------
+
+• CA-1552: 200 character truncation of protocols causes ingest issue
+
+
 1.1.24 — Fast ingestion aids digestion
 --------------------------------------
 
