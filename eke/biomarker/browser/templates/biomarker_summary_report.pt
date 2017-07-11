@@ -273,5 +273,10 @@ function dashboard(id, fData){
 
             dashboard('#dashboard',items);
         });
+        if ($(".faceted-checkboxes-widget", parent.document)[0]){
+            $(".biomarker-summary-report", parent.document).css("margin-left","-15em");
+        }else{
+            $(".biomarker-summary-report", parent.document).css("margin-left","0");
+        }
      });
 </script>
