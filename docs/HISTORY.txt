@@ -6,6 +6,11 @@ are listed below, you can find out more about them by visiting the issue
 tracker at https://oodt.jpl.nasa.gov/jira/browse/CA.
 
 
+1.1.27 — External Resources
+---------------------------
+
+• CA-1572: biomarker ingest need to capture cancerdataexpo external resources as ast instead of json
+
 1.1.26 — Graphs are not funny
 -----------------------------
 
