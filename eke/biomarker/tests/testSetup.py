@@ -10,7 +10,7 @@ from eke.biomarker.testing import EKE_BIOMARKER_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
 from zope.component import queryUtility
 from zope.schema.interfaces import IVocabularyFactory
-import unittest2 as unittest
+import unittest
 
 class SetupTest(unittest.TestCase):
     '''Unit tests the setup of this package.'''
