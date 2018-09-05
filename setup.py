@@ -10,7 +10,7 @@ import os.path
 # ------------
 
 _name        = 'eke.biomarker'
-_version     = '1.1.26'
+_version     = '1.1.27'
 _description = 'Biomarkers for the EDRN Knowledge Environment'
 _author      = 'Sean Kelly'
 _authorEmail = 'sean.kelly@jpl.nasa.gov'
